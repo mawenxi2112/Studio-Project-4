@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
 
     public Rigidbody2D rb;
+    public Animator animator;
 
     Vector2 movement;
 
@@ -17,12 +18,18 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
+        animator.SetFloat("Direction", direction);
 
         if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
         {
@@ -31,6 +38,14 @@ public class PlayerMovement : MonoBehaviour
                 direction = 3;
             else if (movement.x > 0)
                 direction = 1;
+        }
+        else if (Mathf.Abs(movement.x) < Mathf.Abs(movement.y))
+        {
+            // Vertical is stronger, check for left or right
+            if (movement.y < 0)
+                direction = 2;
+            else if (movement.y > 0)
+                direction = 0;
         }
 
     }
