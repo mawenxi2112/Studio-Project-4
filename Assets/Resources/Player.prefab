@@ -41,7 +41,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.011316608}
@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 481735979868706374}
   - component: {fileID: -3780799125183211640}
   - component: {fileID: 3110439246463074234}
+  - component: {fileID: 730381919633442623}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -124,7 +125,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 224358de274d2454281ae6621f9dd394, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -154,7 +155,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &-3070322303492496608
@@ -217,7 +218,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7780680387636889357}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e5c48215be601ff46a2e8e41f090a7c4, type: 2}
   m_CullingMode: 0
@@ -244,3 +245,25 @@ CircleCollider2D:
   m_Offset: {x: -0.009308738, y: -0.27376515}
   serializedVersion: 2
   m_Radius: 0.18491243
+--- !u!114 &730381919633442623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780680387636889357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb0c7e8ed3ceea4da39e4f71ffce70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tileDatas:
+  - {fileID: 11400000, guid: b79e5d4e54781ae4f85547568c333650, type: 2}
+  - {fileID: 11400000, guid: 522c90ad4ee88d7489a04f7902efe3ea, type: 2}
+  - {fileID: 11400000, guid: c95c8f181d79f5e41a1e5a7e92aeb057, type: 2}
+  - {fileID: 11400000, guid: c856c1bf34309594296cccdbf48f0fd5, type: 2}
