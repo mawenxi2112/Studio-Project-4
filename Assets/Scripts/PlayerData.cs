@@ -16,6 +16,10 @@ public class PlayerData : MonoBehaviour
     public float m_weaponRadius;
     public int m_currency;
 
+    // VARIABLES FOR TESTING
+    public bool m_holdingTorch;
+    public bool m_holdingKey;
+
     void Start()
     {
         // Initialize base values
