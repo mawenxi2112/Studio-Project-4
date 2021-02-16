@@ -14,6 +14,7 @@ public class PlayerData : MonoBehaviour
     public double m_iFrameCounter;
     public double m_iFrameThreshold;
     public float m_weaponRadius;
+    public int m_currency;
 
     void Start()
     {
@@ -52,5 +53,10 @@ public class PlayerData : MonoBehaviour
     public void SetCurrentMoveSpeed(float value)
 	{
         m_currentMoveSpeed = value;
+	}
+
+    public void SetCurrency(int value)
+	{
+        m_currency = value;
 	}
 }

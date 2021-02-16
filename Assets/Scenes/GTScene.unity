@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 12468297}
   m_Layer: 0
   m_Name: GroundTiles
-  m_TagString: Untagged
+  m_TagString: Tiles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13806,7 +13806,7 @@ GameObject:
   - component: {fileID: 259009563}
   m_Layer: 0
   m_Name: WaterTiles
-  m_TagString: Untagged
+  m_TagString: Tiles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14420,7 +14420,7 @@ GameObject:
   - component: {fileID: 982486055}
   m_Layer: 0
   m_Name: WallTiles
-  m_TagString: Untagged
+  m_TagString: Tiles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17491,7 +17491,7 @@ GameObject:
   - component: {fileID: 1905589567}
   m_Layer: 0
   m_Name: LavaTiles
-  m_TagString: Untagged
+  m_TagString: Tiles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

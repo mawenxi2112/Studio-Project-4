@@ -94,6 +94,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 	void OnCollisionStay2D(Collision2D collision)
 	{
 		Vector3 hitPosition = Vector3.zero;
+
 		foreach (ContactPoint2D contact in collision.contacts)
 		{
 			Debug.DrawRay(contact.point, contact.normal, Color.white);
@@ -101,19 +102,106 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 			hitPosition.x = contact.point.x - 0.01f * contact.normal.x;
 			hitPosition.y = contact.point.y - 0.01f * contact.normal.y;
 
-			Debug.Log("Position: " + gameObject.GetComponent<CircleCollider2D>().transform.position);
-			Debug.Log("Contact Point: " + contact.point);
-			Vector2 dir = -gameObject.GetComponent<PlayerMovement>().movement;
-			//Vector3 dir = (gameObject.GetComponent<CircleCollider2D>().transform.position - new Vector3(contact.point.x, contact.point.y, 0)).normalized * knockbackMultiplier;
-			Debug.Log("Direction: " + dir);
+			// Collision with any tiles with isTrigger off
+			if (collision.gameObject.tag == "Tiles")
+			{
+				for (int i = 0; i < map.Length; i++)
+				{
+					if (map[i].GetComponent<TilemapCollider2D>() == null)
+						continue;
 
+					TileBase TileInContact = map[i].GetTile(map[i].WorldToCell(hitPosition));
+
+					if (TileInContact == null)
+						continue;
+
+					switch (datafromTiles[TileInContact])
+					{
+						case TILE_TYPE.GROUND:
+							Debug.Log("GROUND");
+							break;
+
+						case TILE_TYPE.LAVA:
+							if (!GetComponent<PlayerData>().m_iFrame)
+							{
+								GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth - 1);
+								GetComponent<PlayerData>().m_iFrame = true;
+
+								Vector2 dir = -gameObject.GetComponent<PlayerMovement>().movement;
+
+								rb.AddForce(dir * knockbackMultiplier);
+
+								Debug.Log("Player's new health: " + GetComponent<PlayerData>().m_currentHealth);
+							}
+							Debug.Log("LAVA");
+							break;
+
+						case TILE_TYPE.WATER:
+
+							Debug.Log("WATER");
+							break;
+
+						case TILE_TYPE.WALL:
+							Debug.Log("WALL");
+							break;
+					}
+				}
+			}
+			// Collision with in-game objects with IsTrigger off
+			else if (collision.gameObject.tag == "Objects")
+			{
+				switch(collision.gameObject.GetComponent<ObjectData>().object_type)
+				{
+					case OBJECT_TYPE.COIN:
+						GetComponent<PlayerData>().SetCurrency(GetComponent<PlayerData>().m_currency + collision.gameObject.GetComponent<ObjectData>().coinValue);
+						collision.gameObject.SetActive(false);
+						break;
+
+					case OBJECT_TYPE.HEALTHPACK:
+						if (GetComponent<PlayerData>().m_currentHealth < GetComponent<PlayerData>().m_maxHealth)
+						{
+							GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth + collision.gameObject.GetComponent<ObjectData>().healthPackValue);
+							collision.gameObject.SetActive(false);
+						}
+						break;
+
+					case OBJECT_TYPE.KEY:
+						break;
+
+					case OBJECT_TYPE.TORCH:
+						break;
+
+					case OBJECT_TYPE.BOMB:
+						break;
+
+					case OBJECT_TYPE.CHEST:
+						break;
+				}
+			}
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D collision)
+	{
+		Vector3 hitPosition = Vector3.zero;
+
+		// Collision with any tiles with isTrigger on
+		if (collision.gameObject.tag == "Tiles")
+		{
 			for (int i = 0; i < map.Length; i++)
 			{
+				// Check if tilemaps is a collidable environment/tiles
 				if (map[i].GetComponent<TilemapCollider2D>() == null)
 					continue;
 
+				// Reference player position for collision detection
+				hitPosition.x = gameObject.transform.position.x;
+				hitPosition.y = gameObject.transform.position.y - 0.3f;
+
+				// WorldToCell = Get the vec3 int of currentTile using a pos. GetTile = Gets the TileBase using Vec3 int pos.
 				TileBase TileInContact = map[i].GetTile(map[i].WorldToCell(hitPosition));
 
+				// If there isn't a tile in that position
 				if (TileInContact == null)
 					continue;
 
@@ -126,16 +214,11 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					case TILE_TYPE.LAVA:
 						if (!GetComponent<PlayerData>().m_iFrame)
 						{
-							GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth - 1);
-							GetComponent<PlayerData>().m_iFrame = true;
-							rb.AddForce(dir * knockbackMultiplier);
-							Debug.Log("Player's new health: " + GetComponent<PlayerData>().m_currentHealth);
+							Debug.Log("LAVA");
 						}
-						Debug.Log("LAVA");
 						break;
 
 					case TILE_TYPE.WATER:
-
 						Debug.Log("WATER");
 						break;
 
@@ -144,57 +227,38 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 						break;
 				}
 			}
+		}
+		// Collision with in-game objects with IsTrigger on
+		else if (collision.gameObject.tag == "Objects")
+		{
+			switch (collision.gameObject.GetComponent<ObjectData>().object_type)
+			{
+				case OBJECT_TYPE.COIN:
+					GetComponent<PlayerData>().SetCurrency(GetComponent<PlayerData>().m_currency + collision.gameObject.GetComponent<ObjectData>().coinValue);
+					collision.gameObject.SetActive(false);
+					break;
 
+				case OBJECT_TYPE.HEALTHPACK:
+					if (GetComponent<PlayerData>().m_currentHealth < GetComponent<PlayerData>().m_maxHealth)
+					{
+						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth + collision.gameObject.GetComponent<ObjectData>().healthPackValue);
+						collision.gameObject.SetActive(false);
+					}
+					break;
+
+				case OBJECT_TYPE.KEY:
+					break;
+
+				case OBJECT_TYPE.TORCH:
+					break;
+
+				case OBJECT_TYPE.BOMB:
+					break;
+
+				case OBJECT_TYPE.CHEST:
+					break;
+			}
 		}
 	}
-
-	//void OnTriggerStay2D(Collider2D other)
-	//{
-	//	Vector3 hitPosition = Vector3.zero;
-
-	//	for (int i = 0; i < map.Length; i++)
-	//	{
-	//		// Check if tilemaps is a collidable environment/tiles
-	//		if (map[i].GetComponent<TilemapCollider2D>() == null)
-	//			continue;
-
-	//		// Reference player position for collision detection
-	//		hitPosition.x = gameObject.transform.position.x;
-	//		hitPosition.y = gameObject.transform.position.y - 0.3f;
-
-	//		// WorldToCell = Get the vec3 int of currentTile using a pos. GetTile = Gets the TileBase using Vec3 int pos.
-	//		TileBase TileInContact = map[i].GetTile(map[i].WorldToCell(hitPosition));
-
-	//		// If there isn't a tile in that position
-	//		if (TileInContact == null)
-	//			continue;
-
-	//		switch (datafromTiles[TileInContact])
-	//		{
-	//			case TILE_TYPE.GROUND:
-	//				Debug.Log("GROUND");
-	//				break;
-
-	//			case TILE_TYPE.LAVA:
-	//				if (!GetComponent<PlayerData>().m_iFrame)
-	//				{
-	//					GetComponent<PlayerData>().m_currentHealth--;
-	//					GetComponent<PlayerData>().m_iFrame = true;
-	//					Debug.Log("LAVA");
-	//					Debug.Log("Player's new health: " + GetComponent<PlayerData>().m_currentHealth);
-	//				}
-	//				break;
-
-	//			case TILE_TYPE.WATER:
-	//				GetComponent<PlayerData>().m_currentMoveSpeed = 1f;
-	//				Debug.Log("WATER");
-	//				break;
-
-	//			case TILE_TYPE.WALL:
-	//				Debug.Log("WALL");
-	//				break;
-	//		}
-	//	}
-	//}
 
 }
