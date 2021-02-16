@@ -17432,6 +17432,7 @@ MonoBehaviour:
   coinPrefab: {fileID: 6719234473584511683, guid: a079c1cbe791fbb44ac6466f1fc5cb2a, type: 3}
   keyPrefab: {fileID: 6101477652406124783, guid: a2a5c72e67e02864a85a3edc189a5e3e, type: 3}
   healthpackPrefab: {fileID: 8954472259260705781, guid: 9e89edfe82b94ab488864fb204bc10f0, type: 3}
+  swordPrefab: {fileID: 2503024969205781189, guid: d0d826d8e795b214580cfe316699c9ce, type: 3}
   camera: {fileID: 387364850}
 --- !u!1 &1905589562
 GameObject:

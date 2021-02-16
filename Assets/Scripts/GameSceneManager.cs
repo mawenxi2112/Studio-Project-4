@@ -30,6 +30,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject coinPrefab;
     public GameObject keyPrefab;
     public GameObject healthpackPrefab;
+    public GameObject swordPrefab;
 
     public CinemachineVirtualCamera camera;
 
@@ -201,6 +202,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
         Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
         Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
+        tmpPlayer.GetComponent<PlayerAttack>().m_weapon = Instantiate(swordPrefab);
+        tmpPlayer.GetComponent<PlayerAttack>().transform.position = new Vector3(0, 0, 0);
 
         camera.Follow = tmpPlayer.transform;
 

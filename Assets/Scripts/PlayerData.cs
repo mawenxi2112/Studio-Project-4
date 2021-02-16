@@ -13,6 +13,7 @@ public class PlayerData : MonoBehaviour
     public bool m_iFrame;
     public double m_iFrameCounter;
     public double m_iFrameThreshold;
+    public float m_weaponRadius;
 
     void Start()
     {
