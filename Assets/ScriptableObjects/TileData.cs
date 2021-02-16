@@ -6,10 +6,8 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu]
 public class TileData : ScriptableObject
 {
+	// Same type of tiles but different variation/design
 	public TileBase[] tiles;
-
-	public bool TakeDamageWhenOn;
-	public bool IsMoveable;
 
 	public TILE_TYPE tiletype;
 }

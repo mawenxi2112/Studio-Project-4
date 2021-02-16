@@ -13,16 +13,20 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
     [SerializeField]
     private List<TileData> tileDatas;
 
-    private Dictionary<TileBase, TileData> datafromTiles;
+    // Key = Variations, Value = TileType
+    private Dictionary<TileBase, TILE_TYPE> datafromTiles;
+
+    private TileBase currentTile;
+
     private void Awake()
     {
-        datafromTiles = new Dictionary<TileBase, TileData>();
+        datafromTiles = new Dictionary<TileBase, TILE_TYPE>();
 
         foreach (var tileData in tileDatas)
         {
             foreach (var tile in tileData.tiles)
             {
-                datafromTiles.Add(tile, tileData);
+                datafromTiles.Add(tile, tileData.tiletype);
             }
         }
     }
@@ -35,7 +39,6 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
         for (int i = 0; i < GameObject.Find("Grid").transform.childCount; i++)
 		{
             map[i] = GameObject.Find("Grid").transform.GetChild(i).GetComponent<Tilemap>();
-            Debug.Log("Loop: " + i);
 		}
     }
 
@@ -65,12 +68,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
                 if (TileInContact == null)
                     continue;
 
-                if (datafromTiles[TileInContact].TakeDamageWhenOn)
-                    Debug.Log("At position " + map[i].WorldToCell(hitPosition) + ", standing on " + TileInContact + ", taking damage");
-                else if (!datafromTiles[TileInContact].TakeDamageWhenOn)
-                    Debug.Log("At position " + map[i].WorldToCell(hitPosition) + ", standing on " + TileInContact + ", not taking damage");
 
-                switch (datafromTiles[TileInContact].tiletype)
+                switch (datafromTiles[TileInContact])
                 {
                     case TILE_TYPE.GROUND:
                         Debug.Log("GROUND");
@@ -99,30 +98,30 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
         for (int i = 0; i < map.Length; i++)
         {
+            // Check if tilemaps is a collidable environment/tiles
             if (map[i].GetComponent<TilemapCollider2D>() == null)
                 continue;
-
+            
+            // Reference player position for collision detection
             hitPosition.x = gameObject.transform.position.x;
             hitPosition.y = gameObject.transform.position.y - 0.3f;
 
+            // WorldToCell = Get the vec3 int of currentTile using a pos. GetTile = Gets the TileBase using Vec3 int pos.
             TileBase TileInContact = map[i].GetTile(map[i].WorldToCell(hitPosition));
 
+            // If there isn't a tile in that position
             if (TileInContact == null)
                 continue;
 
-            if (datafromTiles[TileInContact].TakeDamageWhenOn)
-                Debug.Log("At position " + map[i].WorldToCell(hitPosition) + ", standing on " + TileInContact + ", taking damage");
-            else if (!datafromTiles[TileInContact].TakeDamageWhenOn)
-                Debug.Log("At position " + map[i].WorldToCell(hitPosition) + ", standing on " + TileInContact + ", not taking damage");
-
-            switch (datafromTiles[TileInContact].tiletype)
+            switch (datafromTiles[TileInContact])
             {
                 case TILE_TYPE.GROUND:
                     Debug.Log("GROUND");
                     break;
 
                 case TILE_TYPE.LAVA:
-                    Debug.Log("LAVA");
+                    if (!GetComponent<PlayerData>().m_iFrame)
+                        Debug.Log("LAVA");
                     break;
 
                 case TILE_TYPE.WATER:
