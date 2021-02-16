@@ -6,8 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public float moveSpeed = 5f;
-
     public Rigidbody2D rb;
     public Animator animator;
 
@@ -31,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed", movement.sqrMagnitude);
         animator.SetFloat("Direction", direction);
 
+        // Checking of current direction
+
         if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
         {
             // Horizontal is stronger, check for left or right
@@ -52,6 +52,6 @@ public class PlayerMovement : MonoBehaviour
     
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * GetComponent<PlayerData>().m_currentMoveSpeed * Time.fixedDeltaTime);
     }
 }
