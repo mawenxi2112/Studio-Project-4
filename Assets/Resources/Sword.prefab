@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 101351504779741048}
   - component: {fileID: 1197795573032057726}
   - component: {fileID: 9052467280761190668}
+  - component: {fileID: 8465892835486254885}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Equipment
@@ -111,10 +112,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7367329457419984506}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -159,3 +160,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &8465892835486254885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7367329457419984506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5123a5fb749968d47a86e01a462bdef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

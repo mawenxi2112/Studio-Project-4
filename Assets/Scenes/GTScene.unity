@@ -14027,7 +14027,7 @@ Tilemap:
       - {fileID: 6879808720649491513, guid: a4184f2326a5c094eba98ad5b0624623, type: 3}
       - {fileID: 4316972346314124055, guid: a4184f2326a5c094eba98ad5b0624623, type: 3}
       - {fileID: 508572374083666297, guid: a4184f2326a5c094eba98ad5b0624623, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 7, y: 4, z: 0}
@@ -17470,7 +17470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InfoText: {fileID: 0}
-  playerPrefab: {fileID: 7780680387636889357, guid: 2a3c7648c6921644d84a123714d28a81, type: 3}
+  playerPrefab: {fileID: 2806126621235551223, guid: 2a3c7648c6921644d84a123714d28a81, type: 3}
   coinPrefab: {fileID: 6719234473584511683, guid: a079c1cbe791fbb44ac6466f1fc5cb2a, type: 3}
   keyPrefab: {fileID: 6101477652406124783, guid: a2a5c72e67e02864a85a3edc189a5e3e, type: 3}
   healthpackPrefab: {fileID: 8954472259260705781, guid: 9e89edfe82b94ab488864fb204bc10f0, type: 3}
@@ -17478,7 +17478,7 @@ MonoBehaviour:
   moveableblockPrefab: {fileID: 6641217289784227308, guid: c923df22aca738b4c82c3c040da1e56f, type: 3}
   torchPrefab: {fileID: 5364706790223898747, guid: 92ab31b8129740e45a5976a8a9d243c2, type: 3}
   campfirePrefab: {fileID: 5338844828333723284, guid: 5570473d723028c4e855173b8c3b92aa, type: 3}
-  swordPrefab: {fileID: 2503024969205781189, guid: d0d826d8e795b214580cfe316699c9ce, type: 3}
+  swordPrefab: {fileID: 7367329457419984506, guid: d0d826d8e795b214580cfe316699c9ce, type: 3}
   camera: {fileID: 387364850}
 --- !u!1 &1905589562
 GameObject:

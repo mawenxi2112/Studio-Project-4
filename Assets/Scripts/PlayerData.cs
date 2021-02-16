@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EQUIPMENT
+{
+    SWORD,
+    TORCH,
+    KEY
+}
+
 public class PlayerData : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -15,6 +22,8 @@ public class PlayerData : MonoBehaviour
     public double m_iFrameThreshold;
     public float m_weaponRadius;
     public int m_currency;
+
+    public EQUIPMENT m_currentEquipment;
 
     // VARIABLES FOR TESTING
     public bool m_holdingTorch;

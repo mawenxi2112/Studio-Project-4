@@ -292,6 +292,9 @@ MonoBehaviour:
   m_iFrameThreshold: 0.5
   m_weaponRadius: 2
   m_currency: 0
+  m_currentEquipment: 0
+  m_holdingTorch: 0
+  m_holdingKey: 0
 --- !u!114 &4430784766013518377
 MonoBehaviour:
   m_ObjectHideFlags: 0
