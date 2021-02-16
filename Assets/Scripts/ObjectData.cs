@@ -17,5 +17,6 @@ public enum OBJECT_TYPE
     KEY,
     TORCH,
     BOMB,
-    CHEST
+    CHEST,
+    SPIKE,
 };
