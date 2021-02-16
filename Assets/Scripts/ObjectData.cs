@@ -1,0 +1,21 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ObjectData : MonoBehaviour
+{
+    public OBJECT_TYPE object_type;
+
+    public int coinValue;
+    public int healthPackValue;
+}
+public enum OBJECT_TYPE
+{
+    NONE = 0,
+    COIN,
+    HEALTHPACK,
+    KEY,
+    TORCH,
+    BOMB,
+    CHEST
+};
