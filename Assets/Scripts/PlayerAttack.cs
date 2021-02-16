@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
     private Camera camera;
 
     public GameObject m_weapon;
+    public Animator weaponAnimator;
     public Vector3 ScreenToWorldPos;
     public Vector2 m_dir;
 
@@ -15,6 +16,7 @@ public class PlayerAttack : MonoBehaviour
     {
         // Later on for multiplayer, set the camera if the photonView is mine.
         camera = Camera.main;
+        weaponAnimator = m_weapon.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -34,6 +36,12 @@ public class PlayerAttack : MonoBehaviour
 
         // Rotate weapon accordingly to m_dir
         m_weapon.GetComponent<Transform>().eulerAngles = new Vector3(0, 0, Mathf.Atan2(m_dir.y, m_dir.x) * Mathf.Rad2Deg);
+
+        if (Input.GetKeyDown(KeyCode.Space)) // Add attack speed
+        {
+            weaponAnimator.SetTrigger("Attack");
+            // Attack Code
+        }
         
     }
 
