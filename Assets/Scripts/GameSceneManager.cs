@@ -17,12 +17,21 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Cinemachine;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
     public static GameSceneManager Instance = null;
 
     public Text InfoText;
+
+    public GameObject playerPrefab;
+
+    public GameObject coinPrefab;
+    public GameObject keyPrefab;
+    public GameObject healthpackPrefab;
+
+    public CinemachineVirtualCamera camera;
 
     //public GameObject[] AsteroidPrefabs;
 
@@ -186,7 +195,17 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
+        // REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
+        GameObject tmpPlayer = Instantiate(playerPrefab);
+        tmpPlayer.transform.position = new Vector3(5, 5, 0);
+        Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
+        Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
+        Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
+
+        camera.Follow = tmpPlayer.transform;
+
         GameObject player = PhotonNetwork.Instantiate("Player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+
 
         if (player.GetComponent<PhotonView>().IsMine)
         {
