@@ -24,7 +24,7 @@ public class AudioSlider : MonoBehaviour
 
         slider = GetComponent<Slider>();
 
-        if (gameSettings !=  null)
+        if (gameSettings != null)
         {
             slider.minValue = 0;
             slider.maxValue = 100;
