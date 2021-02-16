@@ -15,6 +15,7 @@ MonoBehaviour:
   tiles:
   - {fileID: 11400000, guid: a99f9eb99d3884d4aa91adc52687aece, type: 2}
   - {fileID: 11400000, guid: 5cf27df617d90a84ab12441cf4d12a4b, type: 2}
+  - {fileID: 11400000, guid: 440b4decec1c8b9419069e259cba2a91, type: 2}
   TakeDamageWhenOn: 1
   IsMoveable: 0
   tiletype: 2
