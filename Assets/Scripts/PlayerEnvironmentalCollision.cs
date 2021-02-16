@@ -176,6 +176,9 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 					case OBJECT_TYPE.CHEST:
 						break;
+
+					case OBJECT_TYPE.SPIKE:
+						break;
 				}
 			}
 		}
@@ -212,10 +215,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 						break;
 
 					case TILE_TYPE.LAVA:
-						if (!GetComponent<PlayerData>().m_iFrame)
-						{
-							Debug.Log("LAVA");
-						}
+						Debug.Log("LAVA");
 						break;
 
 					case TILE_TYPE.WATER:
@@ -256,6 +256,15 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					break;
 
 				case OBJECT_TYPE.CHEST:
+					break;
+
+				case OBJECT_TYPE.SPIKE:
+					if (!GetComponent<PlayerData>().m_iFrame)
+					{
+						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth - 1);
+						GetComponent<PlayerData>().m_iFrame = true;
+						Debug.Log("Player's new health: " + GetComponent<PlayerData>().m_currentHealth);
+					}
 					break;
 			}
 		}
