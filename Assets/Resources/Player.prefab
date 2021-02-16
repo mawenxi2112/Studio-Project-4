@@ -290,7 +290,7 @@ MonoBehaviour:
   m_iFrame: 0
   m_iFrameCounter: 0
   m_iFrameThreshold: 0.5
-  m_weaponRadius: 10
+  m_weaponRadius: 2
 --- !u!114 &7469723517884931215
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,44 +8,38 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject m_weapon;
     public Vector3 ScreenToWorldPos;
-    public Vector3 m_dir;
+    public Vector2 m_dir;
 
     // Start is called before the first frame update
     void Start()
     {
         // Later on for multiplayer, set the camera if the photonView is mine.
         camera = Camera.main;
-        //  ScreenToWorldPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_weapon.GetComponent<Transform>().position = new Vector2(transform.position.x, transform.position.y) + Vector2.ClampMagnitude(new Vector2(ScreenToWorldPos.x, ScreenToWorldPos.y), GetComponent<PlayerData>().m_weaponRadius);
+        // Calculate the relative position of the mouse position to the player
+        Vector2 relativePosition = new Vector2(ScreenToWorldPos.x - transform.position.x, ScreenToWorldPos.y - transform.position.y);
 
+        // For future usages
+        m_dir = relativePosition.normalized;
+
+        // Clamp the relative position when the mouse position is outside of the weapon radius
+        Vector2 clampedRelativePosition = Vector2.ClampMagnitude(relativePosition, GetComponent<PlayerData>().m_weaponRadius);
+
+        // Update the weapon's world position by adding the newly clamped relative position back onto the player position
+        m_weapon.GetComponent<Transform>().position = clampedRelativePosition + new Vector2(transform.position.x, transform.position.y);
+
+        // Rotate weapon accordingly to m_dir
+        m_weapon.GetComponent<Transform>().eulerAngles = new Vector3(0, 0, Mathf.Atan2(m_dir.y, m_dir.x) * Mathf.Rad2Deg);
+        
     }
 
     void FixedUpdate()
     {
-        //m_dir = (ScreenToWorldPos - transform.position).normalized;
-    }
-
-    void OnGUI()
-    {
-        Event currentEvent = Event.current;
         Vector3 mousePos = Input.mousePosition;
-
-        // Get the mouse position from Event;
-        // Note that the y position from Event is inverted;
-
         ScreenToWorldPos = camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 0));
-
-
-
-        GUILayout.BeginArea(new Rect(20, 20, 250, 120));
-        GUILayout.Label("Screen pixels: " + camera.pixelWidth + ":" + camera.pixelHeight);
-        GUILayout.Label("Mouse position: " + mousePos);
-        GUILayout.Label("World position: " + ScreenToWorldPos.ToString("F3"));
-        GUILayout.EndArea();
     }
 }
