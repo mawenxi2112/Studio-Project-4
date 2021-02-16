@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class GameSettings : MonoBehaviour
 {
+    public static GameSettings instance = null;
+
     private static string settingsFilepath;
 
     // Resolution related Settings
@@ -23,6 +25,8 @@ public class GameSettings : MonoBehaviour
 
     void Awake()
     {
+        instance = GetInstance();
+
         settingsFilepath = Application.persistentDataPath + "/settings.json";
 
         string settingsJson = null;
@@ -73,5 +77,14 @@ public class GameSettings : MonoBehaviour
             File.Create(settingsFilepath).Close();
 
         File.WriteAllText(settingsFilepath, jsonText);
+    }
+
+    public static GameSettings GetInstance()
+    {
+        if (instance == null)
+            instance = new GameSettings();
+
+
+        return instance;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AudioSlider : MonoBehaviour
 {
-    private GameSettings gameSettings;
+    private GameSettings gameSettings = GameSettings.GetInstance();
     
     private Slider slider;
 
