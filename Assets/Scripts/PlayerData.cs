@@ -18,13 +18,13 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         // Initialize base values
-        m_maxHealth = 5;
-        m_currentHealth = m_maxHealth;
-        m_maxMoveSpeed = 5f;
-        m_currentMoveSpeed = m_maxMoveSpeed;
-        m_iFrame = false;
-        m_iFrameCounter = 0f;
-        m_iFrameThreshold = 0.2f;
+        //m_maxHealth = 5;
+        //m_currentHealth = m_maxHealth;
+        //m_maxMoveSpeed = 5f;
+        //m_currentMoveSpeed = m_maxMoveSpeed;
+        //m_iFrame = false;
+        //m_iFrameCounter = 0f;
+        //m_iFrameThreshold = 0.2f;
     }
 
     // Update is called once per frame
@@ -44,4 +44,13 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    public void SetCurrentHealth(int value)
+	{
+        m_currentHealth = value;
+	}
+
+    public void SetCurrentMoveSpeed(float value)
+	{
+        m_currentMoveSpeed = value;
+	}
 }
