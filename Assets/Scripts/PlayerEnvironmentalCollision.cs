@@ -179,6 +179,12 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 					case OBJECT_TYPE.SPIKE:
 						break;
+
+					case OBJECT_TYPE.MOVEABLEBLOCK:
+						break;
+
+					case OBJECT_TYPE.CAMPFIRE:
+						break;
 				}
 			}
 		}
@@ -247,9 +253,19 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					break;
 
 				case OBJECT_TYPE.KEY:
+					if (Input.GetKeyDown(KeyCode.Mouse0))
+					{
+						GetComponent<PlayerData>().m_holdingKey = true;
+						collision.gameObject.SetActive(false);
+					}
 					break;
 
 				case OBJECT_TYPE.TORCH:
+					if (Input.GetKeyDown(KeyCode.Mouse0))
+					{
+						GetComponent<PlayerData>().m_holdingTorch = true;
+						collision.gameObject.SetActive(false);
+					}
 					break;
 
 				case OBJECT_TYPE.BOMB:
@@ -264,6 +280,18 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth - 1);
 						GetComponent<PlayerData>().m_iFrame = true;
 						Debug.Log("Player's new health: " + GetComponent<PlayerData>().m_currentHealth);
+					}
+					break;
+
+				case OBJECT_TYPE.MOVEABLEBLOCK:
+					break;
+
+				case OBJECT_TYPE.CAMPFIRE:
+					if (Input.GetKeyDown(KeyCode.Mouse0) && GetComponent<PlayerData>().m_holdingTorch && !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot)
+					{
+						Debug.Log("CAMPFIRE");
+						collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot = !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot;
+						collision.gameObject.GetComponent<Animator>().SetBool("IsLit", collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot);
 					}
 					break;
 			}

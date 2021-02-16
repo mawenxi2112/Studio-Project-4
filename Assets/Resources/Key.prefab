@@ -117,9 +117,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.01145947}
+  m_Offset: {x: 0, y: -0.014518201}
   serializedVersion: 2
-  m_Radius: 0.24788749
+  m_Radius: 0.3549419
 --- !u!114 &5125589419451616401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,3 +135,4 @@ MonoBehaviour:
   object_type: 3
   coinValue: 0
   healthPackValue: 0
+  campfireLitOrNot: 0
