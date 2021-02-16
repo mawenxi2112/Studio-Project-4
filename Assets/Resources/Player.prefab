@@ -150,7 +150,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.01
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -209,7 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c388ec73bc09df4a995785e78bbd34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   rb: {fileID: 0}
   animator: {fileID: 0}
 --- !u!95 &-3780799125183211640
@@ -259,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb0c7e8ed3ceea4da39e4f71ffce70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackMultiplier: 50
   map:
   - {fileID: 0}
   - {fileID: 0}
@@ -281,6 +281,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd8554b09a41f34cb72d69f555eef36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_currentHealth: 0
-  m_maxHealth: 0
-  m_movementSpeed: 0
+  m_currentHealth: 5
+  m_maxHealth: 5
+  m_currentMoveSpeed: 5
+  m_maxMoveSpeed: 5
+  m_iFrame: 0
+  m_iFrameCounter: 0
+  m_iFrameThreshold: 0.5

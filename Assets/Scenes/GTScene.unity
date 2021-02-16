@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 12468294}
   - component: {fileID: 12468296}
   - component: {fileID: 12468295}
+  - component: {fileID: 12468297}
   m_Layer: 0
   m_Name: GroundTiles
   m_TagString: Untagged
@@ -13777,6 +13778,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &12468297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12468293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9841f067211f14e9ca3e10ec8cba7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemaptype: 1
 --- !u!1 &259009558
 GameObject:
   m_ObjectHideFlags: 0
@@ -13789,6 +13803,7 @@ GameObject:
   - component: {fileID: 259009561}
   - component: {fileID: 259009560}
   - component: {fileID: 259009562}
+  - component: {fileID: 259009563}
   m_Layer: 0
   m_Name: WaterTiles
   m_TagString: Untagged
@@ -14100,6 +14115,19 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!114 &259009563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259009558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9841f067211f14e9ca3e10ec8cba7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemaptype: 3
 --- !u!1 &387364849
 GameObject:
   m_ObjectHideFlags: 0
@@ -14389,6 +14417,7 @@ GameObject:
   - component: {fileID: 982486053}
   - component: {fileID: 982486052}
   - component: {fileID: 982486054}
+  - component: {fileID: 982486055}
   m_Layer: 0
   m_Name: WallTiles
   m_TagString: Untagged
@@ -17294,6 +17323,19 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!114 &982486055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982486050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9841f067211f14e9ca3e10ec8cba7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemaptype: 4
 --- !u!1 &1260871574
 GameObject:
   m_ObjectHideFlags: 0
@@ -17445,6 +17487,7 @@ GameObject:
   - component: {fileID: 1905589565}
   - component: {fileID: 1905589564}
   - component: {fileID: 1905589566}
+  - component: {fileID: 1905589567}
   m_Layer: 0
   m_Name: LavaTiles
   m_TagString: Untagged
@@ -17746,12 +17789,25 @@ TilemapCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!114 &1905589567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905589562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9841f067211f14e9ca3e10ec8cba7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemaptype: 2
 --- !u!1 &1921380338
 GameObject:
   m_ObjectHideFlags: 3

@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
-    Vector2 movement;
+    public Vector2 movement;
 
     int direction = 2; // Up = 0 Right = 1 Down = 2 Left = 3
 
