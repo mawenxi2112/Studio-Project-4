@@ -228,6 +228,14 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         tmpPlayer.GetComponent<PlayerAttack>().m_weapon = Instantiate(swordPrefab);
         tmpPlayer.GetComponent<PlayerAttack>().transform.position = new Vector3(0, 0, 0);
 
+        // Example
+        // GameObject enemy = Instantiate Enemy;
+        // enemy.GetComponent<EnemyData>().m_type = melee;
+        // enemy.GetComponent<EnemyData>().Init();
+        // enemy.GetComponent<EnemyData>().m_id = 0;
+        // enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().GetWayPointArray(id of enemy)
+        // enemy.GetComponent<Transform>().position = m_waypoint[0];
+
         camera.Follow = tmpPlayer.transform;
 
         GameObject player = PhotonNetwork.Instantiate("Player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)

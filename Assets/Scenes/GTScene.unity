@@ -17807,6 +17807,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1681122124}
   - component: {fileID: 1681122125}
+  - component: {fileID: 1681122126}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -17858,6 +17859,19 @@ MonoBehaviour:
   doorPrefab: {fileID: 7293402352003206539, guid: 0c1cd155f96cb7e43950156ec10324a3, type: 3}
   swordPrefab: {fileID: 7367329457419984506, guid: d0d826d8e795b214580cfe316699c9ce, type: 3}
   camera: {fileID: 387364850}
+--- !u!114 &1681122126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681122123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f5bc81d4611ce4290d0b883e2f96c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyWaypointList: []
 --- !u!1 &1905589562
 GameObject:
   m_ObjectHideFlags: 0
