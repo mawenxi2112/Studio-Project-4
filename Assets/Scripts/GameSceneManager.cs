@@ -233,7 +233,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         // enemy.GetComponent<EnemyData>().m_type = melee;
         // enemy.GetComponent<EnemyData>().Init();
         // enemy.GetComponent<EnemyData>().m_id = 0;
-        // enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().GetWayPointArray(id of enemy)
+        // enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[m_id];
         // enemy.GetComponent<Transform>().position = m_waypoint[0];
 
         camera.Follow = tmpPlayer.transform;

@@ -5,26 +5,29 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance = null;
+    public List<Transform[]> EnemyWaypointList;
 
-    [SerializeField]
-    public List<GameObject> EnemyWaypointList;
-
-    public Transform[] GetWaypointArray(int i)
+    public void Start()
     {
-        if (i >= EnemyWaypointList.Count)
-            return null;
+        GameObject waypointList = transform.Find("Waypoint").gameObject;
 
-        GameObject tmp = EnemyWaypointList[i];
-        Transform[] waypointArray = new Transform[tmp.transform.childCount];
-
-        for (int j = 0; j < tmp.transform.childCount; j++)
+        if (waypointList)
         {
-            waypointArray[j] = tmp.transform.GetChild(j).GetComponent<Transform>();
+            for (int i = 0; i < waypointList.transform.childCount; i++)
+            {
+                GameObject waypointSet = waypointList.transform.GetChild(i).gameObject;
+                Transform[] tmp = new Transform[waypointSet.transform.childCount];
+
+                for (int j = 0; j < waypointSet.transform.childCount; j++)
+                {
+                    tmp[j] = waypointSet.transform.GetChild(j);
+                    Debug.Log("Adding child transform" + tmp[j].position);
+                }
+
+                EnemyWaypointList.Add(tmp);
+            }
         }
-
-        return waypointArray;
     }
-
     public static EnemyManager GetInstance()
     {
         if (instance == null)
