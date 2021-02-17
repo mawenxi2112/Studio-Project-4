@@ -39,6 +39,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject surprisetrapblockPrefab;
     public GameObject chestPrefab;
     public GameObject pressureplatePrefab;
+    public GameObject resetbuttonPrefab;
     public GameObject swordPrefab;
 
     public CinemachineVirtualCamera camera;
@@ -220,6 +221,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
         Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
         Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
+        Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
 
         tmpPlayer.GetComponent<PlayerAttack>().m_weapon = Instantiate(swordPrefab);
         tmpPlayer.GetComponent<PlayerAttack>().transform.position = new Vector3(0, 0, 0);
