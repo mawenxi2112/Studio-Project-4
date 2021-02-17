@@ -15,13 +15,28 @@ public class SwordCollision : MonoBehaviour
     {
         
     }
+
     void OnTriggerEnter2D(Collider2D collider)
     {
         Debug.Log("TRIGGER ENTER!");
+
+        if (collider.gameObject.CompareTag("Player"))
+            return;
+
         collider.gameObject.SetActive(false);
     }
 
     void OnTriggerStay2D(Collider2D collider)
     {
+    }
+
+    public void EnableSwordCollision()
+    {
+        GetComponent<PolygonCollider2D>().enabled = true;
+    }
+
+    public void DisableSwordCollision()
+    {
+        GetComponent<PolygonCollider2D>().enabled = false;
     }
 }

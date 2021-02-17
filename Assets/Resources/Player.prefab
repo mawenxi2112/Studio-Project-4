@@ -290,7 +290,7 @@ MonoBehaviour:
   m_iFrame: 0
   m_iFrameCounter: 0
   m_iFrameThreshold: 0.5
-  m_weaponRadius: 2
+  m_weaponRadius: 0.75
   m_currency: 0
   m_currentEquipment: 0
   m_holdingTorch: 0
@@ -311,3 +311,4 @@ MonoBehaviour:
   weaponAnimator: {fileID: 0}
   ScreenToWorldPos: {x: 0, y: 0, z: 0}
   m_dir: {x: 0, y: 0}
+  m_isSwordSwinging: 0

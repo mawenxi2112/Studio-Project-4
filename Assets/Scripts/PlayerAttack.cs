@@ -10,18 +10,26 @@ public class PlayerAttack : MonoBehaviour
     public Animator weaponAnimator;
     public Vector3 ScreenToWorldPos;
     public Vector2 m_dir;
+    public bool m_isSwordSwinging;
 
     // Start is called before the first frame update
     void Start()
     {
         // Later on for multiplayer, set the camera if the photonView is mine.
         camera = Camera.main;
-        
-        if (GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.SWORD)
-        {
-            weaponAnimator = m_weapon.GetComponent<Animator>();
-        }
 
+        switch (GetComponent<PlayerData>().m_currentEquipment)
+        {
+            case EQUIPMENT.SWORD:
+                weaponAnimator = m_weapon.GetComponent<Animator>();
+                break;
+
+            case EQUIPMENT.KEY:
+                break;
+
+            case EQUIPMENT.TORCH:
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -42,21 +50,19 @@ public class PlayerAttack : MonoBehaviour
         // Rotate weapon accordingly to m_dir
         m_weapon.GetComponent<Transform>().eulerAngles = new Vector3(0, 0, Mathf.Atan2(m_dir.y, m_dir.x) * Mathf.Rad2Deg);
 
-        if (weaponAnimator.GetCurrentAnimatorStateInfo(0).IsName("Sword_Swing"))
+        switch (GetComponent<PlayerData>().m_currentEquipment)
         {
-            m_weapon.GetComponent<PolygonCollider2D>().enabled = true;
-        }
-        else
-        {
-            m_weapon.GetComponent<PolygonCollider2D>().enabled = false;
-        }
+            case EQUIPMENT.SWORD:
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                    weaponAnimator.SetTrigger("Attack");
+                break;
 
-        if (Input.GetKeyDown(KeyCode.Space) && GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.SWORD) // Add attack speed
-        {
-            weaponAnimator.SetTrigger("Attack");    
-            // Attack checking enemies code.
+            case EQUIPMENT.KEY:
+                break;
+
+            case EQUIPMENT.TORCH:
+                break;
         }
-        
     }
 
     void FixedUpdate()
