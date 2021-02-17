@@ -8,6 +8,8 @@ TagManager:
   - Objects
   - Tiles
   - Equipment
+  - Hitbox
+  - Enemy
   layers:
   - Default
   - TransparentFX
