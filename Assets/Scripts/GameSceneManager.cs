@@ -231,10 +231,12 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         tmpPlayer.GetComponent<PlayerInteraction>().transform.position = new Vector3(0, 0, 0);
 
         // Example
-         GameObject enemy = Instantiate(meeleEnemyPrefab);
-         enemy.GetComponent<EnemyData>().m_ID = 0;
-         enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
-         enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+        GameObject enemy = Instantiate(meeleEnemyPrefab);
+        enemy.GetComponent<EnemyData>().m_ID = 0;
+        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+        enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+
+        Debug.Log(enemy.GetComponent<Transform>().position);
 
         camera.Follow = tmpPlayer.transform;
 
