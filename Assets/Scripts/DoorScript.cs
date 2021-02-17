@@ -44,7 +44,7 @@ public class DoorScript : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.CompareTag("Hitbox"))
+		if (collision.gameObject.CompareTag("Hitbox") && !isDoorLock)
 		{
             // Start next level
             Debug.Log("POWER UP + NEXT LEVEL");
