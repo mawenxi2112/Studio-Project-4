@@ -41,6 +41,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject pressureplatePrefab;
     public GameObject resetbuttonPrefab;
     public GameObject doorPrefab;
+    public GameObject meeleEnemyPrefab;
     public GameObject swordPrefab;
 
     public CinemachineVirtualCamera camera;
@@ -229,12 +230,10 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         tmpPlayer.GetComponent<PlayerAttack>().transform.position = new Vector3(0, 0, 0);
 
         // Example
-        // GameObject enemy = Instantiate Enemy;
-        // enemy.GetComponent<EnemyData>().m_type = melee;
-        // enemy.GetComponent<EnemyData>().Init();
-        // enemy.GetComponent<EnemyData>().m_id = 0;
-        // enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[m_id];
-        // enemy.GetComponent<Transform>().position = m_waypoint[0];
+         GameObject enemy = Instantiate(meeleEnemyPrefab);
+         enemy.GetComponent<EnemyData>().m_ID = 0;
+         enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+         enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
 
         camera.Follow = tmpPlayer.transform;
 

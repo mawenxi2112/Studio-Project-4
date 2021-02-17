@@ -7,8 +7,14 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance = null;
     public List<Transform[]> EnemyWaypointList;
 
-    public void Start()
+    public void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        EnemyWaypointList = new List<Transform[]>();
         GameObject waypointList = transform.Find("Waypoint").gameObject;
 
         if (waypointList)

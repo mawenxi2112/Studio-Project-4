@@ -8,7 +8,6 @@ public enum ENEMY_TYPE
     RANGED,
 }
 
-
 public class EnemyData : MonoBehaviour
 {
     public int m_ID;
