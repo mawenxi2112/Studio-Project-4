@@ -10,6 +10,9 @@ TagManager:
   - Equipment
   - Hitbox
   - Enemy
+  - Torch
+  - Bomb
+  - Key
   layers:
   - Default
   - TransparentFX
