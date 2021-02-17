@@ -33,7 +33,6 @@ public class PlayerData : MonoBehaviour
 
     void Start()
     {
-
     }
 
     // Update is called once per frame

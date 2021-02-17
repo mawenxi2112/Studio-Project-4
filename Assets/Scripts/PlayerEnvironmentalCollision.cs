@@ -76,7 +76,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
                 case TILE_TYPE.WATER:
                     //Debug.Log("WATER");
-				    GetComponent<PlayerData>().m_currentMoveSpeed = 2f;
+				    GetComponent<PlayerData>().m_currentMoveSpeed = GetComponent<PlayerData>().m_maxMoveSpeed * 0.2f;
 					break;
 
                 case TILE_TYPE.WALL:
@@ -127,7 +127,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 								GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth - 1);
 								GetComponent<PlayerData>().m_iFrame = true;
 
-								Vector2 dir = -gameObject.GetComponent<PlayerMovement>().movement;
+								Vector2 dir = -gameObject.GetComponent<Rigidbody2D>().velocity;
 
 								rb.AddForce(dir * knockbackMultiplier);
 							}

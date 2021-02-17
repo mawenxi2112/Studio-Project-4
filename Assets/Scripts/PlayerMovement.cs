@@ -48,15 +48,16 @@ public class PlayerMovement : MonoBehaviour
                 direction = 0;
         }
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             // Dash
-            rb.AddForce(movement.normalized * , ForceMode2D.Impulse)
+            Debug.Log("Dashed!");
+            rb.AddForce(movement.normalized * GetComponent<PlayerData>().m_dashSpeed, ForceMode2D.Impulse);
         }
     }
     
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * GetComponent<PlayerData>().m_currentMoveSpeed * Time.fixedDeltaTime);
+        rb.AddForce(movement * GetComponent<PlayerData>().m_currentMoveSpeed * Time.fixedDeltaTime);
     }
 }
