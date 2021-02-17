@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb0c7e8ed3ceea4da39e4f71ffce70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackMultiplier: 30
+  knockbackMultiplier: 10
   map:
   - {fileID: 0}
   - {fileID: 0}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_maxMoveSpeed: 350
   m_iFrame: 0
   m_iFrameCounter: 0
-  m_iFrameThreshold: 0.5
+  m_iFrameThreshold: 0.25
   m_weaponRadius: 0.75
   m_currency: 0
   m_dashSpeed: 3.5

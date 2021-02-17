@@ -53,6 +53,10 @@ public class PlayerAttack : MonoBehaviour
         switch (GetComponent<PlayerData>().m_currentEquipment)
         {
             case EQUIPMENT.SWORD:
+
+                if (!weaponAnimator)
+                    weaponAnimator = m_weapon.GetComponent<Animator>();
+
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                     weaponAnimator.SetTrigger("Attack");
                 break;

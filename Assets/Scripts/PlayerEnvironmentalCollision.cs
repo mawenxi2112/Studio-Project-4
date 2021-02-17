@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class PlayerEnvironmentalCollision : MonoBehaviour
 {
     private Rigidbody2D rb;
-	public float knockbackMultiplier = 30;
+	public float knockbackMultiplier;
 
     [SerializeField]
     private Tilemap[] map;
@@ -67,20 +67,16 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
             switch (datafromTiles[currentTile])
             {
                 case TILE_TYPE.GROUND:
-                    //Debug.Log("GROUND");
                     break;
 
                 case TILE_TYPE.LAVA:
-                    //Debug.Log("LAVA");
                     break;
 
                 case TILE_TYPE.WATER:
-                    //Debug.Log("WATER");
 				    GetComponent<PlayerData>().m_currentMoveSpeed = GetComponent<PlayerData>().m_maxMoveSpeed * 0.2f;
 					break;
 
                 case TILE_TYPE.WALL:
-                    //Debug.Log("WALL");
                     break;
             }
 
@@ -127,7 +123,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 								GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth - 1);
 								GetComponent<PlayerData>().m_iFrame = true;
 
-								Vector2 dir = -gameObject.GetComponent<Rigidbody2D>().velocity;
+								Vector2 dir = -gameObject.GetComponent<PlayerMovement>().movement * knockbackMultiplier;
 
 								rb.AddForce(dir * knockbackMultiplier);
 							}
