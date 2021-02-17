@@ -35,9 +35,11 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject torchPrefab;
     public GameObject campfirePrefab;
     public GameObject bombPrefab;
-    public GameObject swordPrefab;
     public GameObject breakableblockPrefab;
     public GameObject surprisetrapblockPrefab;
+    public GameObject chestPrefab;
+    public GameObject pressureplatePrefab;
+    public GameObject swordPrefab;
 
     public CinemachineVirtualCamera camera;
 
@@ -216,6 +218,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
         Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
         Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
+        Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
+        Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
 
         tmpPlayer.GetComponent<PlayerAttack>().m_weapon = Instantiate(swordPrefab);
         tmpPlayer.GetComponent<PlayerAttack>().transform.position = new Vector3(0, 0, 0);

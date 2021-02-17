@@ -130,19 +130,13 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 								Vector2 dir = -gameObject.GetComponent<PlayerMovement>().movement;
 
 								rb.AddForce(dir * knockbackMultiplier);
-
-								Debug.Log("Player's new health: " + GetComponent<PlayerData>().m_currentHealth);
 							}
-							Debug.Log("LAVA");
 							break;
 
 						case TILE_TYPE.WATER:
-
-							Debug.Log("WATER");
 							break;
 
 						case TILE_TYPE.WALL:
-							Debug.Log("WALL");
 							break;
 					}
 				}
@@ -191,6 +185,15 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 					case OBJECT_TYPE.SURPRISETRAPBLOCK:
 						break;
+
+					case OBJECT_TYPE.PRESSUREPLATE:
+						break;
+
+					case OBJECT_TYPE.RESETBUTTON:
+						break;
+
+					case OBJECT_TYPE.DOOR:
+						break;
 				}
 			}
 		}
@@ -223,19 +226,15 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				switch (datafromTiles[TileInContact])
 				{
 					case TILE_TYPE.GROUND:
-						Debug.Log("GROUND");
 						break;
 
 					case TILE_TYPE.LAVA:
-						Debug.Log("LAVA");
 						break;
 
 					case TILE_TYPE.WATER:
-						Debug.Log("WATER");
 						break;
 
 					case TILE_TYPE.WALL:
-						Debug.Log("WALL");
 						break;
 				}
 			}
@@ -285,7 +284,6 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					{
 						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth - 1);
 						GetComponent<PlayerData>().m_iFrame = true;
-						Debug.Log("Player's new health: " + GetComponent<PlayerData>().m_currentHealth);
 					}
 					break;
 
@@ -295,7 +293,6 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.CAMPFIRE:
 					if (Input.GetKeyDown(KeyCode.Mouse0) && GetComponent<PlayerData>().m_holdingTorch && !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot)
 					{
-						Debug.Log("CAMPFIRE");
 						collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot = !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot;
 						collision.gameObject.GetComponent<Animator>().SetBool("IsLit", collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot);
 					}
@@ -306,8 +303,17 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 				case OBJECT_TYPE.SURPRISETRAPBLOCK:
 					break;
+
+				case OBJECT_TYPE.PRESSUREPLATE:
+					break;
+
+				case OBJECT_TYPE.RESETBUTTON:
+					break;
+
+				case OBJECT_TYPE.DOOR:
+					break;
+
 			}
 		}
 	}
-
 }
