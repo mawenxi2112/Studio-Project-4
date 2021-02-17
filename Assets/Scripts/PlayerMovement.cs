@@ -47,7 +47,12 @@ public class PlayerMovement : MonoBehaviour
             else if (movement.y > 0)
                 direction = 0;
         }
-
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // Dash
+            rb.AddForce(movement.normalized * , ForceMode2D.Impulse)
+        }
     }
     
     void FixedUpdate()

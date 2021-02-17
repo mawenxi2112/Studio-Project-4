@@ -4,9 +4,11 @@ using UnityEngine;
 
 public enum EQUIPMENT
 {
+    NONE,
     SWORD,
     TORCH,
-    KEY
+    KEY,
+    BOMB
 }
 
 public class PlayerData : MonoBehaviour
@@ -22,7 +24,7 @@ public class PlayerData : MonoBehaviour
     public double m_iFrameThreshold;
     public float m_weaponRadius;
     public int m_currency;
-
+    public float m_dashSpeed;
     public EQUIPMENT m_currentEquipment;
 
     // VARIABLES FOR TESTING
@@ -31,14 +33,7 @@ public class PlayerData : MonoBehaviour
 
     void Start()
     {
-        // Initialize base values
-        //m_maxHealth = 5;
-        //m_currentHealth = m_maxHealth;
-        //m_maxMoveSpeed = 5f;
-        //m_currentMoveSpeed = m_maxMoveSpeed;
-        //m_iFrame = false;
-        //m_iFrameCounter = 0f;
-        //m_iFrameThreshold = 0.2f;
+
     }
 
     // Update is called once per frame
