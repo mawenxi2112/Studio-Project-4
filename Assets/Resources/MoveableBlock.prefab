@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_Sprite: {fileID: 21300000, guid: 0db7a800d087894499ac78fecbfc8543, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -147,3 +147,5 @@ MonoBehaviour:
   object_type: 8
   coinValue: 0
   healthPackValue: 0
+  campfireLitOrNot: 0
+  blockHealth: 0

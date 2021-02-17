@@ -23,7 +23,49 @@ public class SwordCollision : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
             return;
 
-        collider.gameObject.SetActive(false);
+        if (collider.gameObject.CompareTag("Objects"))
+		{
+            switch(collider.gameObject.GetComponent<ObjectData>().object_type)
+			{
+                case OBJECT_TYPE.COIN:
+                    break;
+
+                case OBJECT_TYPE.HEALTHPACK:
+                    break;
+
+                case OBJECT_TYPE.KEY:
+                    break;
+
+                case OBJECT_TYPE.TORCH:
+                    break;
+
+                case OBJECT_TYPE.BOMB:
+                    break;
+
+                case OBJECT_TYPE.CHEST:
+                    collider.gameObject.GetComponent<ObjectData>().blockHealth--;
+                    break;
+
+                case OBJECT_TYPE.SPIKE:
+                    break;
+
+                case OBJECT_TYPE.MOVEABLEBLOCK:
+                    break;
+
+                case OBJECT_TYPE.CAMPFIRE:
+                    break;
+
+                case OBJECT_TYPE.BREAKABLEBLOCK:
+                    collider.gameObject.GetComponent<ObjectData>().blockHealth--;
+                    break;
+
+                case OBJECT_TYPE.SURPRISETRAPBLOCK:
+                    collider.gameObject.GetComponent<ObjectData>().blockHealth--;
+                    break;
+            }
+		}
+
+        //collider.gameObject.SetActive(false);
     }
 
     void OnTriggerStay2D(Collider2D collider)

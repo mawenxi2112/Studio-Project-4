@@ -185,6 +185,12 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 					case OBJECT_TYPE.CAMPFIRE:
 						break;
+
+					case OBJECT_TYPE.BREAKABLEBLOCK:
+						break;
+
+					case OBJECT_TYPE.SURPRISETRAPBLOCK:
+						break;
 				}
 			}
 		}
@@ -293,6 +299,12 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 						collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot = !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot;
 						collision.gameObject.GetComponent<Animator>().SetBool("IsLit", collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot);
 					}
+					break;
+
+				case OBJECT_TYPE.BREAKABLEBLOCK:
+					break;
+
+				case OBJECT_TYPE.SURPRISETRAPBLOCK:
 					break;
 			}
 		}
