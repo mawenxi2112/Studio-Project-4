@@ -9,6 +9,7 @@ public class ObjectData : MonoBehaviour
     public int coinValue;
     public int healthPackValue;
     public bool campfireLitOrNot;
+    public int blockHealth;
 }
 public enum OBJECT_TYPE
 {
@@ -22,4 +23,6 @@ public enum OBJECT_TYPE
     SPIKE,
     MOVEABLEBLOCK,
     CAMPFIRE,
+    BREAKABLEBLOCK,
+    SURPRISETRAPBLOCK,
 };
