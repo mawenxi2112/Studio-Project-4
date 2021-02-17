@@ -64,12 +64,21 @@ public class SwordCollision : MonoBehaviour
                     break;
             }
 		}
-
-        //collider.gameObject.SetActive(false);
     }
 
     void OnTriggerStay2D(Collider2D collider)
     {
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            return;
+    }
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            return;
     }
 
     public void EnableSwordCollision()

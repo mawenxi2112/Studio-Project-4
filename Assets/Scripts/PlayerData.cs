@@ -27,10 +27,6 @@ public class PlayerData : MonoBehaviour
     public float m_dashSpeed;
     public EQUIPMENT m_currentEquipment;
 
-    // VARIABLES FOR TESTING
-    public bool m_holdingTorch;
-    public bool m_holdingKey;
-
     void Start()
     {
     }

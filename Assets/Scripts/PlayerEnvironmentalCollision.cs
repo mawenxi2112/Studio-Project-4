@@ -256,16 +256,16 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.KEY:
 					if (Input.GetKeyDown(KeyCode.Mouse0))
 					{
-						GetComponent<PlayerData>().m_holdingKey = true;
-						collision.gameObject.SetActive(false);
+						GetComponent<PlayerInteraction>().PickUp(collision.gameObject, EQUIPMENT.KEY);
+						GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.KEY;
 					}
 					break;
 
 				case OBJECT_TYPE.TORCH:
 					if (Input.GetKeyDown(KeyCode.Mouse0))
 					{
-						GetComponent<PlayerData>().m_holdingTorch = true;
-						collision.gameObject.SetActive(false);
+						GetComponent<PlayerInteraction>().PickUp(collision.gameObject, EQUIPMENT.TORCH);
+						GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.TORCH;
 					}
 					break;
 
@@ -287,7 +287,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					break;
 
 				case OBJECT_TYPE.CAMPFIRE:
-					if (Input.GetKeyDown(KeyCode.Mouse0) && GetComponent<PlayerData>().m_holdingTorch && !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot)
+					if (Input.GetKeyDown(KeyCode.Mouse0) && GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.TORCH && !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot)
 					{
 						collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot = !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot;
 						collision.gameObject.GetComponent<Animator>().SetBool("IsLit", collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot);

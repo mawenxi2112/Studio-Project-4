@@ -226,8 +226,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
         Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
 
-        tmpPlayer.GetComponent<PlayerAttack>().m_weapon = Instantiate(swordPrefab);
-        tmpPlayer.GetComponent<PlayerAttack>().transform.position = new Vector3(0, 0, 0);
+        tmpPlayer.GetComponent<PlayerInteraction>().m_hand = Instantiate(swordPrefab);
+        tmpPlayer.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
+        tmpPlayer.GetComponent<PlayerInteraction>().transform.position = new Vector3(0, 0, 0);
 
         // Example
          GameObject enemy = Instantiate(meeleEnemyPrefab);
