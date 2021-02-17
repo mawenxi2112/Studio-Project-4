@@ -19,4 +19,17 @@ public static class SceneGameObjects
 
         return rootGameObjects;
     }
+
+    public static GameObject FindGameObjectWithName(ref List<GameObject> rootGameObjects, string gameObjectName)
+    {
+        for (int i = 0; i < rootGameObjects.Count; i++)
+        {
+            if (rootGameObjects[i].name.Equals(gameObjectName))
+            {
+                return rootGameObjects[i];
+            }
+        }
+
+        return null;
+    }
 }
