@@ -26,6 +26,9 @@ public class PlayerData : MonoBehaviour
     public int m_currency;
     public float m_dashSpeed;
     public EQUIPMENT m_currentEquipment;
+    public bool m_actionKey;
+    public double m_actionKeyTimer;
+    public double m_actionKeyReset;
 
     void Start()
     {
@@ -34,6 +37,8 @@ public class PlayerData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_actionKeyTimer += Time.deltaTime;
+
         if (m_iFrame)
         {
             // Render a different colour during iFrame
@@ -45,6 +50,17 @@ public class PlayerData : MonoBehaviour
                 m_iFrame = false;
                 m_iFrameCounter = 0f;
             }
+        }
+
+        if (Input.GetKey(KeyCode.Mouse0) && m_actionKeyTimer >= m_actionKeyReset)
+        {
+            m_actionKeyTimer = 0;
+            m_actionKey = true;
+        }
+
+        if (!Input.GetKey(KeyCode.Mouse0))
+        {
+            m_actionKey = false;
         }
     }
 
