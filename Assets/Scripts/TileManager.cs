@@ -42,6 +42,13 @@ public class TileManager : MonoBehaviour
 		{
             Debug.Log("Number of tiles in " + i + " tilearray: " + ListOfTilePosition[i].Count);
 		}
+
+        List<Vector2> watertilemap = ReturnListInArray(2);
+
+        for (int i = 0; i < watertilemap.Count; i++)
+		{
+            Debug.Log(i + " position: " + watertilemap[i]);
+		}
     }
 
     // Update is called once per frame
@@ -63,10 +70,15 @@ public class TileManager : MonoBehaviour
                     TileBase tile = map[i].GetTile(new Vector3Int(x, y, 0));
                     if (tile != null)
                     {
-                        ListOfTilePosition[i].Add(new Vector2(x, y));
+                        ListOfTilePosition[i].Add(new Vector2(x + 0.5f, y + 0.5f));
                     }
                 }
             }
         }
+	}
+
+    List<Vector2> ReturnListInArray(int id)
+	{
+        return ListOfTilePosition[id];
 	}
 }
