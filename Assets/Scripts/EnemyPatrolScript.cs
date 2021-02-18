@@ -20,6 +20,14 @@ public class EnemyPatrolScript : StateMachineBehaviour
 		if (Vector2.Distance(animator.transform.position, m_targetPos.position) > 0.5f)
 		{
 			// Moving to waypoint using NavMesh Agent
+
+			// Check if any player enters the enemy detection range
+			GameObject closestPlayer = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_detectionRange);
+			if (closestPlayer)
+			{
+				animator.SetBool("IsChasing", true);
+				animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
+			}
 		}
 		else
 		{
@@ -77,4 +85,5 @@ public class EnemyPatrolScript : StateMachineBehaviour
 
 		return closestWaypoint;
 	}
+	
 }

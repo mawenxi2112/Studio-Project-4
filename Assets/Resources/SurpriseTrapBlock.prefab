@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9085597787752237054}
   - component: {fileID: 4499032018919595177}
   - component: {fileID: 5127415729219920610}
+  - component: {fileID: 1710183530144117632}
   m_Layer: 0
   m_Name: SurpriseTrapBlock
   m_TagString: Objects
@@ -162,3 +163,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!208 &1710183530144117632
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735011137969123922}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.575, y: 0.575, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
