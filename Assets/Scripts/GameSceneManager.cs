@@ -209,7 +209,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
         // REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
-        GameObject tmpPlayer = Instantiate(playerPrefab);
+/*        GameObject tmpPlayer = Instantiate(playerPrefab);
         tmpPlayer.transform.position = new Vector3(5, 5, 0);
         Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
         Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
@@ -237,15 +237,17 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
         enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
 
-        Debug.Log(enemy.GetComponent<Transform>().position);
-
-        camera.Follow = tmpPlayer.transform;
+        Debug.Log(enemy.GetComponent<Transform>().position);*/
 
         GameObject player = PhotonNetwork.Instantiate("Player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+        player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", position, rotation, 0);
+        player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
+        player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
 
 
         if (player.GetComponent<PhotonView>().IsMine)
         {
+            camera.Follow = player.transform;
             // Do targetting of camera here.
         }
 
