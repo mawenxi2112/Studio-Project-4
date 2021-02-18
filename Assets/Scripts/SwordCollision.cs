@@ -65,7 +65,7 @@ public class SwordCollision : MonoBehaviour
             }
 		}
 
-        if (collider.gameObject.CompareTag("Hitbox"))
+        if (collider.gameObject.CompareTag("EnemyHitbox"))
 		{
             Debug.Log("SWORD HIT ENEMY");
 

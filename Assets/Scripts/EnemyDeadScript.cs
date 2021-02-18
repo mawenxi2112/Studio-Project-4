@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyDeadScript : StateMachineBehaviour
 {
@@ -14,6 +15,9 @@ public class EnemyDeadScript : StateMachineBehaviour
 		spriterender = animator.gameObject.GetComponent<SpriteRenderer>();
 		color = spriterender.color;
 		alphaedit = 255;
+
+		animator.GetComponent<NavMeshAgentScript>().target = null;
+		animator.GetComponent<NavMeshAgent>().speed = 0;
 
 		animator.SetBool("IsRecharging", false);
 		animator.SetBool("IsAttacking", false);
@@ -40,16 +44,4 @@ public class EnemyDeadScript : StateMachineBehaviour
 	{
 
 	}
-
-	// OnStateMove is called right after Animator.OnAnimatorMove()
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that processes and affects root motion
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK()
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that sets up animation IK (inverse kinematics)
-	//}
 }

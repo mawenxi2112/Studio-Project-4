@@ -13,6 +13,9 @@ TagManager:
   - Torch
   - Bomb
   - Key
+  - EnemyHitbox
+  - AttackCollider
+  - DetectCollider
   layers:
   - Default
   - TransparentFX

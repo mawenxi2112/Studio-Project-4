@@ -13,6 +13,7 @@ public class EnemyRechargingScript : StateMachineBehaviour
 		m_currentCountDown = animator.GetComponent<EnemyData>().m_rechargeDuration;
 		animator.GetComponent<NavMeshAgentScript>().target = null;
 		animator.GetComponent<NavMeshAgent>().speed = 0;
+		animator.transform.Find("DetectCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
 
 		animator.SetBool("IsRecharging", true);
 		animator.SetBool("IsAttacking", false);
@@ -62,16 +63,4 @@ public class EnemyRechargingScript : StateMachineBehaviour
 	{
 
 	}
-
-	// OnStateMove is called right after Animator.OnAnimatorMove()
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that processes and affects root motion
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK()
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that sets up animation IK (inverse kinematics)
-	//}
 }

@@ -97,4 +97,13 @@ public class EnemyData : MonoBehaviour
 
         return closestPlayer;
     }
+
+    public void SetAttackColliderEnable(int value)
+	{
+        if (value == 0)
+            gameObject.transform.Find("AttackCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+        else if (value == 1)
+            gameObject.transform.Find("AttackCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+    }
+
 }

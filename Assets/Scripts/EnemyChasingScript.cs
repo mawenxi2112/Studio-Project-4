@@ -27,34 +27,10 @@ public class EnemyChasingScript : StateMachineBehaviour
 		{
 			animator.SetBool("IsChasing", false);
 		}
-
-		// Check whether is target within attack range
-		GameObject target = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_attackRange);
-		if (target)
-		{
-			animator.GetComponent<NavMeshAgentScript>().target = target.transform;
-			animator.SetBool("IsAttacking", true);
-		}
-		else if (!target)
-		{
-			animator.SetBool("IsAttacking", false);
-		}
 	}
 
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 
 	}
-
-	// OnStateMove is called right after Animator.OnAnimatorMove()
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that processes and affects root motion
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK()
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that sets up animation IK (inverse kinematics)
-	//}
 }
