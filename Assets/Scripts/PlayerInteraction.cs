@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -44,6 +45,9 @@ public class PlayerInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GetComponent<PhotonView>().IsMine)
+            return;
+
         // These updates are for PC platform!
         // Need to add custom player interactions for mobile etc.
 
@@ -170,6 +174,9 @@ public class PlayerInteraction : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!GetComponent<PhotonView>().IsMine)
+            return;
+
         Vector3 mousePos = Input.mousePosition;
         ScreenToWorldPos = camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 0));
 

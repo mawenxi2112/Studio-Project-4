@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public enum EQUIPMENT
     BOMB
 }
 
-public class PlayerData : MonoBehaviour
+public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 {
     // Start is called before the first frame update
 
@@ -32,11 +33,24 @@ public class PlayerData : MonoBehaviour
 
     void Start()
     {
+        // Network instatiate sword;
+
+        // My client side rn
+        // Player (Right now client) - > sword network instantiatel
+        // the one below is ignored
+        // Player (Other person Client) -> sword network instaiate 
+        
+        // My client side rn
+        // Player (Right now client) - > sword network instantiatel
+        // Player (Other person Client) -> sword network instaiate
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!GetComponent<PhotonView>().IsMine)
+            return;
+
         m_actionKeyTimer += Time.deltaTime;
 
         if (m_iFrame)
@@ -78,4 +92,34 @@ public class PlayerData : MonoBehaviour
 	{
         m_currency = value;
 	}
+
+    #region IPunObservable
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+/*        if (stream.IsWriting)
+        {
+            // If this current stream is our player
+            stream.SendNext(GetComponent<PlayerInteraction>().m_hand);
+            stream.SendNext(GetComponent<PlayerInteraction>().m_sword);
+        }
+        else
+        {
+            // Network player
+            this.GetComponent<PlayerInteraction>().m_hand = (GameObject)stream.ReceiveNext();
+            this.GetComponent<PlayerInteraction>().m_sword = (GameObject)stream.ReceiveNext();
+        }*/
+    }
+
+    [PunRPC]
+    void SetSwordReference(int otherPlayerView, int otherPlayerSwordView)
+    {
+        if (GetComponent<PhotonView>().ViewID == otherPlayerView)
+        {
+            GetComponent<PlayerInteraction>().m_sword = PhotonView.Find(otherPlayerSwordView).gameObject;
+            GetComponent<PlayerInteraction>().m_hand = PhotonView.Find(otherPlayerSwordView).gameObject;
+        }
+    }
+
+    #endregion
 }

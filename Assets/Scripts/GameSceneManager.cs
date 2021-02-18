@@ -239,22 +239,12 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
         Debug.Log(enemy.GetComponent<Transform>().position);*/
 
-        GameObject player = PhotonNetwork.Instantiate("Player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+        GameObject player = PhotonNetwork.Instantiate("Player", position, rotation, 0);
         player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", position, rotation, 0);
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
         player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
-
-
-        if (player.GetComponent<PhotonView>().IsMine)
-        {
-            camera.Follow = player.transform;
-            // Do targetting of camera here.
-        }
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            
-        }
+        player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PhotonView>().ViewID, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
+        camera.Follow = player.transform;
     }
 
     private bool CheckAllPlayerLoadedLevel()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,7 +10,7 @@ public enum ENEMY_TYPE
     RANGED,
 }
 
-public class EnemyData : MonoBehaviour
+public class EnemyData : MonoBehaviourPun
 {
     public int m_ID;
     public int m_currentHealth;
@@ -94,4 +95,5 @@ public class EnemyData : MonoBehaviour
 
         return closestPlayer;
     }
+
 }
