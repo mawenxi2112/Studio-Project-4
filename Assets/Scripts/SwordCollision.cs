@@ -64,6 +64,17 @@ public class SwordCollision : MonoBehaviour
                     break;
             }
 		}
+
+        if (collider.gameObject.CompareTag("Hitbox"))
+		{
+            Debug.Log("SWORD HIT ENEMY");
+
+            if (!collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame)
+            {
+                collider.gameObject.transform.parent.GetComponent<EnemyData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<EnemyData>().m_currentHealth - 1);
+                collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame = true;
+            }
+		}
     }
 
     void OnTriggerStay2D(Collider2D collider)
