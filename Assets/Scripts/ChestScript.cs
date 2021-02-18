@@ -29,7 +29,7 @@ public class ChestScript : MonoBehaviour
 		{
 			if (color.a > 0)
 			{
-				alphaedit -= Time.deltaTime * 50;
+				alphaedit -= Time.deltaTime * 60;
 				color = new Color(1, 1, 1, alphaedit / 255);
 				spriterender.color = color;
             }

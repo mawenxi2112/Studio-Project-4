@@ -36,6 +36,7 @@ public class EnemyData : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         gameObject.GetComponent<NavMeshAgent>().speed = m_maxMoveSpeed;
+        animator.SetInteger("Health", m_currentHealth);
     }
 
     void InitializeStat()
@@ -49,6 +50,8 @@ public class EnemyData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animator.SetInteger("Health", m_currentHealth);
+
         Player_List = GameObject.FindGameObjectsWithTag("Player");
 
         if (m_iFrame)
