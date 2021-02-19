@@ -16,6 +16,8 @@ TagManager:
   - EnemyHitbox
   - AttackCollider
   - DetectCollider
+  - MeleeWaypoint
+  - RangeWaypoint
   layers:
   - Default
   - TransparentFX

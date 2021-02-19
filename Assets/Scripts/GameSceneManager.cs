@@ -210,34 +210,32 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
         // REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
         GameObject tmpPlayer = Instantiate(playerPrefab);
-        tmpPlayer.transform.position = new Vector3(5, 5, 0);
-        Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
-        Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
-        Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
-        Instantiate(spikePrefab).transform.position = new Vector3(5, 0, 0);
-        Instantiate(moveableblockPrefab).transform.position = new Vector3(-2, 0, 0);
-        Instantiate(torchPrefab).transform.position = new Vector3(7, 0, 0);
-        Instantiate(campfirePrefab).transform.position = new Vector3(9, 0, 0);
-        Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
-        Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
-        Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
-        Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
-        Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
-        Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
-        Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
+        tmpPlayer.transform.position = new Vector3(10, 2, 0);
+        //Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
+        //Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
+        //Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
+        //Instantiate(spikePrefab).transform.position = new Vector3(5, 0, 0);
+        //Instantiate(moveableblockPrefab).transform.position = new Vector3(-2, 0, 0);
+        //Instantiate(torchPrefab).transform.position = new Vector3(7, 0, 0);
+        //Instantiate(campfirePrefab).transform.position = new Vector3(9, 0, 0);
+        //Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
+        //Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
+        //Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
+        //Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
+        //Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
+        //Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
+        //Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
 
         tmpPlayer.GetComponent<PlayerInteraction>().m_hand = Instantiate(swordPrefab);
         tmpPlayer.GetComponent<PlayerInteraction>().m_sword = tmpPlayer.GetComponent<PlayerInteraction>().m_hand;
         tmpPlayer.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
-        tmpPlayer.GetComponent<PlayerInteraction>().transform.position = new Vector3(0, 0, 0);
+        tmpPlayer.GetComponent<PlayerInteraction>().transform.position = new Vector3(10, 2, 0);
 
         // Example
-        GameObject enemy = Instantiate(meeleEnemyPrefab);
-        enemy.GetComponent<EnemyData>().m_ID = 0;
-        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
-        enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
-
-        Debug.Log(enemy.GetComponent<Transform>().position);
+        //GameObject enemy = Instantiate(meeleEnemyPrefab);
+        //enemy.GetComponent<EnemyData>().m_ID = 0;
+        //enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+        //enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
 
         camera.Follow = tmpPlayer.transform;
 
