@@ -24,6 +24,7 @@ TagManager:
   - PuzzlePlacement
   - TorchPlacement
   - ChestPlacement
+  - KeyPlacement
   layers:
   - Default
   - TransparentFX
