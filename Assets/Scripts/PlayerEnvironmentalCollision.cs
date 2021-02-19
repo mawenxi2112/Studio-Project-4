@@ -197,46 +197,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 	void OnTriggerStay2D(Collider2D collision)
 	{
-		Vector3 hitPosition = Vector3.zero;
-
-		// Collision with any tiles with isTrigger on
-		if (collision.gameObject.tag == "Tiles")
-		{
-			for (int i = 0; i < map.Length; i++)
-			{
-				// Check if tilemaps is a collidable environment/tiles
-				if (map[i].GetComponent<TilemapCollider2D>() == null)
-					continue;
-
-				// Reference player position for collision detection
-				hitPosition.x = gameObject.transform.position.x;
-				hitPosition.y = gameObject.transform.position.y - 0.3f;
-
-				// WorldToCell = Get the vec3 int of currentTile using a pos. GetTile = Gets the TileBase using Vec3 int pos.
-				TileBase TileInContact = map[i].GetTile(map[i].WorldToCell(hitPosition));
-
-				// If there isn't a tile in that position
-				if (TileInContact == null)
-					continue;
-
-				switch (datafromTiles[TileInContact])
-				{
-					case TILE_TYPE.GROUND:
-						break;
-
-					case TILE_TYPE.LAVA:
-						break;
-
-					case TILE_TYPE.WATER:
-						break;
-
-					case TILE_TYPE.WALL:
-						break;
-				}
-			}
-		}
 		// Collision with in-game objects with IsTrigger on
-		else if (collision.gameObject.tag == "Objects")
+		if (collision.gameObject.tag == "Objects")
 		{
 			switch (collision.gameObject.GetComponent<ObjectData>().object_type)
 			{
