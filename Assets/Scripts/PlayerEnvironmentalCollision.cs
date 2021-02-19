@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -35,7 +36,10 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+		if (!GetComponent<PhotonView>().IsMine)
+			return;
+
+		rb = GetComponent<Rigidbody2D>();
 
         for (int i = 0; i < GameObject.Find("Grid").transform.childCount; i++)
 		{
@@ -46,7 +50,10 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 hitPosition = Vector3.zero;
+		if (!GetComponent<PhotonView>().IsMine)
+			return;
+
+		Vector3 hitPosition = Vector3.zero;
 
         for (int i = 0; i < map.Length; i++)
         {
@@ -89,6 +96,9 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 	void OnCollisionStay2D(Collision2D collision)
 	{
+		if (!GetComponent<PhotonView>().IsMine)
+			return;
+
 		Vector3 hitPosition = Vector3.zero;
 
 		foreach (ContactPoint2D contact in collision.contacts)
@@ -197,6 +207,9 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 	void OnTriggerStay2D(Collider2D collision)
 	{
+		if (!GetComponent<PhotonView>().IsMine)
+			return;
+
 		Vector3 hitPosition = Vector3.zero;
 
 		// Collision with any tiles with isTrigger on
@@ -256,8 +269,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.KEY:
 					if (GetComponent<PlayerData>().m_actionKey)
 					{
-						GetComponent<PlayerInteraction>().PickUp(collision.gameObject, EQUIPMENT.KEY);
-						GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.KEY;
+						//GetComponent<PlayerInteraction>().PickUp(collision.gameObject, EQUIPMENT.KEY);
+						GetComponent<PhotonView>().RPC("PickUp", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID, EQUIPMENT.KEY);
 						GetComponent<PlayerData>().m_actionKey = false;
 					}
 					break;
@@ -265,8 +278,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.TORCH:
 					if (GetComponent<PlayerData>().m_actionKey)
 					{
-						GetComponent<PlayerInteraction>().PickUp(collision.gameObject, EQUIPMENT.TORCH);
-						GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.TORCH;
+						//GetComponent<PlayerInteraction>().PickUp(collision.gameObject, EQUIPMENT.TORCH);
+						GetComponent<PhotonView>().RPC("PickUp", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID, EQUIPMENT.TORCH);
 						GetComponent<PlayerData>().m_actionKey = false;
 					}
 					break;

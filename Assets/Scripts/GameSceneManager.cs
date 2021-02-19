@@ -243,7 +243,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", position, rotation, 0);
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
         player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
-        player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PhotonView>().ViewID, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
+        player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.InstantiateRoomObject("Key", position, rotation, 0);
+        }
+
         camera.Follow = player.transform;
     }
 

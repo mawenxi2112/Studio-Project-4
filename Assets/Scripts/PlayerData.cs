@@ -97,27 +97,29 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-/*        if (stream.IsWriting)
+        if (stream.IsWriting)
         {
             // If this current stream is our player
-            stream.SendNext(GetComponent<PlayerInteraction>().m_hand);
-            stream.SendNext(GetComponent<PlayerInteraction>().m_sword);
+            stream.SendNext(m_currentHealth);
+            stream.SendNext(GetComponent<PlayerInteraction>().attackAnimationCalled);
         }
         else
         {
             // Network player
-            this.GetComponent<PlayerInteraction>().m_hand = (GameObject)stream.ReceiveNext();
-            this.GetComponent<PlayerInteraction>().m_sword = (GameObject)stream.ReceiveNext();
-        }*/
+            m_currentHealth = (int)stream.ReceiveNext();
+            GetComponent<PlayerInteraction>().attackAnimationCalled = (bool)stream.ReceiveNext();
+        }
     }
 
     [PunRPC]
-    void SetSwordReference(int otherPlayerView, int otherPlayerSwordView)
+    void SetSwordReference(int otherPlayerSwordView, PhotonMessageInfo info)
     {
-        if (GetComponent<PhotonView>().ViewID == otherPlayerView)
+        // Only update it if the incoming other playview is the same as one of the networked game objects
+        if (GetComponent<PhotonView>().ViewID == info.photonView.ViewID)
         {
             GetComponent<PlayerInteraction>().m_sword = PhotonView.Find(otherPlayerSwordView).gameObject;
             GetComponent<PlayerInteraction>().m_hand = PhotonView.Find(otherPlayerSwordView).gameObject;
+            GetComponent<PlayerInteraction>().m_handAnimator = PhotonView.Find(otherPlayerSwordView).gameObject.GetComponent<Animator>();
         }
     }
 

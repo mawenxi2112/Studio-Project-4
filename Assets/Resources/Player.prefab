@@ -66,7 +66,6 @@ GameObject:
   - component: {fileID: 7670004085083852396}
   - component: {fileID: 6577412233344338210}
   - component: {fileID: 4430784766013518377}
-  - component: {fileID: -4816376418827204779}
   - component: {fileID: 5858090850472955523}
   m_Layer: 0
   m_Name: Player
@@ -197,7 +196,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8216742315242213946}
-  - {fileID: -4816376418827204779}
+  - {fileID: 6577412233344338210}
   - {fileID: 5858090850472955523}
   viewIdField: 0
   InstantiationId: 0
@@ -316,24 +315,9 @@ MonoBehaviour:
   m_hand: {fileID: 0}
   m_sword: {fileID: 0}
   m_handAnimator: {fileID: 0}
+  attackAnimationCalled: 0
   ScreenToWorldPos: {x: 0, y: 0, z: 0}
   m_dir: {x: 0, y: 0}
---- !u!114 &-4816376418827204779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2806126621235551223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &5858090850472955523
 MonoBehaviour:
   m_ObjectHideFlags: 0

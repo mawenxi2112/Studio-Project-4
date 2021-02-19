@@ -90,4 +90,9 @@ public class SwordCollision : MonoBehaviour
     {
         GetComponent<PolygonCollider2D>().enabled = false;
     }
+
+    public void FinishAttackAnimation()
+    {
+        GetComponent<Animator>().SetBool("Attack", false);
+    }
 }
