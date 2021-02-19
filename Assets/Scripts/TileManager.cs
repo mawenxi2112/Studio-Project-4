@@ -36,18 +36,18 @@ public class TileManager : MonoBehaviour
 
         FindAllTilePosition(-50, 50, -50, 50);
 
-        Debug.Log("Number of TileMap in Listarray" + ListOfTilePosition.Length);
+        //Debug.Log("Number of TileMap in Listarray" + ListOfTilePosition.Length);
 
         for (int i = 0; i < ListOfTilePosition.Length; i++)
 		{
-            Debug.Log("Number of tiles in " + i + " tilearray: " + ListOfTilePosition[i].Count);
+            //Debug.Log("Number of tiles in " + i + " tilearray: " + ListOfTilePosition[i].Count);
 		}
 
         List<Vector2> watertilemap = ReturnListInArray(2);
 
         for (int i = 0; i < watertilemap.Count; i++)
 		{
-            Debug.Log(i + " position: " + watertilemap[i]);
+            //Debug.Log(i + " position: " + watertilemap[i]);
 		}
     }
 

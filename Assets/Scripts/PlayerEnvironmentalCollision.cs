@@ -190,6 +190,9 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 					case OBJECT_TYPE.DOOR:
 						break;
+
+					case OBJECT_TYPE.GATE:
+						break;
 				}
 			}
 		}
@@ -251,10 +254,9 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					break;
 
 				case OBJECT_TYPE.CAMPFIRE:
-					if (GetComponent<PlayerData>().m_actionKey && GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.TORCH && !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot)
+					if (GetComponent<PlayerData>().m_actionKey && GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.TORCH)
 					{
-						collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot = !collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot;
-						collision.gameObject.GetComponent<Animator>().SetBool("IsLit", collision.gameObject.GetComponent<ObjectData>().campfireLitOrNot);
+						collision.gameObject.GetComponent<CampfireScript>().IsLit = !collision.gameObject.GetComponent<CampfireScript>().IsLit;
 						GetComponent<PlayerData>().m_actionKey = false;
 					}
 					break;
@@ -272,6 +274,9 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					break;
 
 				case OBJECT_TYPE.DOOR:
+					break;
+
+				case OBJECT_TYPE.GATE:
 					break;
 
 			}

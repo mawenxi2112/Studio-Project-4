@@ -33,7 +33,7 @@ public class EnemyAttackColliderScript : MonoBehaviour
         {
             if (!collision.gameObject.GetComponent<PlayerData>().m_iFrame)
             {
-                Debug.Log("ENEMY HIT PLAYER");
+                //Debug.Log("ENEMY HIT PLAYER");
                 collision.gameObject.GetComponent<PlayerData>().SetCurrentHealth(collision.gameObject.GetComponent<PlayerData>().m_currentHealth - 1);
                 collision.gameObject.GetComponent<PlayerData>().m_iFrame = true;
             }

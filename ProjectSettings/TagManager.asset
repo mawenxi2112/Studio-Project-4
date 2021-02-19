@@ -18,6 +18,12 @@ TagManager:
   - DetectCollider
   - MeleeWaypoint
   - RangeWaypoint
+  - DoorPlacement
+  - CoinPlacement
+  - HealthpackPlacement
+  - PuzzlePlacement
+  - TorchPlacement
+  - ChestPlacement
   layers:
   - Default
   - TransparentFX

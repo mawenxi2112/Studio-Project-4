@@ -8,7 +8,6 @@ public class ObjectData : MonoBehaviour
 
     public int coinValue;
     public int healthPackValue;
-    public bool campfireLitOrNot;
     public int blockHealth;
 
 }

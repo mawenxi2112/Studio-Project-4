@@ -6,6 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance = null;
     public List<Transform[]> EnemyWaypointList;
+    public List<GameObject> EnemyWaypointHolder;
 
     public void Awake()
     {
@@ -15,6 +16,7 @@ public class EnemyManager : MonoBehaviour
             Destroy(gameObject);
 
         EnemyWaypointList = new List<Transform[]>();
+        EnemyWaypointHolder = new List<GameObject>();
         GameObject waypointList = transform.Find("Waypoint").gameObject;
 
         if (waypointList)
@@ -27,11 +29,15 @@ public class EnemyManager : MonoBehaviour
                 for (int j = 0; j < waypointSet.transform.childCount; j++)
                 {
                     tmp[j] = waypointSet.transform.GetChild(j);
-                    Debug.Log("Adding child transform" + tmp[j].position);
+                    //Debug.Log("Adding child transform" + tmp[j].position);
                 }
 
+                EnemyWaypointHolder.Add(waypointSet);
                 EnemyWaypointList.Add(tmp);
             }
+
+            Debug.Log("Number of EnemyWaypointHolder: " + EnemyWaypointHolder.Count);
+            Debug.Log("Number of EnemyWaypointList: " + EnemyWaypointList.Count);
         }
     }
     public static EnemyManager GetInstance()

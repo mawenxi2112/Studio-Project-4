@@ -9,6 +9,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,8 +42,12 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject pressureplatePrefab;
     public GameObject resetbuttonPrefab;
     public GameObject doorPrefab;
+    public GameObject gatePrefab;
     public GameObject meeleEnemyPrefab;
     public GameObject swordPrefab;
+
+    public GameObject objectplacementManager;
+    public GameObject NavMesh2DReference;
 
     public CinemachineVirtualCamera camera;
 
@@ -208,36 +213,210 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
-        // REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
-        GameObject tmpPlayer = Instantiate(playerPrefab);
-        tmpPlayer.transform.position = new Vector3(10, 2, 0);
-		Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
-		Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
-		Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
-		Instantiate(spikePrefab).transform.position = new Vector3(5, 0, 0);
-		Instantiate(moveableblockPrefab).transform.position = new Vector3(-2, 0, 0);
-		Instantiate(torchPrefab).transform.position = new Vector3(7, 0, 0);
-		Instantiate(campfirePrefab).transform.position = new Vector3(9, 0, 0);
-		Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
-		Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
-		Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
-		Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
-		Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
-		Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
-		Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
+		// REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
+		GameObject tmpPlayer = Instantiate(playerPrefab);
+		tmpPlayer.transform.position = new Vector3(10, 2, 0);
+		//Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
+		//Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
+		//Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
+		//Instantiate(spikePrefab).transform.position = new Vector3(5, 0, 0);
+		//Instantiate(moveableblockPrefab).transform.position = new Vector3(-2, 0, 0);
+		//Instantiate(torchPrefab).transform.position = new Vector3(7, 0, 0);
+		//Instantiate(campfirePrefab).transform.position = new Vector3(9, 0, 0);
+		//Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
+		//Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
+		//Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
+		//Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
+		//Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
+		//Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
+		//Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
 
 		tmpPlayer.GetComponent<PlayerInteraction>().m_hand = Instantiate(swordPrefab);
-        tmpPlayer.GetComponent<PlayerInteraction>().m_sword = tmpPlayer.GetComponent<PlayerInteraction>().m_hand;
-        tmpPlayer.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
-        tmpPlayer.GetComponent<PlayerInteraction>().transform.position = new Vector3(10, 2, 0);
+		tmpPlayer.GetComponent<PlayerInteraction>().m_sword = tmpPlayer.GetComponent<PlayerInteraction>().m_hand;
+		tmpPlayer.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
+		tmpPlayer.GetComponent<PlayerInteraction>().transform.position = new Vector3(10, 2, 0);
 
-		// Example
-		GameObject enemy = Instantiate(meeleEnemyPrefab);
-		enemy.GetComponent<EnemyData>().m_ID = 0;
-		enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
-		enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+        for (int i = 0; i < objectplacementManager.transform.childCount; i++)
+		{
+            List<GameObject> TmpStorage = new List<GameObject>();
 
-		camera.Follow = tmpPlayer.transform;
+            if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("DoorPlacement"))
+			{
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+				{
+                    GameObject doortmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networkDoor = Instantiate(doorPrefab);
+                    networkDoor.transform.position = new Vector3(doortmp.transform.position.x, doortmp.transform.position.y , 0);
+                    TmpStorage.Add(networkDoor);
+                    
+                    Destroy(doortmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("CoinPlacement"))
+			{
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject cointmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networkCoin = Instantiate(coinPrefab);
+                    networkCoin.transform.position = new Vector3(cointmp.transform.position.x, cointmp.transform.position.y, 0);
+                    TmpStorage.Add(networkCoin);
+
+                    Destroy(cointmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("HealthpackPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject healthpacktmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networkHealthpack = Instantiate(healthpackPrefab);
+                    networkHealthpack.transform.position = new Vector3(healthpacktmp.transform.position.x, healthpacktmp.transform.position.y, 0);
+                    TmpStorage.Add(networkHealthpack);
+
+                    Destroy(healthpacktmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("ChestPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject chesttmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networkchest = Instantiate(chestPrefab);
+                    networkchest.transform.position = new Vector3(chesttmp.transform.position.x, chesttmp.transform.position.y, 0);
+                    TmpStorage.Add(networkchest);
+
+                    Destroy(chesttmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("TorchPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject torchtmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networktorch = Instantiate(torchPrefab);
+                    networktorch.transform.position = new Vector3(torchtmp.transform.position.x, torchtmp.transform.position.y, 0);
+                    TmpStorage.Add(networktorch);
+
+                    Destroy(torchtmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("KeyPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject keytmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networkkey = Instantiate(keyPrefab);
+                    networkkey.transform.position = new Vector3(keytmp.transform.position.x, keytmp.transform.position.y, 0);
+                    TmpStorage.Add(networkkey);
+
+                    Destroy(keytmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("PuzzlePlacement"))
+            {
+                // First for-loop loops through the number of puzzle sets there are
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject PuzzleSettmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    List<GameObject> OTUTmpStorage = new List<GameObject>();
+                    List<GameObject> ROTmpStorage = new List<GameObject>();
+
+                    // Second for-loop loops through the ObjectToUnlockGate, RegularObject, Gate in the puzzle set
+                    for (int k = 0; k < PuzzleSettmp.transform.childCount; k++)
+                    {
+                        if (PuzzleSettmp.transform.GetChild(k).gameObject.name != "Gate")
+                        {
+                            // Third for-loop loops through the child in ObjectToUnlock and RegularObject
+                            Debug.Log("Name: " + PuzzleSettmp.transform.GetChild(k).gameObject.name);
+                            for (int l = 0; l < PuzzleSettmp.transform.GetChild(k).childCount; l++)
+                            {
+                                GameObject OTUorROchild = PuzzleSettmp.transform.GetChild(k).GetChild(l).gameObject;
+                                switch (OTUorROchild.GetComponent<ObjectData>().object_type)
+                                {
+                                    case OBJECT_TYPE.CAMPFIRE:
+                                        GameObject networkcampfire = Instantiate(campfirePrefab);
+                                        networkcampfire.transform.position = new Vector3(OTUorROchild.transform.position.x, OTUorROchild.transform.position.y, 0);
+
+                                        if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "ObjectsToUnlockGate")
+                                            OTUTmpStorage.Add(networkcampfire);
+                                        else
+                                            ROTmpStorage.Add(networkcampfire);
+
+                                        Destroy(OTUorROchild);
+                                        break;
+
+                                    case OBJECT_TYPE.PRESSUREPLATE:
+                                        GameObject networkpressureplate = Instantiate(pressureplatePrefab);
+                                        networkpressureplate.transform.position = new Vector3(OTUorROchild.transform.position.x, OTUorROchild.transform.position.y, 0);
+
+                                        if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "ObjectsToUnlockGate")
+                                            OTUTmpStorage.Add(networkpressureplate);
+                                        else
+                                            ROTmpStorage.Add(networkpressureplate);
+                                        break;
+
+                                    case OBJECT_TYPE.RESETBUTTON:
+                                        break;
+                                };
+
+                            }
+                        }
+                    }
+
+                    for (int k = 0; k < PuzzleSettmp.transform.childCount; k++)
+                    {
+                        if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "ObjectsToUnlockGate")
+                        {
+                            for (int x = 0; x < OTUTmpStorage.Count; x++)
+                            {
+                                OTUTmpStorage[x].transform.SetParent(PuzzleSettmp.transform.GetChild(k), false);
+                                Debug.Log("Added to ObjectsToUnlockGate");
+                            }
+                        }
+                        else if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "RegularObjects")
+                        {
+                            for (int x = 0; x < ROTmpStorage.Count; x++)
+                            {
+                                ROTmpStorage[x].transform.SetParent(PuzzleSettmp.transform.GetChild(k), false);
+                            }
+                        }
+                        else if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "Gate")
+                        {
+                            GameObject networkgate = Instantiate(gatePrefab);
+                            networkgate.transform.position = new Vector3(PuzzleSettmp.transform.GetChild(k).position.x, PuzzleSettmp.transform.GetChild(k).position.y, 0);
+                            for (int x = 0; x < OTUTmpStorage.Count; x++)
+                            {
+                                networkgate.GetComponent<GateScript>().ListOfObjectRequiredToOpenGate.Add(OTUTmpStorage[x].gameObject);
+                                Debug.Log("Object Added To Gate: " + OTUTmpStorage[x].name);
+                            }
+                            networkgate.transform.SetParent(PuzzleSettmp.transform);
+                            Destroy(PuzzleSettmp.transform.GetChild(k).gameObject);
+                        }
+                    }
+                }
+            }
+
+            for (int j = 0; j < TmpStorage.Count; j++)
+			{
+                TmpStorage[j].transform.SetParent(objectplacementManager.transform.GetChild(i), false);
+			}
+        }
+
+        // For Spawning of enemies, NavMesh2D needs to be disable first, then reenabled after all enemies are spawned
+        NavMesh2DReference.SetActive(false);
+        for (int i = 0; i < 31; i++)
+        {
+            if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("MeleeWaypoint"))
+            {
+                GameObject enemy = Instantiate(meeleEnemyPrefab);
+                enemy.GetComponent<EnemyData>().m_ID = i;
+                enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+                enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+            }
+        }
+        NavMesh2DReference.SetActive(true);
+
+        camera.Follow = tmpPlayer.transform;
 
         GameObject player = PhotonNetwork.Instantiate("Player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
 
