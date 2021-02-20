@@ -34,7 +34,7 @@ public class TileManager : MonoBehaviour
     {
         ListOfTilePosition = new List<Vector2>[map.Length];
 
-        FindAllTilePosition(-50, 50, -50, 50);
+        FindAllTilePosition(-120, 120, -120, 120);
 
         //Debug.Log("Number of TileMap in Listarray" + ListOfTilePosition.Length);
 

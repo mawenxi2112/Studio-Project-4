@@ -14,19 +14,6 @@ public class EnemyRechargingScript : StateMachineBehaviour
 		animator.GetComponent<NavMeshAgentScript>().target = null;
 		animator.GetComponent<NavMeshAgent>().speed = 0;
 
-		// WHEN ENTERING RECHARGE STATE
-		// Meele - reenable detection collider
-		// Range - None
-		switch (animator.gameObject.GetComponent<EnemyData>().m_type)
-		{
-			case ENEMY_TYPE.MELEE:
-				animator.transform.Find("DetectCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
-				break;
-
-			case ENEMY_TYPE.RANGED:
-				break;
-		}
-
 		animator.SetBool("IsRecharging", true);
 		animator.SetBool("IsAttacking", false);
 		animator.SetBool("IsChasing", false);
@@ -42,30 +29,28 @@ public class EnemyRechargingScript : StateMachineBehaviour
 			animator.SetBool("IsRecharging", false);
 			animator.GetComponent<NavMeshAgent>().speed = animator.GetComponent<EnemyData>().m_maxMoveSpeed;
 
-			// Check whether is target within attack range
-			GameObject target = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_attackRange);
-			if (target)
-			{
-				animator.GetComponent<NavMeshAgentScript>().target = target.transform;
-				animator.SetBool("IsAttacking", true);
-				return;
-			}
-			else if (!target)
-			{
-				animator.SetBool("IsAttacking", false);
-			}
-
 			// Check if any player enters the enemy detection range
 			GameObject closestPlayer = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_detectionRange);
 			if (closestPlayer)
 			{
 				animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
 				animator.SetBool("IsChasing", true);
-				return;
 			}
 			else if (!closestPlayer)
 			{
 				animator.SetBool("IsChasing", false);
+			}
+
+			// Meele - reenable detection collider
+			// Range - None
+			switch (animator.gameObject.GetComponent<EnemyData>().m_type)
+			{
+				case ENEMY_TYPE.MELEE:
+					animator.transform.Find("DetectCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+					break;
+
+				case ENEMY_TYPE.RANGED:
+					break;
 			}
 		}
 	}

@@ -328,7 +328,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                         if (PuzzleSettmp.transform.GetChild(k).gameObject.name != "Gate")
                         {
                             // Third for-loop loops through the child in ObjectToUnlock and RegularObject
-                            Debug.Log("Name: " + PuzzleSettmp.transform.GetChild(k).gameObject.name);
                             for (int l = 0; l < PuzzleSettmp.transform.GetChild(k).childCount; l++)
                             {
                                 GameObject OTUorROchild = PuzzleSettmp.transform.GetChild(k).GetChild(l).gameObject;
@@ -371,7 +370,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                             for (int x = 0; x < OTUTmpStorage.Count; x++)
                             {
                                 OTUTmpStorage[x].transform.SetParent(PuzzleSettmp.transform.GetChild(k), false);
-                                Debug.Log("Added to ObjectsToUnlockGate");
                             }
                         }
                         else if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "RegularObjects")
@@ -388,7 +386,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                             for (int x = 0; x < OTUTmpStorage.Count; x++)
                             {
                                 networkgate.GetComponent<GateScript>().ListOfObjectRequiredToOpenGate.Add(OTUTmpStorage[x].gameObject);
-                                Debug.Log("Object Added To Gate: " + OTUTmpStorage[x].name);
                             }
                             networkgate.transform.SetParent(PuzzleSettmp.transform);
                             Destroy(PuzzleSettmp.transform.GetChild(k).gameObject);
@@ -405,7 +402,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
         // For Spawning of enemies, NavMesh2D needs to be disable first, then reenabled after all enemies are spawned
         NavMesh2DReference.SetActive(false);
-        for (int i = 0; i < 31; i++)
+        for (int i = 0; i < EnemyManager.GetInstance().EnemyWaypointHolder.Count; i++)
         {
             if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("MeleeWaypoint"))
             {
