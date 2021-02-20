@@ -140,7 +140,6 @@ MonoBehaviour:
   object_type: 3
   coinValue: 0
   healthPackValue: 0
-  campfireLitOrNot: 0
   blockHealth: 0
 --- !u!50 &4934283645187160388
 Rigidbody2D:

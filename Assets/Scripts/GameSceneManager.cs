@@ -236,7 +236,46 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
         camera.Follow = player.transform;
 
-        player.GetComponent<PhotonView>().RPC("InitializeLevel", RpcTarget.AllBuffered);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // For Spawning of enemies, NavMesh2D needs to be disable first, then reenabled after all enemies are spawned
+            NavMesh2DReference.SetActive(false);
+            for (int i = 0; i < EnemyManager.GetInstance().EnemyWaypointHolder.Count; i++)
+            {
+                if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("MeleeWaypoint"))
+                {
+                    GameObject enemy;
+
+                    enemy = PhotonNetwork.InstantiateRoomObject("MeleeEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+
+                    enemy.GetComponent<EnemyData>().m_ID = i;
+                    enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+                    enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                }
+                else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RangeWaypoint"))
+                {
+                    GameObject enemy;
+
+                    enemy = PhotonNetwork.InstantiateRoomObject("RangedEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+
+                    enemy.GetComponent<EnemyData>().m_ID = i;
+                    enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+                    enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                }
+                else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RunnerWaypoint"))
+                {
+                    GameObject enemy;
+
+                    enemy = PhotonNetwork.InstantiateRoomObject("RunnerEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+
+                    enemy.GetComponent<EnemyData>().m_ID = i;
+                    enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+                    enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                }
+            }
+            NavMesh2DReference.SetActive(true);
+        }
+
     }
 
     private bool CheckAllPlayerLoadedLevel()
@@ -323,7 +362,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     }
                     else
                     {
-                        networkDoor = PhotonView.Find(info.photonView.ViewID).gameObject;
+                        networkDoor = PhotonNetwork.InstantiateRoomObject("Door", new Vector3(doortmp.transform.position.x, doortmp.transform.position.y, 0), Quaternion.identity, 0);
                     }
 
                     TmpStorage.Add(networkDoor);

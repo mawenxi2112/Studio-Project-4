@@ -417,6 +417,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: -1514383404470128253}
+  - {fileID: -3930240266190991854}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -449,5 +450,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsChasing
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsAttacking
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsRecharging
+  - Type: 3
+    SynchronizeType: 0
+    Name: Health
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0

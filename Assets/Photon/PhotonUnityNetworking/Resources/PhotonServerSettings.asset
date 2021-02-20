@@ -42,6 +42,7 @@ MonoBehaviour:
   - DoAttackAnimation
   - PickUp
   - EquipSword
+  - InitializeLevel
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
