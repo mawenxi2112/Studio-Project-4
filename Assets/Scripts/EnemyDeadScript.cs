@@ -29,7 +29,7 @@ public class EnemyDeadScript : StateMachineBehaviour
 	{
 		if (color.a > 0)
 		{
-			alphaedit -= Time.deltaTime * 60;
+			alphaedit -= Time.deltaTime * 80;
 			color = new Color(1, 1, 1, alphaedit / 255);
 			spriterender.color = color;
 		}

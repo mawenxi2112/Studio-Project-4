@@ -27,6 +27,8 @@ public class EnemyData : MonoBehaviour
     public Transform[] m_wayPoint;
     public ENEMY_TYPE m_type;
 
+    public GameObject projectilePrefab;
+
     public GameObject[] Player_List;
 
     public Animator animator;
@@ -104,6 +106,12 @@ public class EnemyData : MonoBehaviour
             gameObject.transform.Find("AttackCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = false;
         else if (value == 1)
             gameObject.transform.Find("AttackCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+    }
+
+    public void SpawnEnemyProjectile()
+	{
+        Debug.Log("Spawn Projectile");
+        //Vector2 dir = ( new Vector2(gameObject.GetComponent<NavMeshAgentScript>().target.position.x, gameObject.GetComponent<NavMeshAgentScript>().target.position.y) - new Vector2(gameObject.transform.position.x, gameObject.transform.position.y)).normalized;
     }
 
 }

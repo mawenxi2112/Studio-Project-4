@@ -44,6 +44,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject doorPrefab;
     public GameObject gatePrefab;
     public GameObject meeleEnemyPrefab;
+    public GameObject rangeEnemyPrefab;
     public GameObject swordPrefab;
 
     public GameObject objectplacementManager;
@@ -409,6 +410,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("MeleeWaypoint"))
             {
                 GameObject enemy = Instantiate(meeleEnemyPrefab);
+                enemy.GetComponent<EnemyData>().m_ID = i;
+                enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+                enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+            }
+            else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RangeWaypoint"))
+            {
+                GameObject enemy = Instantiate(rangeEnemyPrefab);
                 enemy.GetComponent<EnemyData>().m_ID = i;
                 enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                 enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;

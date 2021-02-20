@@ -13,7 +13,19 @@ public class EnemyRechargingScript : StateMachineBehaviour
 		m_currentCountDown = animator.GetComponent<EnemyData>().m_rechargeDuration;
 		animator.GetComponent<NavMeshAgentScript>().target = null;
 		animator.GetComponent<NavMeshAgent>().speed = 0;
-		animator.transform.Find("DetectCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+
+		// WHEN ENTERING RECHARGE STATE
+		// Meele - reenable detection collider
+		// Range - None
+		switch (animator.gameObject.GetComponent<EnemyData>().m_type)
+		{
+			case ENEMY_TYPE.MELEE:
+				animator.transform.Find("DetectCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+				break;
+
+			case ENEMY_TYPE.RANGED:
+				break;
+		}
 
 		animator.SetBool("IsRecharging", true);
 		animator.SetBool("IsAttacking", false);

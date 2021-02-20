@@ -27,6 +27,25 @@ public class EnemyChasingScript : StateMachineBehaviour
 		{
 			animator.SetBool("IsChasing", false);
 		}
+
+		// TO ENTER ATTACKING STATE
+		// Meele - Uses a detection collider on the prefab and another script called EnemyDetectCollider
+		// Range - Uses a distance range check
+		switch(animator.gameObject.GetComponent<EnemyData>().m_type)
+		{
+			case ENEMY_TYPE.MELEE:
+				break;
+
+			case ENEMY_TYPE.RANGED:
+				GameObject PlayerInAttackRange = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_attackRange);
+				if (PlayerInAttackRange)
+				{
+					animator.GetComponent<NavMeshAgentScript>().target = PlayerInAttackRange.transform;
+					animator.SetBool("IsAttacking", true);
+				}
+				break;
+		}
+
 	}
 
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
