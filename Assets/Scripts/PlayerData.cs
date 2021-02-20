@@ -101,13 +101,11 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         {
             // If this current stream is our player
             stream.SendNext(m_currentHealth);
-            stream.SendNext(GetComponent<PlayerInteraction>().attackAnimationCalled);
         }
         else
         {
             // Network player
             m_currentHealth = (int)stream.ReceiveNext();
-            GetComponent<PlayerInteraction>().attackAnimationCalled = (bool)stream.ReceiveNext();
         }
     }
 

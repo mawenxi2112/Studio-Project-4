@@ -285,6 +285,12 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					break;
 
 				case OBJECT_TYPE.BOMB:
+					if (GetComponent<PlayerData>().m_actionKey)
+					{
+						//GetComponent<PlayerInteraction>().PickUp(collision.gameObject, EQUIPMENT.TORCH);
+						GetComponent<PhotonView>().RPC("PickUp", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID, EQUIPMENT.BOMB);
+						GetComponent<PlayerData>().m_actionKey = false;
+					}
 					break;
 
 				case OBJECT_TYPE.CHEST:

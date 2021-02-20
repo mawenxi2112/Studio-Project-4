@@ -248,6 +248,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.InstantiateRoomObject("Key", position, rotation, 0);
+            PhotonNetwork.InstantiateRoomObject("Torch", position + new Vector3(3, 0, 0), rotation, 0);
+            PhotonNetwork.InstantiateRoomObject("Bomb", position + new Vector3(6, 0, 0), rotation, 0);
         }
 
         camera.Follow = player.transform;

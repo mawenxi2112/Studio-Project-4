@@ -18,9 +18,6 @@ public class PlayerInteraction : MonoBehaviour
     // Animator reference of the gameobject of the currently held object
     public Animator m_handAnimator;
 
-    // When attack animation is called
-    public bool attackAnimationCalled;
-
     // Pos of the mouse in world space
     public Vector3 ScreenToWorldPos;
     public Vector2 m_dir;
@@ -91,7 +88,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    public void Throw(GameObject gameObject, Vector3 startingPos, Vector3 dir, float force)
+    public void Throw(GameObject gameObject, Vector3 dir, float force)
     {
         // Currently held equipment (The one that is about to be dropped) switch their tags back to objects since it's going to go back to being a world object
         if (GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.TORCH ||
@@ -99,11 +96,16 @@ public class PlayerInteraction : MonoBehaviour
             GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.BOMB)
             gameObject.tag = "Objects";
 
-        IgnoreCollisionWithTag(m_hand, "All", false); ; // Re-enable the collision between the old held object and player
+        if (GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.BOMB)
+            gameObject.GetComponent<BombScript>().startCountDown = true;
+
+        // Re-enable the collision between the old held object and player, by using coroutines we can delay the action
+        StartCoroutine(IgnoreCollisionWithTag(m_hand, "All", false, 0f));
+        StartCoroutine(IgnoreCollisionWithTag(m_hand, "Player", false, 0.1f));
+        //IgnoreCollisionWithTag(m_hand, "All", false); ; // Re-enable the collision between the old held object and player
 
         if (GetComponent<PhotonView>().IsMine)
         {
-            gameObject.GetComponent<Rigidbody2D>().MovePosition(startingPos);
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dir.x, dir.y).normalized * force, ForceMode2D.Impulse);
             if (gameObject.GetComponent<EntityBounce>() != null)
                 gameObject.GetComponent<EntityBounce>().StartBounce(6, true);
@@ -112,7 +114,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public void EquipSword()
     {
-        Throw(m_hand, new Vector3(m_hand.transform.position.x * 1.3f, m_hand.transform.position.y * 1.3f, 0), m_dir, 10);
+        Throw(m_hand, m_dir, 10);
         GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         m_hand = m_sword;
         m_sword.SetActive(true);
@@ -131,8 +133,10 @@ public class PlayerInteraction : MonoBehaviour
         return false;
     }
 
-    public void IgnoreCollisionWithTag(GameObject gameObject, string tag, bool ignore)
+    IEnumerator IgnoreCollisionWithTag(GameObject gameObject, string tag, bool ignore, float delayTime)
     {
+        yield return new WaitForSeconds(delayTime);
+
         GameObject[] gameObjectArray;
 
         if (tag == "All")
@@ -148,6 +152,24 @@ public class PlayerInteraction : MonoBehaviour
                 Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), tmp.GetComponent<Collider2D>(), ignore);
         }
     }
+
+    /*public void IgnoreCollisionWithTag(GameObject gameObject, string tag, bool ignore)
+    {
+        GameObject[] gameObjectArray;
+
+        if (tag == "All")
+            gameObjectArray = FindObjectsOfType<GameObject>();
+        else
+            gameObjectArray = GameObject.FindGameObjectsWithTag(tag);
+
+        for (int i = 0; i < gameObjectArray.Length; i++)
+        {
+            GameObject tmp = gameObjectArray[i];
+
+            if (tmp.GetComponents<Collider2D>().Length > 0)
+                Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), tmp.GetComponent<Collider2D>(), ignore);
+        }
+    }*/
 
     void FixedUpdate()
     {
@@ -210,9 +232,12 @@ public class PlayerInteraction : MonoBehaviour
 
         GetComponent<PlayerData>().m_currentEquipment = equipmentType;
 
-        Throw(m_hand, m_hand.transform.position, new Vector3(0, 0, 0), 0);
+        // Only auto throw current held item if the player isn't holding a sword.
+        if (m_hand != m_sword)
+            Throw(m_hand, new Vector3(0, 0, 0), 0);
         m_hand = pickUpGameObject;
-        IgnoreCollisionWithTag(m_hand, "All", true); // Ignore the collision between the held object and every other game objects with collider
+        StartCoroutine(IgnoreCollisionWithTag(m_hand, "All", true, 0f));
+        //IgnoreCollisionWithTag(m_hand, "All", true); // Ignore the collision between the held object and every other game objects with collider
         GetComponent<PlayerData>().m_currentEquipment = equipmentType;
     }
 
@@ -222,13 +247,13 @@ public class PlayerInteraction : MonoBehaviour
         if (GetComponent<PhotonView>().ViewID != info.photonView.ViewID)
             return;
 
-        Throw(m_hand, new Vector3(m_hand.transform.position.x * 1.3f, m_hand.transform.position.y * 1.3f, 0), m_dir, 10);
+        Throw(m_hand, m_dir, 10);
         GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         m_hand = m_sword;
         m_sword.SetActive(true);
     }
 
-    public void PickUp(GameObject gameObject, EQUIPMENT equipment)
+ /*   public void PickUp(GameObject gameObject, EQUIPMENT equipment)
     {
         // Transfer ownership to the one who is picking up the weapon.
         if (!gameObject.GetComponent<PhotonView>().IsMine)
@@ -262,7 +287,7 @@ public class PlayerInteraction : MonoBehaviour
 
         IgnoreCollisionWithTag(m_hand, "All", true); // Ignore the collision between the held object and every other game objects with collider
         GetComponent<PlayerData>().m_currentEquipment = equipment;
-    }
+    }*/
 }
 
 

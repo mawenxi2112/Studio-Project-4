@@ -315,7 +315,6 @@ MonoBehaviour:
   m_hand: {fileID: 0}
   m_sword: {fileID: 0}
   m_handAnimator: {fileID: 0}
-  attackAnimationCalled: 0
   ScreenToWorldPos: {x: 0, y: 0, z: 0}
   m_dir: {x: 0, y: 0}
 --- !u!114 &5858090850472955523
