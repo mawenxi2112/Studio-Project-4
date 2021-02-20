@@ -123,6 +123,9 @@ GameObject:
   - component: {fileID: 6407441338400124269}
   - component: {fileID: 6407441338400124268}
   - component: {fileID: 6407441338400124279}
+  - component: {fileID: -4125807021194354587}
+  - component: {fileID: 2708369520597386026}
+  - component: {fileID: -4884865540137734260}
   m_Layer: 0
   m_Name: RunnerEnemy
   m_TagString: Enemy
@@ -234,6 +237,7 @@ MonoBehaviour:
   target: {fileID: 0}
   m_dir: {x: 0, y: 0}
   m_previousPosition: {x: 0, y: 0}
+  HomingTarget: {x: 0, y: 0, z: 0}
 --- !u!95 &6407441338400124274
 Animator:
   serializedVersion: 3
@@ -318,3 +322,57 @@ MonoBehaviour:
   animator: {fileID: 0}
   HomingEndDistance: 3
   DoOnce: 0
+--- !u!114 &-4125807021194354587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407441338400124271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 1
+  ObservedComponents:
+  - {fileID: 2708369520597386026}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &2708369520597386026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407441338400124271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &-4884865540137734260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407441338400124271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers: []
