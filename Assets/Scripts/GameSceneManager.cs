@@ -211,32 +211,32 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     private void StartGame()
     {
 
-		// REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
-		/*GameObject tmpPlayer = Instantiate(playerPrefab);
+        // REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
+        /*GameObject tmpPlayer = Instantiate(playerPrefab);
 		tmpPlayer.transform.position = new Vector3(10, 2, 0);*/
-		//Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
-		//Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
-		//Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
-		//Instantiate(spikePrefab).transform.position = new Vector3(5, 0, 0);
-		//Instantiate(moveableblockPrefab).transform.position = new Vector3(-2, 0, 0);
-		//Instantiate(torchPrefab).transform.position = new Vector3(7, 0, 0);
-		//Instantiate(campfirePrefab).transform.position = new Vector3(9, 0, 0);
-		//Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
-		//Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
-		//Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
-		//Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
-		//Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
-		//Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
-		//Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
+        //Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
+        //Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
+        //Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
+        //Instantiate(spikePrefab).transform.position = new Vector3(5, 0, 0);
+        //Instantiate(moveableblockPrefab).transform.position = new Vector3(-2, 0, 0);
+        //Instantiate(torchPrefab).transform.position = new Vector3(7, 0, 0);
+        //Instantiate(campfirePrefab).transform.position = new Vector3(9, 0, 0);
+        //Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
+        //Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
+        //Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
+        //Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
+        //Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
+        //Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
+        //Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
+
+        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(10, 2, 0), Quaternion.identity, 0);
+        player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", new Vector3(11, 2, 0), Quaternion.identity, 0);
+        player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
+        player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
+        player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
 
         if (PhotonNetwork.IsMasterClient)
         {
-            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(10, 2, 0), Quaternion.identity, 0);
-            player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", new Vector3(11, 2, 0), Quaternion.identity, 0);
-            player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
-            player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
-            player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
-
             for (int i = 0; i < objectplacementManager.transform.childCount; i++)
             {
                 List<GameObject> TmpStorage = new List<GameObject>();
