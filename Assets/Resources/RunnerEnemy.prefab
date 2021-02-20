@@ -207,7 +207,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6407441338400124271}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.99999994
   m_Speed: 3.5
@@ -342,6 +342,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   ObservedComponents:
   - {fileID: 2708369520597386026}
+  - {fileID: -4884865540137734260}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -374,5 +375,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsChasing
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsAttacking
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsRecharging
+  - Type: 3
+    SynchronizeType: 2
+    Name: Health
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0

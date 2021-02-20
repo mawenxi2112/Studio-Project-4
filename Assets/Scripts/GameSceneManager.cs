@@ -19,6 +19,7 @@ using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Cinemachine;
+using UnityEngine.AI;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
@@ -251,6 +252,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_ID = i;
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                    enemy.GetComponent<NavMeshAgent>().enabled = true;
                 }
                 else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RangeWaypoint"))
                 {
@@ -261,6 +263,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_ID = i;
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                    enemy.GetComponent<NavMeshAgent>().enabled = true;
                 }
                 else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RunnerWaypoint"))
                 {
@@ -271,6 +274,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_ID = i;
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                    enemy.GetComponent<NavMeshAgent>().enabled = true;
                 }
             }
             NavMesh2DReference.SetActive(true);
