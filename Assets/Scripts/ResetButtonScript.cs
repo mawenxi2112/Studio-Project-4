@@ -5,12 +5,13 @@ using UnityEngine;
 public class ResetButtonScript : MonoBehaviour
 {
     public Animator animator;
-
+    public bool isSteppedOn;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        isSteppedOn = false;
     }
 
     // Update is called once per frame
@@ -26,6 +27,7 @@ public class ResetButtonScript : MonoBehaviour
             if (animator.GetFloat("TriggerChange") == 0)
             {
                 animator.SetFloat("TriggerChange", 1);
+                isSteppedOn = true;
             }
         }
     }
@@ -35,6 +37,7 @@ public class ResetButtonScript : MonoBehaviour
         if (animator.GetFloat("TriggerChange") == 1)
         {
             animator.SetFloat("TriggerChange", 0);
+            isSteppedOn = false;
         }
     }
 }

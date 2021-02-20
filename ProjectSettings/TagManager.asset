@@ -13,6 +13,19 @@ TagManager:
   - Torch
   - Bomb
   - Key
+  - EnemyHitbox
+  - AttackCollider
+  - DetectCollider
+  - MeleeWaypoint
+  - RangeWaypoint
+  - DoorPlacement
+  - CoinPlacement
+  - HealthpackPlacement
+  - PuzzlePlacement
+  - TorchPlacement
+  - ChestPlacement
+  - KeyPlacement
+  - RunnerWaypoint
   layers:
   - Default
   - TransparentFX

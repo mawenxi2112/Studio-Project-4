@@ -8,8 +8,27 @@ public class EnemyAttackingScript : StateMachineBehaviour
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		animator.GetComponent<NavMeshAgentScript>().target = null;
-		animator.GetComponent<NavMeshAgent>().speed = 0;
+		// WHEN ENTERING ATTACKING STATE
+		// Meele - Disable detectCollider
+		// Range - Nothing
+		// Runner - Disable hitbox collider and enable attack collider
+		switch (animator.gameObject.GetComponent<EnemyData>().m_type)
+		{
+			case ENEMY_TYPE.MELEE:
+				animator.transform.Find("DetectCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+				animator.GetComponent<NavMeshAgent>().speed = 0;
+				break;
+
+			case ENEMY_TYPE.RANGED:
+				animator.GetComponent<NavMeshAgent>().speed = 0;
+				break;
+
+			case ENEMY_TYPE.RUNNER:
+				animator.transform.Find("Hitbox").GetComponent<CapsuleCollider2D>().enabled = false;
+				animator.transform.Find("AttackCollider").GetComponent<CircleCollider2D>().enabled = true;
+				animator.GetComponent<NavMeshAgent>().speed = 8;
+				break;
+		}
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -22,16 +41,4 @@ public class EnemyAttackingScript : StateMachineBehaviour
 	{
 
 	}
-
-	// OnStateMove is called right after Animator.OnAnimatorMove()
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that processes and affects root motion
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK()
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that sets up animation IK (inverse kinematics)
-	//}
 }

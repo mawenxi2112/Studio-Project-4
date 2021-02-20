@@ -28,33 +28,38 @@ public class EnemyChasingScript : StateMachineBehaviour
 			animator.SetBool("IsChasing", false);
 		}
 
-		// Check whether is target within attack range
-		GameObject target = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_attackRange);
-		if (target)
+		// TO ENTER ATTACKING STATE
+		// Meele - Uses a detection collider on the prefab and another script called EnemyDetectCollider
+		// Range - Uses a distance range check
+		// Runner - Uses a distance range check
+		switch(animator.gameObject.GetComponent<EnemyData>().m_type)
 		{
-			animator.GetComponent<NavMeshAgentScript>().target = target.transform;
-			animator.SetBool("IsAttacking", true);
+			case ENEMY_TYPE.MELEE:
+				break;
+
+			case ENEMY_TYPE.RANGED:
+				GameObject RangedPlayerInAttackRange = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_attackRange);
+				if (RangedPlayerInAttackRange)
+				{
+					animator.GetComponent<NavMeshAgentScript>().target = RangedPlayerInAttackRange.transform;
+					animator.SetBool("IsAttacking", true);
+				}
+				break;
+
+			case ENEMY_TYPE.RUNNER:
+				GameObject RunnerPlayerInAttackRange = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_attackRange);
+				if (RunnerPlayerInAttackRange)
+				{
+					animator.GetComponent<NavMeshAgentScript>().target = RunnerPlayerInAttackRange.transform;
+					animator.SetBool("IsAttacking", true);
+				}
+				break;
 		}
-		else if (!target)
-		{
-			animator.SetBool("IsAttacking", false);
-		}
+
 	}
 
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 
 	}
-
-	// OnStateMove is called right after Animator.OnAnimatorMove()
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that processes and affects root motion
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK()
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that sets up animation IK (inverse kinematics)
-	//}
 }

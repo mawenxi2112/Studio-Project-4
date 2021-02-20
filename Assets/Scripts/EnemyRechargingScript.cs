@@ -14,6 +14,12 @@ public class EnemyRechargingScript : StateMachineBehaviour
 		animator.GetComponent<NavMeshAgentScript>().target = null;
 		animator.GetComponent<NavMeshAgent>().speed = 0;
 
+		if (animator.gameObject.GetComponent<EnemyData>().m_type == ENEMY_TYPE.RUNNER)
+		{
+			animator.transform.Find("Hitbox").GetComponent<CapsuleCollider2D>().enabled = true;
+			animator.transform.Find("AttackCollider").GetComponent<CircleCollider2D>().enabled = false;
+		}
+
 		animator.SetBool("IsRecharging", true);
 		animator.SetBool("IsAttacking", false);
 		animator.SetBool("IsChasing", false);
@@ -29,30 +35,31 @@ public class EnemyRechargingScript : StateMachineBehaviour
 			animator.SetBool("IsRecharging", false);
 			animator.GetComponent<NavMeshAgent>().speed = animator.GetComponent<EnemyData>().m_maxMoveSpeed;
 
-			// Check whether is target within attack range
-			GameObject target = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_attackRange);
-			if (target)
-			{
-				animator.GetComponent<NavMeshAgentScript>().target = target.transform;
-				animator.SetBool("IsAttacking", true);
-				return;
-			}
-			else if (!target)
-			{
-				animator.SetBool("IsAttacking", false);
-			}
-
 			// Check if any player enters the enemy detection range
 			GameObject closestPlayer = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_detectionRange);
 			if (closestPlayer)
 			{
 				animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
 				animator.SetBool("IsChasing", true);
-				return;
 			}
 			else if (!closestPlayer)
 			{
 				animator.SetBool("IsChasing", false);
+			}
+
+			// Meele - reenable detection collider
+			// Range - None
+			switch (animator.gameObject.GetComponent<EnemyData>().m_type)
+			{
+				case ENEMY_TYPE.MELEE:
+					animator.transform.Find("DetectCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+					break;
+
+				case ENEMY_TYPE.RANGED:
+					break;
+
+				case ENEMY_TYPE.RUNNER:
+					break;
 			}
 		}
 	}
@@ -62,16 +69,4 @@ public class EnemyRechargingScript : StateMachineBehaviour
 	{
 
 	}
-
-	// OnStateMove is called right after Animator.OnAnimatorMove()
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that processes and affects root motion
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK()
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that sets up animation IK (inverse kinematics)
-	//}
 }

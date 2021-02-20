@@ -165,6 +165,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   spriterender: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
+  speedPowerUp: {fileID: 6719234473584511683, guid: 5f3043f5fc152a34396606fcfecbf3b5, type: 3}
+  maxHPPowerUp: {fileID: 6101477652406124783, guid: a2a5c72e67e02864a85a3edc189a5e3e, type: 3}
+  damagePowerUp: {fileID: 8954472259260705781, guid: 9e89edfe82b94ab488864fb204bc10f0, type: 3}
+  coinPowerUp: {fileID: 7266793746816379912, guid: db5f463a20234f04fb3ed0a829800cf5, type: 3}
 --- !u!50 &4696696201629490525
 Rigidbody2D:
   serializedVersion: 4

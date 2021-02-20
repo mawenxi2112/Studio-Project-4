@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5338844828333723287}
   - component: {fileID: 5338844828333723283}
   - component: {fileID: 845435526772844199}
+  - component: {fileID: 3857999940251087646}
   m_Layer: 0
   m_Name: Campfire
   m_TagString: Objects
@@ -146,7 +147,6 @@ MonoBehaviour:
   object_type: 9
   coinValue: 0
   healthPackValue: 0
-  campfireLitOrNot: 0
   blockHealth: 0
 --- !u!50 &845435526772844199
 Rigidbody2D:
@@ -169,3 +169,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3857999940251087646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5338844828333723284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc70884322edea540acbfb1b0bcdc0b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  IsLit: 0

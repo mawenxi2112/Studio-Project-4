@@ -8,6 +8,7 @@ public enum ENEMY_TYPE
 { 
     MELEE,
     RANGED,
+    RUNNER,
 }
 
 public class EnemyData : MonoBehaviourPun
@@ -28,6 +29,8 @@ public class EnemyData : MonoBehaviourPun
     public Transform[] m_wayPoint;
     public ENEMY_TYPE m_type;
 
+    public GameObject projectilePrefab;
+
     public GameObject[] Player_List;
 
     public Animator animator;
@@ -37,6 +40,7 @@ public class EnemyData : MonoBehaviourPun
     {
         animator = GetComponent<Animator>();
         gameObject.GetComponent<NavMeshAgent>().speed = m_maxMoveSpeed;
+        animator.SetInteger("Health", m_currentHealth);
     }
 
     void InitializeStat()
@@ -50,6 +54,8 @@ public class EnemyData : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        animator.SetInteger("Health", m_currentHealth);
+
         Player_List = GameObject.FindGameObjectsWithTag("Player");
 
         if (m_iFrame)
@@ -94,6 +100,23 @@ public class EnemyData : MonoBehaviourPun
         }
 
         return closestPlayer;
+    }
+
+    public void SetAttackColliderEnable(int value)
+	{
+        if (value == 0)
+            gameObject.transform.Find("AttackCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+        else if (value == 1)
+            gameObject.transform.Find("AttackCollider").gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+    }
+
+    public void SpawnEnemyProjectile()
+	{
+        Vector2 dir = ( new Vector2(gameObject.GetComponent<NavMeshAgentScript>().target.position.x, gameObject.GetComponent<NavMeshAgentScript>().target.position.y) - new Vector2(gameObject.transform.position.x, gameObject.transform.position.y)).normalized;
+        GameObject projectiletmp = Instantiate(projectilePrefab);
+        projectiletmp.GetComponent<Transform>().position = gameObject.transform.Find("ProjectileSpawnPoint").position;
+        projectiletmp.GetComponent<Transform>().eulerAngles = new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+        projectiletmp.GetComponent<EnemyProjectileScript>().rb.AddForce(dir * projectiletmp.GetComponent<EnemyProjectileScript>().moveSpeed, ForceMode2D.Impulse);
     }
 
 }

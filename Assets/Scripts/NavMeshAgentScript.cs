@@ -13,6 +13,9 @@ public class NavMeshAgentScript : MonoBehaviour
     public Vector2 m_dir;
     public Vector2 m_previousPosition;
 
+    // ONLY FOR RUNNER ENEMY
+    public Vector3 HomingTarget;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,7 @@ public class NavMeshAgentScript : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         m_previousPosition = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        HomingTarget.Set(0, 0, 0);
     }
 
     // Update is called once per frame
@@ -30,23 +34,41 @@ public class NavMeshAgentScript : MonoBehaviour
         {
             agent.SetDestination(target.position);
 
-            //m_dir = (new Vector2(gameObject.transform.position.x, gameObject.transform.position.y) - m_previousPosition).normalized;
+			m_dir = (new Vector2(gameObject.transform.position.x, gameObject.transform.position.y) - m_previousPosition).normalized;
 
-            //Debug.Log(m_dir);
+			m_previousPosition = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
 
-            //m_previousPosition = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+			Vector3 tmp = new Vector3(gameObject.GetComponent<Transform>().localScale.x, gameObject.GetComponent<Transform>().localScale.y, gameObject.GetComponent<Transform>().localScale.z);
+			if (m_dir.x < 0)
+			{
+                if (tmp.x > 0)
+				    gameObject.GetComponent<Transform>().localScale = new Vector3(-tmp.x, tmp.y, tmp.z);
+			}
+			else if (m_dir.x > 0)
+			{
+                if (tmp.x < 0)
+                    gameObject.GetComponent<Transform>().localScale = new Vector3(-tmp.x, tmp.y, tmp.z);
+			}
+        }
+        else if (gameObject.GetComponent<EnemyData>().m_type == ENEMY_TYPE.RUNNER)
+		{
+            agent.SetDestination(HomingTarget);
 
-            //Vector3 tmp = new Vector3(agent.gameObject.GetComponent<Transform>().localScale.x, agent.gameObject.GetComponent<Transform>().localScale.y, agent.gameObject.GetComponent<Transform>().localScale.z);
-            //if (m_dir.x < 0)
-            //{
-            //    agent.gameObject.GetComponent<Transform>().localScale = new Vector3(-tmp.x, tmp.y, tmp.z);
-            //    //Debug.Log("LOOK LEFT");
-            //}
-            //else if (m_dir.x > 0)
-            //{
-            //    agent.gameObject.GetComponent<Transform>().localScale = new Vector3(tmp.x, tmp.y, tmp.z);
-            //    //Debug.Log("LOOK RIGHT");
-            //}
+            m_dir = (new Vector2(gameObject.transform.position.x, gameObject.transform.position.y) - m_previousPosition).normalized;
+
+            m_previousPosition = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+
+            Vector3 tmp = new Vector3(gameObject.GetComponent<Transform>().localScale.x, gameObject.GetComponent<Transform>().localScale.y, gameObject.GetComponent<Transform>().localScale.z);
+            if (m_dir.x < 0)
+            {
+                if (tmp.x > 0)
+                    gameObject.GetComponent<Transform>().localScale = new Vector3(-tmp.x, tmp.y, tmp.z);
+            }
+            else if (m_dir.x > 0)
+            {
+                if (tmp.x < 0)
+                    gameObject.GetComponent<Transform>().localScale = new Vector3(-tmp.x, tmp.y, tmp.z);
+            }
         }
     }
 
