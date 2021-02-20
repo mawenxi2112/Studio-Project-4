@@ -14,6 +14,12 @@ public class EnemyRechargingScript : StateMachineBehaviour
 		animator.GetComponent<NavMeshAgentScript>().target = null;
 		animator.GetComponent<NavMeshAgent>().speed = 0;
 
+		if (animator.gameObject.GetComponent<EnemyData>().m_type == ENEMY_TYPE.RUNNER)
+		{
+			animator.transform.Find("Hitbox").GetComponent<CapsuleCollider2D>().enabled = true;
+			animator.transform.Find("AttackCollider").GetComponent<CircleCollider2D>().enabled = false;
+		}
+
 		animator.SetBool("IsRecharging", true);
 		animator.SetBool("IsAttacking", false);
 		animator.SetBool("IsChasing", false);
@@ -50,6 +56,9 @@ public class EnemyRechargingScript : StateMachineBehaviour
 					break;
 
 				case ENEMY_TYPE.RANGED:
+					break;
+
+				case ENEMY_TYPE.RUNNER:
 					break;
 			}
 		}

@@ -17,17 +17,19 @@ public class EnemyAttackColliderScript : MonoBehaviour
 
             case ENEMY_TYPE.RANGED:
                 break;
-		};
+
+            case ENEMY_TYPE.RUNNER:
+                break;
+        };
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
-	public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
 	{
         if (collision.gameObject.CompareTag("Player"))
         {

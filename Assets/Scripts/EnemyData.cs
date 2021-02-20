@@ -7,6 +7,7 @@ public enum ENEMY_TYPE
 { 
     MELEE,
     RANGED,
+    RUNNER,
 }
 
 public class EnemyData : MonoBehaviour

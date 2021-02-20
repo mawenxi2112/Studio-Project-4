@@ -25,6 +25,7 @@ TagManager:
   - TorchPlacement
   - ChestPlacement
   - KeyPlacement
+  - RunnerWaypoint
   layers:
   - Default
   - TransparentFX
