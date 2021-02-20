@@ -41,7 +41,14 @@ public class GateScript : MonoBehaviour
                         WillGateOpen = false;
 					}
                     break;
-			}
+
+                case OBJECT_TYPE.PRESSUREPLATE:
+                    if (!ListOfObjectRequiredToOpenGate[i].GetComponent<PressurePlateScript>().isSteppedOn)
+                    {
+                        WillGateOpen = false;
+                    }
+                    break;
+            }
 
             if (!WillGateOpen)
                 break;

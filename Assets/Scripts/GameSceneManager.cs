@@ -354,6 +354,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                                             OTUTmpStorage.Add(networkpressureplate);
                                         else
                                             ROTmpStorage.Add(networkpressureplate);
+
+                                        Destroy(OTUorROchild);
                                         break;
 
                                     case OBJECT_TYPE.RESETBUTTON:
