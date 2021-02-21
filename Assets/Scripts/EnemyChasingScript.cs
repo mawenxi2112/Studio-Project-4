@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ public class EnemyChasingScript : StateMachineBehaviour
 {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
+		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+			return;
+
 		// Assign the enemy an player to chase
 		GameObject closestPlayer = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_detectionRange);
 		if (closestPlayer)
@@ -17,6 +21,9 @@ public class EnemyChasingScript : StateMachineBehaviour
 
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
+		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+			return;
+
 		// Update the enemy's target to chase, if it returns a null (that means no player is in range), return to patrol state;
 		GameObject closestPlayer = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_detectionRange);
 		if (closestPlayer)

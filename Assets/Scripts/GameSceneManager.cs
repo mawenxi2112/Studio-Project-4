@@ -252,6 +252,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_ID = i;
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                    enemy.GetComponent<NavMeshAgentScript>().enabled = true;
                     enemy.GetComponent<NavMeshAgent>().enabled = true;
                     enemy.GetComponent<NavMeshAgent>().updateRotation = false;
                     enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
@@ -265,6 +266,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_ID = i;
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                    enemy.GetComponent<NavMeshAgentScript>().enabled = true;
                     enemy.GetComponent<NavMeshAgent>().enabled = true;
                     enemy.GetComponent<NavMeshAgent>().updateRotation = false;
                     enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
@@ -278,6 +280,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_ID = i;
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                    enemy.GetComponent<NavMeshAgentScript>().enabled = true;
                     enemy.GetComponent<NavMeshAgent>().enabled = true;
                     enemy.GetComponent<NavMeshAgent>().updateRotation = false;
                     enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
