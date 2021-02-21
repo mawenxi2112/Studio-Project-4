@@ -11,7 +11,10 @@ public class EnemyPatrolScript : StateMachineBehaviour
 
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//	return;
+
+		if (!PhotonNetwork.IsMasterClient)
 			return;
 
 		newSpot = FindNearestWayPoint(animator);
@@ -21,7 +24,10 @@ public class EnemyPatrolScript : StateMachineBehaviour
 
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//	return;
+
+		if (!PhotonNetwork.IsMasterClient)
 			return;
 
 		if (Vector2.Distance(animator.transform.position, m_targetPos.position) > 0.5f)

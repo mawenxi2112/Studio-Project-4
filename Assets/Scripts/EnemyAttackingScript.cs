@@ -9,7 +9,10 @@ public class EnemyAttackingScript : StateMachineBehaviour
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//	return;
+
+		if (!PhotonNetwork.IsMasterClient)
 			return;
 
 		// WHEN ENTERING ATTACKING STATE

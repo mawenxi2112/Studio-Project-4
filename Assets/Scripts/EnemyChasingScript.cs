@@ -7,7 +7,10 @@ public class EnemyChasingScript : StateMachineBehaviour
 {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//	return;
+
+		if (!PhotonNetwork.IsMasterClient)
 			return;
 
 		// Assign the enemy an player to chase
@@ -21,7 +24,10 @@ public class EnemyChasingScript : StateMachineBehaviour
 
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+		//	return;
+
+		if (!PhotonNetwork.IsMasterClient)
 			return;
 
 		// Update the enemy's target to chase, if it returns a null (that means no player is in range), return to patrol state;

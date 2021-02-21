@@ -23,7 +23,10 @@ public class EnemyDetectColliderScript : MonoBehaviour
         {
             // Check whether is target within collider
 
-            if (!gameObject.transform.parent.GetComponent<PhotonView>().IsMine)
+            //if (!gameObject.transform.parent.GetComponent<PhotonView>().IsMine)
+            //    return;
+
+            if (!PhotonNetwork.IsMasterClient)
                 return;
 
             gameObject.transform.parent.GetComponent<Animator>().SetBool("IsAttacking", true);
