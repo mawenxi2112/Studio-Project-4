@@ -343,6 +343,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   ObservedComponents:
   - {fileID: -4356425014160137433}
+  - {fileID: -4489364311898449686}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -375,5 +376,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsLock
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0

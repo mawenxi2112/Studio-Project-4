@@ -228,6 +228,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   ObservedComponents:
   - {fileID: -2050047133000200966}
+  - {fileID: -3423171587637251600}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -260,8 +261,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsLock
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &7293402352661072059
 GameObject:
   m_ObjectHideFlags: 0
