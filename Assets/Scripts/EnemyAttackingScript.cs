@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +9,9 @@ public class EnemyAttackingScript : StateMachineBehaviour
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
+		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+			return;
+
 		// WHEN ENTERING ATTACKING STATE
 		// Meele - Disable detectCollider
 		// Range - Nothing

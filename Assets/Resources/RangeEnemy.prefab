@@ -218,6 +218,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 1
   ObservedComponents:
+  - {fileID: 2287146280694640949}
   - {fileID: 7097547627770434747}
   - {fileID: 1307951723334327758}
   viewIdField: 0
@@ -237,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  m_SynchronizeScale: 1
 --- !u!114 &1307951723334327758
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,9 @@ public class EnemyPatrolScript : StateMachineBehaviour
 
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
+		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+			return;
+
 		newSpot = FindNearestWayPoint(animator);
 		m_targetPos = animator.GetComponent<EnemyData>().m_wayPoint[newSpot];
 		animator.GetComponent<NavMeshAgentScript>().target = m_targetPos;
@@ -17,6 +21,9 @@ public class EnemyPatrolScript : StateMachineBehaviour
 
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
+		if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
+			return;
+
 		if (Vector2.Distance(animator.transform.position, m_targetPos.position) > 0.5f)
 		{
 			// Moving to waypoint using NavMesh Agent

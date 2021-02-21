@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +23,10 @@ public class EnemyDetectColliderScript : MonoBehaviour
         {
             // Check whether is target within collider
 
-               gameObject.transform.parent.GetComponent<Animator>().SetBool("IsAttacking", true);
+            if (!gameObject.GetComponent<PhotonView>().IsMine)
+                return;
+
+            gameObject.transform.parent.GetComponent<Animator>().SetBool("IsAttacking", true);
             
         }
     }
