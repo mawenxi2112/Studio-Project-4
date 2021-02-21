@@ -224,7 +224,7 @@ namespace Photon.Pun.Demo.Asteroids
             RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
 
             PhotonNetwork.CreateRoom(roomName, options, null);
-            PhotonNetwork.LoadLevel("Shop");
+            PhotonNetwork.LoadLevel("LobbyScene");
         }
 
         public void OnJoinRandomRoomButtonClicked()
@@ -264,13 +264,15 @@ namespace Photon.Pun.Demo.Asteroids
             {
                 PhotonNetwork.JoinRandomRoom();
                 Debug.Log("JoiningRandomRoom: ");
+                PhotonNetwork.LoadLevel("LobbyScene");
                 return;
             }
             Debug.Log("Joining: " + RoomNameInputField.text);
             if (!cachedRoomList.ContainsKey(RoomNameInputField.text))
                 Debug.Log("This Room has yet to exist");
             PhotonNetwork.JoinRoom(RoomNameInputField.text);
-            PhotonNetwork.LoadLevel("Shop");
+   
+            PhotonNetwork.LoadLevel("LobbyScene");
         }
         public void OnRoomListButtonClicked()
         {

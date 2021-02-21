@@ -18,7 +18,8 @@ public class LoadScene : MonoBehaviour
     
         SceneData.previousScene = SceneManager.GetActiveScene().name;
         SceneData.currentScene = "MainMenu";
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
+        
      
     }
     public void LoadPlayMenu()
@@ -26,34 +27,34 @@ public class LoadScene : MonoBehaviour
        
         SceneData.previousScene = SceneManager.GetActiveScene().name;
         SceneData.currentScene = "PlayMenu";
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("PlayMenu");
     }
     public void LoadSettingsMenu()
     {
    
         SceneData.previousScene = SceneManager.GetActiveScene().name;
         SceneData.currentScene = "Settings";
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Settings");
     }
     public void LoadSingleplayerMenu()
     {
   
         SceneData.previousScene = SceneManager.GetActiveScene().name;
         SceneData.currentScene = "SingleplayerMenu";
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("SingleplayerMenu");
     }
     public void LoadMultiplayerMenu()
     {
       
         SceneData.previousScene = SceneManager.GetActiveScene().name;
         SceneData.currentScene = "MultiplayerMenu";
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("MultiplayerMenu");
     }
     public void LoadShopMenu()
     {
 
         SceneData.previousScene = SceneManager.GetActiveScene().name;
         SceneData.currentScene = "Shop";
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene("Shop");
     }
 }
