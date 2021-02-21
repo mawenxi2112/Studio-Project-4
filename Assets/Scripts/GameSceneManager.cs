@@ -27,33 +27,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     public Text InfoText;
 
-    public GameObject playerPrefab;
-
-    public GameObject coinPrefab;
-    public GameObject keyPrefab;
-    public GameObject healthpackPrefab;
-    public GameObject spikePrefab;
-    public GameObject moveableblockPrefab;
-    public GameObject torchPrefab;
-    public GameObject campfirePrefab;
-    public GameObject bombPrefab;
-    public GameObject breakableblockPrefab;
-    public GameObject surprisetrapblockPrefab;
-    public GameObject chestPrefab;
-    public GameObject pressureplatePrefab;
-    public GameObject resetbuttonPrefab;
-    public GameObject doorPrefab;
-    public GameObject gatePrefab;
-    public GameObject meeleEnemyPrefab;
-    public GameObject rangeEnemyPrefab;
-    public GameObject runnerEnemyPrefab;
-    public GameObject swordPrefab;
-
     public GameObject objectplacementManager;
     public GameObject NavMesh2DReference;
 
     public CinemachineVirtualCamera camera;
-    public Joystick joystick;
+    public Joystick movementJoystick;
+    public Joystick attackJoystick;
+    public Button dashButton;
 
     //public GameObject[] AsteroidPrefabs;
 
@@ -236,7 +216,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
         player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
-        player.GetComponent<PlayerMovement>().joystick = joystick;
+        player.GetComponent<PlayerData>().m_movementJoystick = movementJoystick;
+        player.GetComponent<PlayerData>().m_attackJoystick = attackJoystick;
+        player.GetComponent<PlayerData>().m_dashButton = dashButton;
         camera.Follow = player.transform;
 
         if (PhotonNetwork.IsMasterClient)

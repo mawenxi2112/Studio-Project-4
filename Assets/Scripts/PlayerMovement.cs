@@ -9,17 +9,15 @@ public class PlayerMovement : MonoBehaviour
 
     public Rigidbody2D rb;
     public Animator animator;
-
     public Vector2 movement;
-
-    public Joystick joystick;
-
     int direction = 2; // Up = 0 Right = 1 Down = 2 Left = 3
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        GetComponent<PlayerData>().m_dashButton.onClick.AddListener(delegate { Dash(); });
     }
 
     void Update()
@@ -27,20 +25,32 @@ public class PlayerMovement : MonoBehaviour
         if (!GetComponent<PhotonView>().IsMine)
             return;
 
-        
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        if (GetComponent<PlayerData>().platform == 0) // PC Platform
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
 
-        movement.x = joystick.Horizontal;
-        movement.y = joystick.Vertical;
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                Dash();
+            }
+        }
+        else if (GetComponent<PlayerData>().platform == 1) // Android Platform
+        {
+            movement.x = GetComponent<PlayerData>().m_movementJoystick.Horizontal;
+            movement.y = GetComponent<PlayerData>().m_movementJoystick.Vertical;              
+        }
+
+        movement.x += 0.1f;
+        movement.y += 0.1f;
 
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
         animator.SetFloat("Direction", direction);
 
-        // Checking of current direction
 
+        // Checking of current direction
         if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
         {
             // Horizontal is stronger, check for left or right
@@ -57,17 +67,15 @@ public class PlayerMovement : MonoBehaviour
             else if (movement.y > 0)
                 direction = 0;
         }
-        
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            // Dash
-            Debug.Log("Dashed!");
-            rb.AddForce(movement.normalized * GetComponent<PlayerData>().m_dashSpeed, ForceMode2D.Impulse);
-        }
     }
     
     void FixedUpdate()
     {
         rb.AddForce(movement * GetComponent<PlayerData>().m_currentMoveSpeed * Time.fixedDeltaTime);
+    }
+
+    void Dash()
+    {
+        rb.AddForce(movement.normalized * GetComponent<PlayerData>().m_dashSpeed, ForceMode2D.Impulse);
     }
 }
