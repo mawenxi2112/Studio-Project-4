@@ -132,4 +132,5 @@ public class PlayerInteraction : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         ScreenToWorldPos = camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 0));
     }
+    
 }

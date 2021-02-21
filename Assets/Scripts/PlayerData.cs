@@ -16,7 +16,7 @@ public class PlayerData : MonoBehaviour
     // Start is called before the first frame update
 
     public int m_currentHealth;
-    public int m_maxHealth;
+    public  int m_maxHealth;
     public float m_currentMoveSpeed;
     public float m_maxMoveSpeed;
     public bool m_iFrame;
@@ -26,9 +26,11 @@ public class PlayerData : MonoBehaviour
     public int m_currency;
     public float m_dashSpeed;
     public EQUIPMENT m_currentEquipment;
+    public int m_currentAttack;
 
     void Start()
     {
+        m_currentAttack = 5;
     }
 
     // Update is called once per frame

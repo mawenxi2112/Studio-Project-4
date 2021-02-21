@@ -13,6 +13,7 @@ TagManager:
   - Torch
   - Bomb
   - Key
+  - DataManager
   layers:
   - Default
   - TransparentFX
