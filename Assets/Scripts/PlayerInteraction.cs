@@ -164,22 +164,34 @@ public class PlayerInteraction : MonoBehaviour
         if (!GetComponent<PhotonView>().IsMine)
             return;
 
-        // These are for PC control!
+        if (GetComponent<PlayerData>().platform == 0)
+        {
+            // These are for PC control!
+            Vector3 mousePos = Input.mousePosition;
+            ScreenToWorldPos = camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 0));
 
-        Vector3 mousePos = Input.mousePosition;
-        ScreenToWorldPos = camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 0));
+            // Calculate the relative position of the mouse position to the player
+            Vector2 relativePosition = new Vector2(ScreenToWorldPos.x - transform.position.x, ScreenToWorldPos.y - transform.position.y);
 
-        // Calculate the relative position of the mouse position to the player
-        Vector2 relativePosition = new Vector2(ScreenToWorldPos.x - transform.position.x, ScreenToWorldPos.y - transform.position.y);
+            // For future usages
+            m_dir = relativePosition.normalized;
 
-        // For future usages
-        m_dir = relativePosition.normalized;
+            // Clamp the relative position when the mouse position is outside of the weapon radius
+            Vector2 clampedRelativePosition = Vector2.ClampMagnitude(relativePosition, GetComponent<PlayerData>().m_weaponRadius);
 
-        // Clamp the relative position when the mouse position is outside of the weapon radius
-        Vector2 clampedRelativePosition = Vector2.ClampMagnitude(relativePosition, GetComponent<PlayerData>().m_weaponRadius);
+            // Update the weapon's world position by adding the newly clamped relative position back onto the player position
+            m_hand.GetComponent<Transform>().position = clampedRelativePosition + new Vector2(transform.position.x, transform.position.y);
+        }
+        else if (GetComponent<PlayerData>().platform == 1)
+        {
+            // Get the direction of the joystick
+            m_dir = new Vector2(GetComponent<PlayerData>().m_attackJoystick.Horizontal, GetComponent<PlayerData>().m_attackJoystick.Vertical);
+            // Possibly rework this! 
+            Vector2 scaledRelativePosition = new Vector2(m_dir.x, m_dir.y) * GetComponent<PlayerData>().m_weaponRadius;
 
-        // Update the weapon's world position by adding the newly clamped relative position back onto the player position
-        m_hand.GetComponent<Transform>().position = clampedRelativePosition + new Vector2(transform.position.x, transform.position.y);
+            // Update the weapon's world position by adding the newly calculated relative position back onto the player position
+            m_hand.GetComponent<Transform>().position = scaledRelativePosition + new Vector2(transform.position.x, transform.position.y);
+        }
     }
 
     [PunRPC]
