@@ -104,36 +104,46 @@ namespace Photon.Pun.Demo.Asteroids
 
         public override void OnJoinedRoom()
         {
-            SetActivePanel(InsideRoomPanel.name);
-
-            if (playerListEntries == null)
-            {
-                playerListEntries = new Dictionary<int, GameObject>();
-            }
-
-            foreach (Player p in PhotonNetwork.PlayerList)
-            {
-                GameObject entry = Instantiate(PlayerListEntryPrefab);
-                entry.transform.SetParent(InsideRoomPanel.transform);
-                entry.transform.localScale = Vector3.one;
-                entry.GetComponent<PlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
-
-                object isPlayerReady;
-                if (p.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_READY, out isPlayerReady))
-                {
-                    entry.GetComponent<PlayerListEntry>().SetPlayerReady((bool) isPlayerReady);
-                }
-
-                playerListEntries.Add(p.ActorNumber, entry);
-            }
-
-            StartGameButton.gameObject.SetActive(CheckPlayersReady());
+            if (PhotonNetwork.IsMasterClient)
+                return;
 
             Hashtable props = new Hashtable
             {
                 {AsteroidsGame.PLAYER_LOADED_LEVEL, false}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            PhotonNetwork.LoadLevel("Level1Scene");
+
+            /*            SetActivePanel(InsideRoomPanel.name);
+
+                        if (playerListEntries == null)
+                        {
+                            playerListEntries = new Dictionary<int, GameObject>();
+                        }
+
+                        foreach (Player p in PhotonNetwork.PlayerList)
+                        {
+                            GameObject entry = Instantiate(PlayerListEntryPrefab);
+                            entry.transform.SetParent(InsideRoomPanel.transform);
+                            entry.transform.localScale = Vector3.one;
+                            entry.GetComponent<PlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
+
+                            object isPlayerReady;
+                            if (p.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_READY, out isPlayerReady))
+                            {
+                                entry.GetComponent<PlayerListEntry>().SetPlayerReady((bool) isPlayerReady);
+                            }
+
+                            playerListEntries.Add(p.ActorNumber, entry);
+                        }
+
+                        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+
+                        Hashtable props = new Hashtable
+                        {
+                            {AsteroidsGame.PLAYER_LOADED_LEVEL, false}
+                        };
+                        PhotonNetwork.LocalPlayer.SetCustomProperties(props);*/
         }
 
         public override void OnLeftRoom()
@@ -264,7 +274,7 @@ namespace Photon.Pun.Demo.Asteroids
             {
                 PhotonNetwork.JoinRandomRoom();
                 Debug.Log("JoiningRandomRoom: ");
-                PhotonNetwork.LoadLevel("LobbyScene");
+                //PhotonNetwork.LoadLevel("LobbyScene");
                 return;
             }
             Debug.Log("Joining: " + RoomNameInputField.text);
@@ -272,7 +282,7 @@ namespace Photon.Pun.Demo.Asteroids
                 Debug.Log("This Room has yet to exist");
             PhotonNetwork.JoinRoom(RoomNameInputField.text);
    
-            PhotonNetwork.LoadLevel("LobbyScene");
+            //PhotonNetwork.LoadLevel("LobbyScene");
         }
         public void OnRoomListButtonClicked()
         {

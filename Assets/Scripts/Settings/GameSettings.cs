@@ -8,7 +8,7 @@ public class GameSettings : MonoBehaviour
 {
     public static GameSettings instance = null;
 
-    private static string settingsFilepath;
+    private string settingsFilepath;
 
     // Resolution related Settings
     public bool fullscreen = true;
@@ -86,5 +86,10 @@ public class GameSettings : MonoBehaviour
 
 
         return instance;
+    }
+
+    void OnApplicationQuit()
+    {
+        UpdateTextFile();
     }
 }
