@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum EQUIPMENT
 {
@@ -30,22 +31,14 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     public bool m_actionKey;
     public double m_actionKeyTimer;
     public double m_actionKeyReset;
-
     public int m_currentAttack;
+    // Temporary using this to seperate the different platforms.
+    public Joystick m_movementJoystick;
+    public Joystick m_attackJoystick;
+    public Button m_dashButton;
+    public int platform = 0; // 0 = PC, 1 = ANDROID
     void Start()
     {
-        // Network instatiate sword;
-
-        // My client side rn
-        // Player (Right now client) - > sword network instantiatel
-        // the one below is ignored
-        // Player (Other person Client) -> sword network instaiate 
-        
-        // My client side rn
-        // Player (Right now client) - > sword network instantiatel
-        // Player (Other person Client) -> sword network instaiate
-
-
         m_currentAttack = 5;
     }
     // Update is called once per frame
@@ -69,15 +62,42 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
 
-        if (Input.GetKey(KeyCode.Mouse0) && m_actionKeyTimer >= m_actionKeyReset)
+        if (platform == 0)
         {
-            m_actionKeyTimer = 0;
-            m_actionKey = true;
-        }
+            m_movementJoystick.gameObject.SetActive(false);
+            m_attackJoystick.gameObject.SetActive(false);
+            m_dashButton.gameObject.SetActive(false);
 
-        if (!Input.GetKey(KeyCode.Mouse0))
+            if (Input.GetKey(KeyCode.Mouse0) && m_actionKeyTimer >= m_actionKeyReset)
+            {
+                m_actionKeyTimer = 0;
+                m_actionKey = true;
+            }
+
+            if (!Input.GetKey(KeyCode.Mouse0))
+            {
+                m_actionKey = false;
+            }
+        }
+        else if (platform == 1)
         {
-            m_actionKey = false;
+            m_movementJoystick.gameObject.SetActive(true);
+            m_attackJoystick.gameObject.SetActive(true);
+            m_dashButton.gameObject.SetActive(true);
+
+            Vector2 attackDir = new Vector2(m_attackJoystick.Horizontal, m_attackJoystick.Vertical);
+
+            if (attackDir.magnitude > 0 && m_actionKeyTimer >= m_actionKeyReset)
+            {
+                m_actionKeyTimer = 0;
+                m_actionKey = true;
+            }
+
+            if (attackDir.magnitude == 0)
+            {
+                m_actionKey = false;
+            }
+
         }
     }
 
