@@ -52,7 +52,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             // If action key is pressed while not holding the sword, it will drop the current held item if there isn't any nearby pickable/interactable gameobjects
             // Throwaway current item mechanic
-            if (GetComponent<PlayerData>().m_actionKey && !touchingAnyWorldObject() && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.SWORD)
+            if (GetComponent<PlayerData>().m_actionKey && !touchingAnyPickables() && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.SWORD)
             {
                 //EquipSword();
                 GetComponent<PhotonView>().RPC("EquipSword", RpcTarget.All);
@@ -67,7 +67,7 @@ public class PlayerInteraction : MonoBehaviour
                     if (!m_handAnimator)
                         m_handAnimator = m_hand.GetComponent<Animator>();
 
-                    if (GetComponent<PlayerData>().m_actionKey && !touchingAnyWorldObject()) // Add trigger mode for mobile as well.
+                    if (GetComponent<PlayerData>().m_actionKey && !touchingAnyPickables()) // Add trigger mode for mobile as well.
                     {
                         Debug.Log("ATTAACK!");
                         m_handAnimator.SetBool("Attack", true);
@@ -120,14 +120,20 @@ public class PlayerInteraction : MonoBehaviour
         m_sword.SetActive(true);
     }
 
-    bool touchingAnyWorldObject()
+    bool touchingAnyPickables()
     {
         GameObject[] worldObjects = GameObject.FindGameObjectsWithTag("Objects");
 
         for (int i = 0; i < worldObjects.Length; i++)
         {
             if (transform.GetChild(0).gameObject.GetComponent<CapsuleCollider2D>().IsTouching(worldObjects[i].GetComponent<Collider2D>()))
-                return true;
+            {
+                // If touching objects that are interactable/pickable
+                if (worldObjects[i].GetComponent<ObjectData>().object_type == OBJECT_TYPE.BOMB ||
+                    worldObjects[i].GetComponent<ObjectData>().object_type == OBJECT_TYPE.KEY ||
+                    worldObjects[i].GetComponent<ObjectData>().object_type == OBJECT_TYPE.TORCH)
+                    return true;
+            }
         }
 
         return false;
@@ -152,24 +158,6 @@ public class PlayerInteraction : MonoBehaviour
                 Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), tmp.GetComponent<Collider2D>(), ignore);
         }
     }
-
-    /*public void IgnoreCollisionWithTag(GameObject gameObject, string tag, bool ignore)
-    {
-        GameObject[] gameObjectArray;
-
-        if (tag == "All")
-            gameObjectArray = FindObjectsOfType<GameObject>();
-        else
-            gameObjectArray = GameObject.FindGameObjectsWithTag(tag);
-
-        for (int i = 0; i < gameObjectArray.Length; i++)
-        {
-            GameObject tmp = gameObjectArray[i];
-
-            if (tmp.GetComponents<Collider2D>().Length > 0)
-                Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), tmp.GetComponent<Collider2D>(), ignore);
-        }
-    }*/
 
     void FixedUpdate()
     {
@@ -252,42 +240,6 @@ public class PlayerInteraction : MonoBehaviour
         m_hand = m_sword;
         m_sword.SetActive(true);
     }
-
- /*   public void PickUp(GameObject gameObject, EQUIPMENT equipment)
-    {
-        // Transfer ownership to the one who is picking up the weapon.
-        if (!gameObject.GetComponent<PhotonView>().IsMine)
-        {
-            gameObject.GetComponent<PhotonView>().TransferOwnership(GetComponent<PhotonView>().Controller);
-        }
-
-        // Temp code to hide sword
-        if (m_hand == m_sword)
-            m_sword.SetActive(false);
-
-        // The gameobject that is going to be picked up next.
-        switch (equipment)
-        {
-            case EQUIPMENT.SWORD:
-                gameObject.tag = "Sword";
-                break;
-            case EQUIPMENT.TORCH:
-                gameObject.tag = "Torch";
-                break;
-            case EQUIPMENT.KEY:
-                gameObject.tag = "Key";
-                break;
-            case EQUIPMENT.BOMB:
-                gameObject.tag = "Bomb";
-                break;
-        }
-
-        Throw(m_hand, m_hand.transform.position, new Vector3(0, 0, 0), 0);
-        m_hand = gameObject;
-
-        IgnoreCollisionWithTag(m_hand, "All", true); // Ignore the collision between the held object and every other game objects with collider
-        GetComponent<PlayerData>().m_currentEquipment = equipment;
-    }*/
 }
 
 
