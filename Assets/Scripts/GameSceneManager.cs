@@ -53,7 +53,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject NavMesh2DReference;
 
     public CinemachineVirtualCamera camera;
-    public Joystick joystick;
 
     //public GameObject[] AsteroidPrefabs;
 
@@ -236,7 +235,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
         player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
-        player.GetComponent<PlayerMovement>().joystick = joystick;
         camera.Follow = player.transform;
 
         if (PhotonNetwork.IsMasterClient)
@@ -358,4 +356,305 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         StartGame();
     }
 
+    [PunRPC]
+    public void InitializeLevel(PhotonMessageInfo info)
+    {
+        for (int i = 0; i < objectplacementManager.transform.childCount; i++)
+        {
+            List<GameObject> TmpStorage = new List<GameObject>();
+
+            if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("DoorPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject doortmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networkDoor;
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        networkDoor = PhotonNetwork.InstantiateRoomObject("Door", new Vector3(doortmp.transform.position.x, doortmp.transform.position.y, 0), Quaternion.identity, 0);
+                    }
+                    else
+                    {
+                        networkDoor = PhotonNetwork.InstantiateRoomObject("Door", new Vector3(doortmp.transform.position.x, doortmp.transform.position.y, 0), Quaternion.identity, 0);
+                    }
+
+                    TmpStorage.Add(networkDoor);
+                    Destroy(doortmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("CoinPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject cointmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networkCoin;
+
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        networkCoin = PhotonNetwork.InstantiateRoomObject("Coin", new Vector3(cointmp.transform.position.x, cointmp.transform.position.y, 0), Quaternion.identity, 0);
+                    }
+                    else
+                    {
+                        networkCoin = PhotonView.Find(info.photonView.ViewID).gameObject;
+                    }
+
+                    TmpStorage.Add(networkCoin);
+
+                    Destroy(cointmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("HealthpackPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject healthpacktmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+					GameObject networkHealthpack;
+
+					if (PhotonNetwork.IsMasterClient)
+					{
+						networkHealthpack = PhotonNetwork.InstantiateRoomObject("Healthpack", new Vector3(healthpacktmp.transform.position.x, healthpacktmp.transform.position.y, 0), Quaternion.identity, 0);
+					}
+					else
+					{
+						networkHealthpack = PhotonView.Find(info.photonView.ViewID).gameObject;
+					}
+
+					TmpStorage.Add(networkHealthpack);
+
+                    Destroy(healthpacktmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("ChestPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject chesttmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+					GameObject networkchest;
+					if (PhotonNetwork.IsMasterClient)
+					{
+						networkchest = PhotonNetwork.InstantiateRoomObject("Chest", new Vector3(chesttmp.transform.position.x, chesttmp.transform.position.y, 0), Quaternion.identity, 0);
+					}
+					else
+					{
+                        networkchest = PhotonView.Find(info.photonView.ViewID).gameObject;
+					}
+
+					TmpStorage.Add(networkchest);
+
+                    Destroy(chesttmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("TorchPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject torchtmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networktorch;
+
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        networktorch = PhotonNetwork.InstantiateRoomObject("Torch", new Vector3(torchtmp.transform.position.x, torchtmp.transform.position.y, 0), Quaternion.identity, 0);
+                    }
+                    else
+                    {
+                        networktorch = PhotonView.Find(info.photonView.ViewID).gameObject;
+                    }
+
+                    TmpStorage.Add(networktorch);
+                    Destroy(torchtmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("KeyPlacement"))
+            {
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject keytmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    GameObject networkkey;
+
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        networkkey = PhotonNetwork.InstantiateRoomObject("Key", new Vector3(keytmp.transform.position.x, keytmp.transform.position.y, 0), Quaternion.identity, 0);
+                    }
+                    else
+                    {
+                        networkkey = PhotonView.Find(info.photonView.ViewID).gameObject;
+                    }
+
+                    TmpStorage.Add(networkkey);
+                    Destroy(keytmp);
+                }
+            }
+            else if (objectplacementManager.transform.GetChild(i).gameObject.CompareTag("PuzzlePlacement"))
+            {
+                // First for-loop loops through the number of puzzle sets there are
+                for (int j = 0; j < objectplacementManager.transform.GetChild(i).childCount; j++)
+                {
+                    GameObject PuzzleSettmp = objectplacementManager.transform.GetChild(i).GetChild(j).gameObject;
+                    List<GameObject> OTUTmpStorage = new List<GameObject>();
+                    List<GameObject> ROTmpStorage = new List<GameObject>();
+
+                    // Second for-loop loops through the ObjectToUnlockGate, RegularObject, Gate in the puzzle set
+                    for (int k = 0; k < PuzzleSettmp.transform.childCount; k++)
+                    {
+                        if (PuzzleSettmp.transform.GetChild(k).gameObject.name != "Gate")
+                        {
+                            // Third for-loop loops through the child in ObjectToUnlock and RegularObject
+                            for (int l = 0; l < PuzzleSettmp.transform.GetChild(k).childCount; l++)
+                            {
+                                GameObject OTUorROchild = PuzzleSettmp.transform.GetChild(k).GetChild(l).gameObject;
+                                switch (OTUorROchild.GetComponent<ObjectData>().object_type)
+                                {
+                                    case OBJECT_TYPE.CAMPFIRE:
+                                        GameObject networkcampfire;
+
+                                        if (PhotonNetwork.IsMasterClient)
+                                        {
+                                            networkcampfire = PhotonNetwork.InstantiateRoomObject("Campfire", new Vector3(OTUorROchild.transform.position.x, OTUorROchild.transform.position.y, 0), Quaternion.identity, 0);
+                                        }
+                                        else
+                                        {
+                                            networkcampfire = PhotonView.Find(info.photonView.ViewID).gameObject;
+                                        }
+
+                                        if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "ObjectsToUnlockGate")
+                                            OTUTmpStorage.Add(networkcampfire);
+                                        else
+                                            ROTmpStorage.Add(networkcampfire);
+
+                                        Destroy(OTUorROchild);
+                                        break;
+
+                                    case OBJECT_TYPE.PRESSUREPLATE:
+                                        GameObject networkpressureplate;
+
+                                        if (PhotonNetwork.IsMasterClient)
+                                        {
+                                            networkpressureplate = PhotonNetwork.InstantiateRoomObject("PressurePlate", new Vector3(OTUorROchild.transform.position.x, OTUorROchild.transform.position.y, 0), Quaternion.identity, 0);
+                                        }
+                                        else
+                                        {
+                                            networkpressureplate = PhotonView.Find(info.photonView.ViewID).gameObject;
+                                        }
+
+                                        if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "ObjectsToUnlockGate")
+                                            OTUTmpStorage.Add(networkpressureplate);
+                                        else
+                                            ROTmpStorage.Add(networkpressureplate);
+
+                                        Destroy(OTUorROchild);
+                                        break;
+
+                                    case OBJECT_TYPE.RESETBUTTON:
+                                        break;
+                                };
+
+                            }
+                        }
+                    }
+
+                    for (int k = 0; k < PuzzleSettmp.transform.childCount; k++)
+                    {
+                        if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "ObjectsToUnlockGate")
+                        {
+                            for (int x = 0; x < OTUTmpStorage.Count; x++)
+                            {
+                                OTUTmpStorage[x].transform.SetParent(PuzzleSettmp.transform.GetChild(k), false);
+                            }
+                        }
+                        else if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "RegularObjects")
+                        {
+                            for (int x = 0; x < ROTmpStorage.Count; x++)
+                            {
+                                ROTmpStorage[x].transform.SetParent(PuzzleSettmp.transform.GetChild(k), false);
+                            }
+                        }
+                        else if (PuzzleSettmp.transform.GetChild(k).gameObject.name == "Gate")
+                        {
+
+                            GameObject networkgate;
+
+                            if (PhotonNetwork.IsMasterClient)
+                            {
+                                networkgate = PhotonNetwork.InstantiateRoomObject("Gate", new Vector3(PuzzleSettmp.transform.position.x, PuzzleSettmp.transform.position.y, 0), Quaternion.identity, 0);
+                            }
+                            else
+                            {
+                                networkgate = PhotonView.Find(info.photonView.ViewID).gameObject;
+                            }
+
+                            for (int x = 0; x < OTUTmpStorage.Count; x++)
+                            {
+                                networkgate.GetComponent<GateScript>().ListOfObjectRequiredToOpenGate.Add(OTUTmpStorage[x].gameObject);
+                            }
+                            networkgate.transform.SetParent(PuzzleSettmp.transform);
+                            Destroy(PuzzleSettmp.transform.GetChild(k).gameObject);
+                        }
+                    }
+                }
+            }
+
+            for (int j = 0; j < TmpStorage.Count; j++)
+            {
+                TmpStorage[j].transform.SetParent(objectplacementManager.transform.GetChild(i), false);
+            }
+        }
+
+        // For Spawning of enemies, NavMesh2D needs to be disable first, then reenabled after all enemies are spawned
+        NavMesh2DReference.SetActive(false);
+        for (int i = 0; i < EnemyManager.GetInstance().EnemyWaypointHolder.Count; i++)
+        {
+            if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("MeleeWaypoint"))
+            {
+                GameObject enemy;
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    enemy = PhotonNetwork.InstantiateRoomObject("MeleeEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+                }
+                else
+                {
+                    enemy = PhotonView.Find(info.photonView.ViewID).gameObject;
+                }
+
+                enemy.GetComponent<EnemyData>().m_ID = i;
+                enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+                enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+            }
+            else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RangeWaypoint"))
+            {
+                GameObject enemy;
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    enemy = PhotonNetwork.InstantiateRoomObject("RangedEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+                }
+                else
+                {
+                    enemy = PhotonView.Find(info.photonView.ViewID).gameObject;
+                }
+
+                enemy.GetComponent<EnemyData>().m_ID = i;
+                enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+                enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+            }
+            else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RunnerWaypoint"))
+            {
+                GameObject enemy;
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    enemy = PhotonNetwork.InstantiateRoomObject("RunnerEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+                }
+                else
+                {
+                    enemy = PhotonView.Find(info.photonView.ViewID).gameObject;
+                }
+
+                enemy.GetComponent<EnemyData>().m_ID = i;
+                enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
+                enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+            }
+        }
+        NavMesh2DReference.SetActive(true);
+    }
 }

@@ -12,8 +12,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector2 movement;
 
-    public Joystick joystick;
-
     int direction = 2; // Up = 0 Right = 1 Down = 2 Left = 3
 
     void Start()
@@ -27,12 +25,8 @@ public class PlayerMovement : MonoBehaviour
         if (!GetComponent<PhotonView>().IsMine)
             return;
 
-        
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-
-        movement.x = joystick.Horizontal;
-        movement.y = joystick.Vertical;
 
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
