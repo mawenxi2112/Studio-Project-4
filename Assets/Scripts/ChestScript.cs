@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,6 +39,10 @@ public class ChestScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GetComponent<PhotonView>().IsMine)
+            return;
+
+
         if (animator.GetFloat("Health") > 0)
             animator.SetFloat("Health", GetComponent<ObjectData>().blockHealth);
 
@@ -51,23 +56,30 @@ public class ChestScript : MonoBehaviour
 
                 if (rand == 1)
                 {
-                    powerUp = Instantiate(speedPowerUp);
+                    // Speed power up
+                    powerUp = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
                 }
                 else if (rand == 2)
                 {
-                    powerUp = Instantiate(maxHPPowerUp);
+                    //powerUp = Instantiate(maxHPPowerUp);
+                    powerUp = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
                 }
                 else if (rand == 3)
                 {
-                    powerUp = Instantiate(damagePowerUp);
+                    //powerUp = Instantiate(damagePowerUp);
+                    powerUp = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
                 }
                 else
                 {
-                    powerUp = Instantiate(coinPowerUp);
+                    //powerUp = Instantiate(coinPowerUp);
+                    powerUp = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
                 }
 
                 powerUp.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z);
-                powerUp.AddComponent<EntityBounce>();
+                
+                // Only if the powerup doesn't have entitybounce component, then add
+                if (powerUp.GetComponent<EntityBounce>() == null)
+                    powerUp.AddComponent<EntityBounce>();
 
                 EntityBounce powerupBounce = powerUp.GetComponent<EntityBounce>();
                 powerupBounce.m_bounceVelocity = 5;

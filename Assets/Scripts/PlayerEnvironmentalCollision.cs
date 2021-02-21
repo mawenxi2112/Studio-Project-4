@@ -220,14 +220,16 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 			{
 				case OBJECT_TYPE.COIN:
 					GetComponent<PlayerData>().SetCurrency(GetComponent<PlayerData>().m_currency + collision.gameObject.GetComponent<ObjectData>().coinValue);
-					collision.gameObject.SetActive(false);
+					//collision.gameObject.SetActive(false);
+					PhotonNetwork.Destroy(collision.gameObject);
 					break;
 
 				case OBJECT_TYPE.HEALTHPACK:
 					if (GetComponent<PlayerData>().m_currentHealth < GetComponent<PlayerData>().m_maxHealth)
 					{
 						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth + collision.gameObject.GetComponent<ObjectData>().healthPackValue);
-						collision.gameObject.SetActive(false);
+						//collision.gameObject.SetActive(false);
+						PhotonNetwork.Destroy(collision.gameObject);
 					}
 					break;
 

@@ -11,7 +11,7 @@ public enum ENEMY_TYPE
     RUNNER,
 }
 
-public class EnemyData : MonoBehaviourPun
+public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
 {
     public int m_ID;
     public int m_currentHealth;
@@ -117,6 +117,21 @@ public class EnemyData : MonoBehaviourPun
         projectiletmp.GetComponent<Transform>().position = gameObject.transform.Find("ProjectileSpawnPoint").position;
         projectiletmp.GetComponent<Transform>().eulerAngles = new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
         projectiletmp.GetComponent<EnemyProjectileScript>().rb.AddForce(dir * projectiletmp.GetComponent<EnemyProjectileScript>().moveSpeed, ForceMode2D.Impulse);
+    }
+
+    // Syncing of values over the lobby
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // If this current stream is our player
+            stream.SendNext(m_currentHealth);
+        }
+        else
+        {
+            // Network player
+            m_currentHealth = (int)stream.ReceiveNext();
+        }
     }
 
 }
