@@ -216,6 +216,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   movement: {x: 0, y: 0}
+  joystick: {fileID: 0}
 --- !u!95 &7104929258688915183
 Animator:
   serializedVersion: 3
