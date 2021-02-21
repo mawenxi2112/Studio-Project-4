@@ -416,6 +416,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
+  - {fileID: -1814285942154763087}
   - {fileID: -1514383404470128253}
   - {fileID: -3930240266190991854}
   viewIdField: 0
