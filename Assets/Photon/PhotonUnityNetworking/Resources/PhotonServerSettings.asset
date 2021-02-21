@@ -43,6 +43,7 @@ MonoBehaviour:
   - PickUp
   - EquipSword
   - InitializeLevel
+  - UpdateReady
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

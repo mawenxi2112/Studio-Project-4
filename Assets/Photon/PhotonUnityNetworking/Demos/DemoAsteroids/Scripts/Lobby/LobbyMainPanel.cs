@@ -260,6 +260,7 @@ namespace Photon.Pun.Demo.Asteroids
             }
             if(RoomNameInputField.text == "")
             {
+                PhotonNetwork.LocalPlayer.NickName = PlayerNameInput.text;
                 PhotonNetwork.JoinRandomRoom();
                 Debug.Log("JoiningRandomRoom: ");
                 return;

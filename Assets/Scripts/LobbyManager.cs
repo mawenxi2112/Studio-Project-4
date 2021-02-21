@@ -20,13 +20,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public Text InfoText;
     public GameObject playerPrefab;
+    public Transform readyButton;
     public TMP_Text playerInfo;
     public TMP_Text serverInfo;
-
+    
     public Camera camera;
+    public PhotonView photonView;
     public Joystick joystick;
 
-
+    public LoadScene SceneManager;
+    public int playerReady;
     //public GameObject[] AsteroidPrefabs;
 
     #region UNITY
@@ -35,29 +38,37 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         Instance = this;
     }
-
+    void Update()
+    {
+      /*  if (PhotonNetwork.IsMasterClient)
+            Debug.Log("PlayerAmount: " + PhotonNetwork.PlayerList.Length);*/
+    }
     public override void OnEnable()
     {
         base.OnEnable();
 
-        CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
     }
 
     public void Start()
     {
         Hashtable props = new Hashtable
             {
-                {GameData.PLAYER_LOADED_LEVEL, true}
+                {GameData.PLAYER_READY,false}
             };
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
         StartGame();
     }
 
-    public override void OnDisable()
+    public void SetReady(bool value)
     {
-        base.OnDisable();
-
-        CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
+        Hashtable props = new Hashtable
+            {
+                {GameData.PLAYER_READY,value}
+            };
+        Debug.Log("Setting Who?" + PhotonNetwork.LocalPlayer.NickName);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
     #endregion
@@ -122,16 +133,28 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
         public override void OnLeftRoom()
     {
-        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+      
     }
     public void PlayerLeaveRoom()
     {
+        StartCoroutine(LeaveRoomAndLoad());
+    }
+
+    IEnumerator LeaveRoomAndLoad()
+    {
         PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LoadLevel("PlayMenu");
+
+        while(PhotonNetwork.InRoom)
+        yield return null;
+
+        SceneManager.LoadPlayMenu();
     }
     
     public override void OnJoinedRoom()
     {
+/*        object isPlayerReady;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(GameData.PLAYER_READY, out isPlayerReady);
+        Debug.Log("Starting Value: " + (bool)isPlayerReady);*/
         base.OnJoinedRoom();
     }
 
@@ -154,37 +177,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         Debug.Log("Running Into Game");
-        if (changedProps.ContainsKey(GameData.PLAYER_LIVES))
+
+    
+        if(CheckPlayersReady())
         {
-            CheckEndOfGame();
-            return;
-        }
-
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
-
-
-        // if there was no countdown yet, the master client (this one) waits until everyone loaded the level and sets a timer start
-        int startTimestamp;
-        bool startTimeIsSet = CountdownTimer.TryGetStartTime(out startTimestamp);
-
-        if (changedProps.ContainsKey(GameData.PLAYER_LOADED_LEVEL))
-        {
-            if (CheckAllPlayerLoadedLevel())
-            {
-                if (!startTimeIsSet)
-                {
-                    CountdownTimer.SetStartTime();
-                }
-            }
-            else
-            {
-                // not all players loaded yet. wait:
-                Debug.Log("setting text waiting for players! ", this.InfoText);
-                InfoText.text = "Waiting for other players...";
-            }
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+            Debug.Log("AllPlayerReady");
+            PhotonNetwork.LoadLevel("Level1Scene");
         }
 
     }
@@ -215,78 +215,60 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         //Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
         GameObject player;
         GameObject world = GameObject.Find("World");
- 
+
          player = PhotonNetwork.Instantiate("Player", new Vector3(-4, -4, 0), Quaternion.identity, 0);
-        player.GetComponent<PlayerMovement>().joystick = joystick;
+      /*  player.GetComponent<PlayerMovement>().joystick = joystick;*/
         player.transform.SetParent(world.transform);
-     
+ 
         playerInfo.text = "Player Name: " +PhotonNetwork.LocalPlayer.NickName;
         serverInfo.text = "Server: " +PhotonNetwork.CurrentRoom.Name;
+        /*        Hashtable props = new Hashtable
+                    {
+                        {GameData.PLAYER_LOADED_LEVEL, true}
+                    };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);*/ // SETting player Properties
+
+/*        photonView = player.GetComponent<PhotonView>();
+        photonView.RPC("UpdateReady", RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName, false);
+        playerReadyList.Add(PhotonNetwork.LocalPlayer.NickName, false);*/
+        Physics.IgnoreLayerCollision(0, 9);
+        Debug.Log("PlayerReady: " + CheckPlayersReady().ToString());
+        Debug.Log("Size of PlayerList: " + PhotonNetwork.PlayerList.Length.ToString());
+    }
+    public void SetPlayerReady(bool State)
+    {
+        Hashtable props = new Hashtable
+            {
+                {GameData.PLAYER_READY, true}
+            };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
-    private bool CheckAllPlayerLoadedLevel()
+    private bool CheckPlayersReady()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return false;
+        }
+      
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            object playerLoadedLevel;
-
-            if (p.CustomProperties.TryGetValue(GameData.PLAYER_LOADED_LEVEL, out playerLoadedLevel))
+            Debug.Log("PlayerName: " + p.NickName);
+            object isPlayerReady;
+            if (p.CustomProperties.TryGetValue(GameData.PLAYER_READY, out isPlayerReady))
             {
-                if ((bool)playerLoadedLevel)
+                Debug.Log("PlayerReady: " + (bool)isPlayerReady);
+                if (!(bool)isPlayerReady)
                 {
-                    continue;
+                    return false;
                 }
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         return true;
     }
-
-    private void CheckEndOfGame()
-    {
-        bool allDestroyed = true;
-
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            object lives;
-            if (p.CustomProperties.TryGetValue(GameData.PLAYER_LIVES, out lives))
-            {
-                if ((int)lives > 0)
-                {
-                    allDestroyed = false;
-                    break;
-                }
-            }
-        }
-
-        if (allDestroyed)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                StopAllCoroutines();
-            }
-
-            string winner = "";
-            int score = -1;
-
-            foreach (Player p in PhotonNetwork.PlayerList)
-            {
-                if (p.GetScore() > score)
-                {
-                    winner = p.NickName;
-                    score = p.GetScore();
-                }
-            }
-
-            StartCoroutine(EndOfGame(winner, score));
-        }
-    }
-
-    private void OnCountdownTimerIsExpired()
-    {
-        StartGame();
-    }
-
 }
