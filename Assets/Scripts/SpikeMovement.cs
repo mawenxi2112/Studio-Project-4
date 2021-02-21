@@ -9,7 +9,8 @@ public class SpikeMovement : MonoBehaviour
 
     float state = 0; // 0 = Idle1, 1 = Idle2, 2 = Up
     double maxDurationTillNextChange = 0.2;
-    double maxDurationToStayFor = 2;
+    public double maxUpDurationToStayFor = 2;
+    public double maxDownDurationToStayFor = 2;
     double durationTillNextChange = 0;
     double durationToStayFor = 0;
     bool goingDown = false;
@@ -54,13 +55,27 @@ public class SpikeMovement : MonoBehaviour
 		{
             durationToStayFor += Time.deltaTime;
 
-            if (durationToStayFor >= maxDurationToStayFor)
-			{
-                isStaying = false;
-                durationToStayFor = 0;
+            if (!goingDown)
+            {
+                if (durationToStayFor >= maxDownDurationToStayFor)
+                {
+                    isStaying = false;
+                    durationToStayFor = 0;
 
-                if (state == 2)
-                    collider.enabled = !collider.enabled;
+                    if (state == 2)
+                        collider.enabled = !collider.enabled;
+                }
+            }
+            else if (goingDown)
+			{
+                if (durationToStayFor >= maxUpDurationToStayFor)
+                {
+                    isStaying = false;
+                    durationToStayFor = 0;
+
+                    if (state == 2)
+                        collider.enabled = !collider.enabled;
+                }
             }
         }
 
