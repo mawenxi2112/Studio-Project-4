@@ -17,7 +17,7 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     // Start is called before the first frame update
 
     public int m_currentHealth;
-    public int m_maxHealth;
+    public  int m_maxHealth;
     public float m_currentMoveSpeed;
     public float m_maxMoveSpeed;
     public bool m_iFrame;
@@ -31,6 +31,7 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     public double m_actionKeyTimer;
     public double m_actionKeyReset;
 
+    public int m_currentAttack;
     void Start()
     {
         // Network instatiate sword;
@@ -43,8 +44,10 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         // My client side rn
         // Player (Right now client) - > sword network instantiatel
         // Player (Other person Client) -> sword network instaiate
-    }
 
+
+        m_currentAttack = 5;
+    }
     // Update is called once per frame
     void Update()
     {

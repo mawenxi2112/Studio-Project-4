@@ -26,6 +26,7 @@ TagManager:
   - ChestPlacement
   - KeyPlacement
   - RunnerWaypoint
+  - DataManager
   layers:
   - Default
   - TransparentFX

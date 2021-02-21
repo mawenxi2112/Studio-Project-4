@@ -240,6 +240,7 @@ public class PlayerInteraction : MonoBehaviour
         m_hand = m_sword;
         m_sword.SetActive(true);
     }
+    
 }
 
 

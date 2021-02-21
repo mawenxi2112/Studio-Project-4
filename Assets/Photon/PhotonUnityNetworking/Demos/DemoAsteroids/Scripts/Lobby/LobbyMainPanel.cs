@@ -52,7 +52,13 @@ namespace Photon.Pun.Demo.Asteroids
             
             PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
         }
-
+        void Update()
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                Debug.Log("You are in Room:" + PhotonNetwork.CurrentRoom.Name);
+            }
+        }
         #endregion
 
         #region PUN CALLBACKS
@@ -208,15 +214,17 @@ namespace Photon.Pun.Demo.Asteroids
         public void OnCreateRoomButtonClicked()
         {
             string roomName = RoomNameInputField.text;
+            Debug.Log("Created Room");
             roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
 
             byte maxPlayers;
-            byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
-            maxPlayers = (byte) Mathf.Clamp(maxPlayers, 2, 8);
+
+            maxPlayers = 2;
 
             RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
 
             PhotonNetwork.CreateRoom(roomName, options, null);
+            PhotonNetwork.LoadLevel("Shop");
         }
 
         public void OnJoinRandomRoomButtonClicked()
@@ -246,6 +254,24 @@ namespace Photon.Pun.Demo.Asteroids
             }
         }
 
+        public void OnJoinButtonClicked()
+        {
+            if(!PhotonNetwork.IsConnected)
+            {
+                Debug.Log("Player is not yet connected");
+            }
+            if(RoomNameInputField.text == "")
+            {
+                PhotonNetwork.JoinRandomRoom();
+                Debug.Log("JoiningRandomRoom: ");
+                return;
+            }
+            Debug.Log("Joining: " + RoomNameInputField.text);
+            if (!cachedRoomList.ContainsKey(RoomNameInputField.text))
+                Debug.Log("This Room has yet to exist");
+            PhotonNetwork.JoinRoom(RoomNameInputField.text);
+            PhotonNetwork.LoadLevel("Shop");
+        }
         public void OnRoomListButtonClicked()
         {
             if (!PhotonNetwork.InLobby)
