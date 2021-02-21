@@ -253,6 +253,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
                     enemy.GetComponent<NavMeshAgent>().enabled = true;
+                    enemy.GetComponent<NavMeshAgent>().updateRotation = false;
+                    enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
                 }
                 else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RangeWaypoint"))
                 {
@@ -264,6 +266,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
                     enemy.GetComponent<NavMeshAgent>().enabled = true;
+                    enemy.GetComponent<NavMeshAgent>().updateRotation = false;
+                    enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
                 }
                 else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RunnerWaypoint"))
                 {
@@ -275,6 +279,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
                     enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
                     enemy.GetComponent<NavMeshAgent>().enabled = true;
+                    enemy.GetComponent<NavMeshAgent>().updateRotation = false;
+                    enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
                 }
             }
             NavMesh2DReference.SetActive(true);
