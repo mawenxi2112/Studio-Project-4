@@ -53,6 +53,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject NavMesh2DReference;
 
     public CinemachineVirtualCamera camera;
+    public Joystick joystick;
 
     //public GameObject[] AsteroidPrefabs;
 
@@ -235,6 +236,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
         player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
+        player.GetComponent<PlayerMovement>().joystick = joystick;
         camera.Follow = player.transform;
 
         if (PhotonNetwork.IsMasterClient)
