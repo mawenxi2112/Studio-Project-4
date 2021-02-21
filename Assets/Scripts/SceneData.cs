@@ -30,7 +30,6 @@ public class SceneData : MonoBehaviour
 
     void Awake()
     {
-        
         DontDestroyOnLoad(this);
        
     }

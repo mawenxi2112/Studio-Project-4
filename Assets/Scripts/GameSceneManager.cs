@@ -153,6 +153,10 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.Disconnect();
     }
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+    }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
@@ -168,9 +172,11 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
         //CheckEndOfGame();
     }
+  
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
+        Debug.Log("Running Into Game");
         if (changedProps.ContainsKey(GameData.PLAYER_LIVES))
         {
             CheckEndOfGame();
@@ -230,7 +236,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
         //Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
         //Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
-
+        Debug.Log("Starting the game");
         GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(10, 2, 0), Quaternion.identity, 0);
         player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", new Vector3(11, 2, 0), Quaternion.identity, 0);
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
@@ -315,6 +321,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     private void CheckEndOfGame()
     {
+
         bool allDestroyed = true;
 
         foreach (Player p in PhotonNetwork.PlayerList)
