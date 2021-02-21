@@ -101,11 +101,15 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         {
             // If this current stream is our player
             stream.SendNext(m_currentHealth);
+            stream.SendNext(m_maxHealth);
+            stream.SendNext(m_maxMoveSpeed);
         }
         else
         {
             // Network player
             m_currentHealth = (int)stream.ReceiveNext();
+            m_maxHealth = (int)stream.ReceiveNext();
+            m_maxMoveSpeed = (float)stream.ReceiveNext();
         }
     }
 

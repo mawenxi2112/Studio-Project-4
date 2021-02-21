@@ -39,9 +39,8 @@ public class ChestScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine)
             return;
-
 
         if (animator.GetFloat("Health") > 0)
             animator.SetFloat("Health", GetComponent<ObjectData>().blockHealth);
@@ -50,38 +49,46 @@ public class ChestScript : MonoBehaviour
 		{
             if (!itemDropped)
             {
-                GameObject powerUp;
+                GameObject droppedItem;
 
                 int rand = Random.Range(1, 4);
 
+                rand = 1;
+
                 if (rand == 1)
                 {
-                    // Speed power up
-                    powerUp = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
+                    droppedItem = PhotonNetwork.Instantiate("Powerup_Speed", new Vector3(0, 0, 0), Quaternion.identity);
                 }
                 else if (rand == 2)
                 {
-                    //powerUp = Instantiate(maxHPPowerUp);
-                    powerUp = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
-                }
-                else if (rand == 3)
-                {
-                    //powerUp = Instantiate(damagePowerUp);
-                    powerUp = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
+                    droppedItem = PhotonNetwork.Instantiate("Powerup_MaxHealth", new Vector3(0, 0, 0), Quaternion.identity);
                 }
                 else
                 {
-                    //powerUp = Instantiate(coinPowerUp);
-                    powerUp = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
+                    droppedItem = PhotonNetwork.Instantiate("Powerup_Strength", new Vector3(0, 0, 0), Quaternion.identity);
                 }
 
-                powerUp.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z);
-                
-                // Only if the powerup doesn't have entitybounce component, then add
-                if (powerUp.GetComponent<EntityBounce>() == null)
-                    powerUp.AddComponent<EntityBounce>();
+                droppedItem.transform.position = new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z);
+                droppedItem.AddComponent<EntityBounce>();
 
-                EntityBounce powerupBounce = powerUp.GetComponent<EntityBounce>();
+                // Only if the powerup doesn't have entitybounce component, then add
+                if (droppedItem.GetComponent<EntityBounce>() == null)
+                    droppedItem.AddComponent<EntityBounce>();
+
+                EntityBounce powerupBounce = droppedItem.GetComponent<EntityBounce>();
+                powerupBounce.m_bounceVelocity = 5;
+                powerupBounce.m_bounceLoss = 0.75f;
+                powerupBounce.m_gravity = -70;
+                powerupBounce.StartBounce(6, true);
+                droppedItem = PhotonNetwork.Instantiate("Coin", new Vector3(0, 0, 0), Quaternion.identity);
+
+                droppedItem.transform.position = new Vector3(gameObject.transform.position.x + 0.5f, gameObject.transform.position.y + 1.0f, gameObject.transform.position.z);
+
+                // Only if the powerup doesn't have entitybounce component, then add
+                if (droppedItem.GetComponent<EntityBounce>() == null)
+                    droppedItem.AddComponent<EntityBounce>();
+
+                powerupBounce = droppedItem.GetComponent<EntityBounce>();
                 powerupBounce.m_bounceVelocity = 5;
                 powerupBounce.m_bounceLoss = 0.75f;
                 powerupBounce.m_gravity = -70;

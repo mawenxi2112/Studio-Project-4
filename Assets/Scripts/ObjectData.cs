@@ -27,5 +27,10 @@ public enum OBJECT_TYPE
     PRESSUREPLATE,
     RESETBUTTON,
     DOOR,
-    GATE
+    GATE,
+
+    // Powerups
+    PU_DAMAGE,
+    PU_MAXHEALTH,
+    PU_SPEED
 };

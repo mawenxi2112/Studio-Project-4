@@ -216,6 +216,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					//collision.gameObject.SetActive(false);
 					if (GetComponent<PhotonView>().Controller != collision.gameObject.GetComponent<PhotonView>().Controller)
 						collision.gameObject.GetComponent<PhotonView>().TransferOwnership(GetComponent<PhotonView>().Controller);
+
 					PhotonNetwork.Destroy(collision.gameObject);
 					break;
 
@@ -297,6 +298,41 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.GATE:
 					break;
 
+                case OBJECT_TYPE.PU_DAMAGE:
+                    GetComponent<PlayerData>().m_maxHealth += 10;
+
+                    if (GetComponent<PhotonView>().Controller != collision.gameObject.GetComponent<PhotonView>().Controller)
+                        collision.gameObject.GetComponent<PhotonView>().TransferOwnership(GetComponent<PhotonView>().Controller);
+
+                    // Destroy the Damage Powerup
+                    PhotonNetwork.Destroy(collision.gameObject);
+
+                    break;
+
+                case OBJECT_TYPE.PU_MAXHEALTH:
+
+                    // Need to change
+                    GetComponent<PlayerData>().m_maxHealth += 10;
+
+                    if (GetComponent<PhotonView>().Controller != collision.gameObject.GetComponent<PhotonView>().Controller)
+                        collision.gameObject.GetComponent<PhotonView>().TransferOwnership(GetComponent<PhotonView>().Controller);
+
+                    // Destroy the Damage Powerup
+                    PhotonNetwork.Destroy(collision.gameObject);
+
+                    break;
+
+                case OBJECT_TYPE.PU_SPEED:
+
+                    // Need to change
+                    GetComponent<PlayerData>().m_maxMoveSpeed += 700;
+
+                    if (GetComponent<PhotonView>().Controller != collision.gameObject.GetComponent<PhotonView>().Controller)
+                        collision.gameObject.GetComponent<PhotonView>().TransferOwnership(GetComponent<PhotonView>().Controller);
+
+                    // Destroy the Damage Powerup
+                    PhotonNetwork.Destroy(collision.gameObject);
+                    break;
 			}
 		}
 	}
