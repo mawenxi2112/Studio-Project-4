@@ -44,6 +44,8 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     // Update is called once per frame
     void Update()
     {
+        if (GetComponent<PhotonView>() == null)
+            return;
         if (!GetComponent<PhotonView>().IsMine)
             return;
 

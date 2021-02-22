@@ -47,6 +47,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         // These updates are for PC platform!
         // Need to add custom player interactions for mobile etc.
+<<<<<<< Updated upstream
 
         if (!GetComponent<PhotonView>().IsMine)
             return;
@@ -54,6 +55,11 @@ public class PlayerInteraction : MonoBehaviour
         // If action key is pressed while not holding the sword, it will drop the current held item if there isn't any nearby pickable/interactable gameobjects
         // Throwaway current item mechanic
         if (GetComponent<PlayerData>().m_actionKey && !areTherePossibleMechanics() && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.SWORD && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.NONE)
+=======
+        if (GetComponent<PhotonView>() == null)
+            return;
+        if (GetComponent<PhotonView>().IsMine)
+>>>>>>> Stashed changes
         {
             //EquipSword();
             GetComponent<PhotonView>().RPC("EquipSword", RpcTarget.All);
@@ -165,7 +171,13 @@ public class PlayerInteraction : MonoBehaviour
 
     void FixedUpdate()
     {
+<<<<<<< Updated upstream
         if (!GetComponent<PhotonView>().IsMine || GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.NONE)
+=======
+        if (GetComponent<PhotonView>() == null)
+            return;
+        if (!GetComponent<PhotonView>().IsMine)
+>>>>>>> Stashed changes
             return;
 
         if (GetComponent<PlayerData>().platform == 0)

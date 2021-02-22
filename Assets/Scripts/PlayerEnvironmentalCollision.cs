@@ -33,9 +33,16 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 		}
 	}
 
+<<<<<<< Updated upstream
 	// Start is called before the first frame update
 	void Start()
 	{
+=======
+    // Start is called before the first frame update
+    void Start()
+    {
+	
+>>>>>>> Stashed changes
 		if (!GetComponent<PhotonView>().IsMine)
 			return;
 
@@ -50,10 +57,19 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 		}
 	}
 
+<<<<<<< Updated upstream
 	// Update is called once per frame
 	void Update()
 	{
 		if (!GetComponent<PhotonView>().IsMine || GameObject.Find("Grid") == null)
+=======
+    // Update is called once per frame
+    void Update()
+    {
+		if (GetComponent<PhotonView>() == null)
+			return;
+		if (!GetComponent<PhotonView>().IsMine)
+>>>>>>> Stashed changes
 			return;
 
 		Vector3 hitPosition = Vector3.zero;
@@ -205,6 +221,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 	void OnTriggerStay2D(Collider2D collision)
 	{
+		if (GetComponent<PhotonView>() == null)
+			return;
 		if (!GetComponent<PhotonView>().IsMine)
 			return;
 
