@@ -95,6 +95,8 @@ public class PlayerInteraction : MonoBehaviour
             GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.BOMB)
             gameObject.tag = "Objects";
 
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 99;
+
         if (GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.BOMB)
             gameObject.GetComponent<BombScript>().startCountDown = true;
 
@@ -232,6 +234,7 @@ public class PlayerInteraction : MonoBehaviour
                 pickUpGameObject.tag = "Bomb";
                 break;
         }
+        pickUpGameObject.GetComponent<SpriteRenderer>().sortingOrder = 101;
 
         GetComponent<PlayerData>().m_currentEquipment = equipmentType;
 

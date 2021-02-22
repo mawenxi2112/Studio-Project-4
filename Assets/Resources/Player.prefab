@@ -301,9 +301,11 @@ MonoBehaviour:
   m_actionKeyTimer: 0
   m_actionKeyReset: 0.5
   m_currentAttack: 0
+  m_isPaused: 0
+  m_dashButton: {fileID: 0}
   m_movementJoystick: {fileID: 0}
   m_attackJoystick: {fileID: 0}
-  m_dashButton: {fileID: 0}
+  m_OnAttackJoystickDown: 0
   platform: 0
 --- !u!114 &4430784766013518377
 MonoBehaviour:

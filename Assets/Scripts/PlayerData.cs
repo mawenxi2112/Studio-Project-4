@@ -32,11 +32,13 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     public double m_actionKeyTimer;
     public double m_actionKeyReset;
     public int m_currentAttack;
-    // Temporary using this to seperate the different platforms.
+    public bool m_isPaused;
+    // Used in mobile platform
+    public Button m_dashButton;
     public Joystick m_movementJoystick;
     public Joystick m_attackJoystick;
-    public Button m_dashButton;
-    public bool m_isPaused;
+    public bool m_OnAttackJoystickDown;
+    // Temporary using this to seperate the different platforms.
     public int platform = 0; // 0 = PC, 1 = ANDROID
     void Start()
     {
@@ -99,15 +101,39 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 
                 Vector2 attackDir = new Vector2(m_attackJoystick.Horizontal, m_attackJoystick.Vertical);
 
-                if (attackDir.magnitude > 0 && m_actionKeyTimer >= m_actionKeyReset)
+                if (m_currentEquipment == EQUIPMENT.SWORD)
                 {
-                    m_actionKeyTimer = 0;
-                    m_actionKey = true;
-                }
+                    if (attackDir.magnitude > 0 && m_actionKeyTimer >= m_actionKeyReset)
+                    {
+                        m_actionKeyTimer = 0;
+                        m_actionKey = true;
+                    }
 
-                if (attackDir.magnitude == 0)
+                    if (attackDir.magnitude == 0)
+                    {
+                        m_actionKey = false;
+                    }
+                }
+                else if (m_currentEquipment != EQUIPMENT.NONE)
                 {
-                    m_actionKey = false;
+                    // When attack joystick is moving
+                    if (m_attackJoystick.isDown)
+                    {
+                        m_OnAttackJoystickDown = true;
+                    }
+                    else if (!m_attackJoystick.isDown && m_OnAttackJoystickDown) // When attack joystick is not moving and joystick was previously being held
+                    {
+                        m_actionKey = true;
+                        m_OnAttackJoystickDown = false;
+                    }
+                    else if (!m_attackJoystick.isDown && !m_OnAttackJoystickDown) // When attack joystick is not moving and joystick wasn't previously being held
+                    {
+                        // Nothing happens (usual joystick idle state)
+                    }
+                }
+                else // If nothing is held
+                {
+
                 }
             }
         }
