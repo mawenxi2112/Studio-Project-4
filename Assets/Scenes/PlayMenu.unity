@@ -1183,6 +1183,11 @@ MonoBehaviour:
   ID: 0
   pausedOnce: 0
   shopValue: {fileID: 0}
+--- !u!1 &469109303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6249313010698502839, guid: 96952fac4fb1406419f5ee7d1ef03ea0, type: 3}
+  m_PrefabInstance: {fileID: 1037700793}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &564302913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,17 +1342,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726430668}
   m_CullTransparentMesh: 0
---- !u!114 &766043090 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1616530040026479141, guid: 96952fac4fb1406419f5ee7d1ef03ea0, type: 3}
-  m_PrefabInstance: {fileID: 1037700793}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0e64d535e6510c4d97287c39aaf6e56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &769030047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,7 +1585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneManager: {fileID: 1190683208}
-  player: {fileID: 766043090}
+  player: {fileID: 469109303}
   popupMenu: {fileID: 1159657449}
   ID: -1
   pausedOnce: 0
@@ -1748,7 +1742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupMenu: {fileID: 1455687288}
-  player: {fileID: 766043090}
+  player: {fileID: 469109303}
 --- !u!114 &870241964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2794,7 +2788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupMenu: {fileID: 1159657449}
-  player: {fileID: 766043090}
+  player: {fileID: 469109303}
 --- !u!114 &1116386589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3412,7 +3406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupMenu: {fileID: 1455687288}
-  player: {fileID: 766043090}
+  player: {fileID: 0}
 --- !u!114 &1346645416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3709,7 +3703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneManager: {fileID: 1190683208}
-  player: {fileID: 766043090}
+  player: {fileID: 0}
   popupMenu: {fileID: 0}
   ID: 0
   pausedOnce: 0
@@ -4129,7 +4123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneManager: {fileID: 1190683208}
-  player: {fileID: 766043090}
+  player: {fileID: 469109303}
   popupMenu: {fileID: 1455687288}
   ID: -1
   pausedOnce: 0

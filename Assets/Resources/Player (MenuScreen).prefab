@@ -13,12 +13,10 @@ GameObject:
   - component: {fileID: 2419268473400611745}
   - component: {fileID: 1356322212063543215}
   - component: {fileID: 8119584576123328495}
-  - component: {fileID: 1889836506615224108}
   - component: {fileID: 3102120093583544418}
-  - component: {fileID: 5563659804042914665}
-  - component: {fileID: 1616530040026479141}
+  - component: {fileID: -9015095971367433456}
   m_Layer: 0
-  m_Name: Player (MenuScreen) 1
+  m_Name: Player (MenuScreen)
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,29 +144,6 @@ CircleCollider2D:
   m_Offset: {x: -0.009308738, y: -0.27376515}
   serializedVersion: 2
   m_Radius: 0.18491243
---- !u!114 &1889836506615224108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6249313010698502839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bb0c7e8ed3ceea4da39e4f71ffce70b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  knockbackMultiplier: 10
-  map:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  tileDatas:
-  - {fileID: 11400000, guid: b79e5d4e54781ae4f85547568c333650, type: 2}
-  - {fileID: 11400000, guid: 522c90ad4ee88d7489a04f7902efe3ea, type: 2}
-  - {fileID: 11400000, guid: c95c8f181d79f5e41a1e5a7e92aeb057, type: 2}
-  - {fileID: 11400000, guid: c856c1bf34309594296cccdbf48f0fd5, type: 2}
 --- !u!114 &3102120093583544418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +167,15 @@ MonoBehaviour:
   m_currency: 0
   m_dashSpeed: 3.5
   m_currentEquipment: 0
---- !u!114 &5563659804042914665
+  m_actionKey: 0
+  m_actionKeyTimer: 0
+  m_actionKeyReset: 0
+  m_currentAttack: 0
+  m_movementJoystick: {fileID: 0}
+  m_attackJoystick: {fileID: 0}
+  m_dashButton: {fileID: 0}
+  platform: 0
+--- !u!114 &-9015095971367433456
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,30 +184,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6249313010698502839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384fc091072bacd47a3f762e7c17f5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_hand: {fileID: 0}
-  m_sword: {fileID: 0}
-  m_handAnimator: {fileID: 0}
-  ScreenToWorldPos: {x: 0, y: 0, z: 0}
-  m_dir: {x: 0, y: 0}
---- !u!114 &1616530040026479141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6249313010698502839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0e64d535e6510c4d97287c39aaf6e56, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c388ec73bc09df4a995785e78bbd34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   animator: {fileID: 0}
   movement: {x: 0, y: 0}
-  isPaused: 0
 --- !u!1 &6977428344082993517
 GameObject:
   m_ObjectHideFlags: 0

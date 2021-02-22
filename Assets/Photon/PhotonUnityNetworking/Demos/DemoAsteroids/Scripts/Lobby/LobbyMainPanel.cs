@@ -92,6 +92,7 @@ namespace Photon.Pun.Demo.Asteroids
                 {AsteroidsGame.PLAYER_LOADED_LEVEL, false}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+       
             PhotonNetwork.LoadLevel("GameLobbyScene");
 
         }
