@@ -15,8 +15,6 @@ public enum EQUIPMENT
 
 public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 {
-    // Start is called before the first frame update
-
     public int m_currentHealth;
     public  int m_maxHealth;
     public float m_currentMoveSpeed;
@@ -40,9 +38,19 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     public bool m_OnAttackJoystickDown;
     // Temporary using this to seperate the different platforms.
     public int platform = 0; // 0 = PC, 1 = ANDROID
+
+    // Start is called before the first frame update
     void Start()
     {
+        // Load player stats from save file
+        m_maxHealth = SceneData.storage.maxHealth;
+        m_maxMoveSpeed = SceneData.storage.speed;
+        m_currency = SceneData.storage.coins;
+
+        m_currentHealth = m_maxHealth;
+        m_currentMoveSpeed = m_maxMoveSpeed;
     }
+
     // Update is called once per frame
     void Update()
     {
