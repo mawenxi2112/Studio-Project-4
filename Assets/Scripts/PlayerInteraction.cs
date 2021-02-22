@@ -48,43 +48,42 @@ public class PlayerInteraction : MonoBehaviour
         // These updates are for PC platform!
         // Need to add custom player interactions for mobile etc.
 
-        if (GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine)
+            return;
+
+        // If action key is pressed while not holding the sword, it will drop the current held item if there isn't any nearby pickable/interactable gameobjects
+        // Throwaway current item mechanic
+        if (GetComponent<PlayerData>().m_actionKey && !areTherePossibleMechanics() && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.SWORD && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.NONE)
         {
-            // If action key is pressed while not holding the sword, it will drop the current held item if there isn't any nearby pickable/interactable gameobjects
-            // Throwaway current item mechanic
-            if (GetComponent<PlayerData>().m_actionKey && !touchingAnyPickables() && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.SWORD)
-            {
-                //EquipSword();
-                GetComponent<PhotonView>().RPC("EquipSword", RpcTarget.All);
-                GetComponent<PlayerData>().m_actionKey = false;
-            }
+            //EquipSword();
+            GetComponent<PhotonView>().RPC("EquipSword", RpcTarget.All);
+            GetComponent<PlayerData>().m_actionKey = false;
+        }
 
-            switch (GetComponent<PlayerData>().m_currentEquipment)
-            {
-                case EQUIPMENT.SWORD:
-                    // Rotate weapon accordingly to m_dir
-                    m_hand.GetComponent<Transform>().eulerAngles = new Vector3(0, 0, Mathf.Atan2(m_dir.y, m_dir.x) * Mathf.Rad2Deg);
-                    if (!m_handAnimator)
-                        m_handAnimator = m_hand.GetComponent<Animator>();
+        switch (GetComponent<PlayerData>().m_currentEquipment)
+        {
+            case EQUIPMENT.SWORD:
+                // Rotate weapon accordingly to m_dir
+                m_hand.GetComponent<Transform>().eulerAngles = new Vector3(0, 0, Mathf.Atan2(m_dir.y, m_dir.x) * Mathf.Rad2Deg);
+                if (!m_handAnimator)
+                    m_handAnimator = m_hand.GetComponent<Animator>();
 
-                    if (GetComponent<PlayerData>().m_actionKey && !touchingAnyPickables()) // Add trigger mode for mobile as well.
-                    {
-                        Debug.Log("ATTAACK!");
-                        m_handAnimator.SetBool("Attack", true);
-                        GetComponent<PlayerData>().m_actionKey = false;
-                    }
-                    break;
+                if (GetComponent<PlayerData>().m_actionKey && !areTherePossibleMechanics()) // Add trigger mode for mobile as well.
+                {
+                    m_handAnimator.SetBool("Attack", true);
+                    GetComponent<PlayerData>().m_actionKey = false;
+                }
+                break;
 
-                case EQUIPMENT.KEY:
-                    break;
-                case EQUIPMENT.TORCH:
-                    break;
-                case EQUIPMENT.BOMB:
-                    break;
-                case EQUIPMENT.NONE:
-                    break;
+            case EQUIPMENT.KEY:
+                break;
+            case EQUIPMENT.TORCH:
+                break;
+            case EQUIPMENT.BOMB:
+                break;
+            case EQUIPMENT.NONE:
+                break;
 
-            }
         }
     }
 
@@ -102,7 +101,6 @@ public class PlayerInteraction : MonoBehaviour
         // Re-enable the collision between the old held object and player, by using coroutines we can delay the action
         StartCoroutine(IgnoreCollisionWithTag(m_hand, "All", false, 0f));
         StartCoroutine(IgnoreCollisionWithTag(m_hand, "Player", false, 0.1f));
-        //IgnoreCollisionWithTag(m_hand, "All", false); ; // Re-enable the collision between the old held object and player
 
         if (GetComponent<PhotonView>().IsMine)
         {
@@ -120,7 +118,7 @@ public class PlayerInteraction : MonoBehaviour
         m_sword.SetActive(true);
     }
 
-    bool touchingAnyPickables()
+    bool areTherePossibleMechanics()
     {
         GameObject[] worldObjects = GameObject.FindGameObjectsWithTag("Objects");
 
@@ -132,6 +130,12 @@ public class PlayerInteraction : MonoBehaviour
                 if (worldObjects[i].GetComponent<ObjectData>().object_type == OBJECT_TYPE.BOMB ||
                     worldObjects[i].GetComponent<ObjectData>().object_type == OBJECT_TYPE.KEY ||
                     worldObjects[i].GetComponent<ObjectData>().object_type == OBJECT_TYPE.TORCH)
+                    return true;
+
+                if (GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.TORCH && worldObjects[i].GetComponent<ObjectData>().object_type == OBJECT_TYPE.CAMPFIRE)
+                    return true;
+
+                if (GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.KEY && worldObjects[i].GetComponent<ObjectData>().object_type == OBJECT_TYPE.DOOR)
                     return true;
             }
         }
@@ -161,7 +165,7 @@ public class PlayerInteraction : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine || GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.NONE)
             return;
 
         if (GetComponent<PlayerData>().platform == 0)
@@ -201,7 +205,6 @@ public class PlayerInteraction : MonoBehaviour
         if (GetComponent<PhotonView>().ViewID != info.photonView.ViewID)
             return;
 
-        GameObject senderGameObject = PhotonView.Find(info.photonView.ViewID).gameObject;
         GameObject pickUpGameObject = PhotonView.Find(pickUpGameObjectViewID).gameObject;
 
         // If the owner of the gameobject is not the same as the pickup player, then we change the ownership
@@ -217,16 +220,16 @@ public class PlayerInteraction : MonoBehaviour
         switch (equipmentType)
         {
             case EQUIPMENT.SWORD:
-                gameObject.tag = "Sword";
+                pickUpGameObject.tag = "Sword";
                 break;
             case EQUIPMENT.TORCH:
-                gameObject.tag = "Torch";
+                pickUpGameObject.tag = "Torch";
                 break;
             case EQUIPMENT.KEY:
-                gameObject.tag = "Key";
+                pickUpGameObject.tag = "Key";
                 break;
             case EQUIPMENT.BOMB:
-                gameObject.tag = "Bomb";
+                pickUpGameObject.tag = "Bomb";
                 break;
         }
 

@@ -18,8 +18,6 @@ public class SwordCollision : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("TRIGGER ENTER!");
-
         if (collider.gameObject.CompareTag("Player"))
             return;
 
@@ -67,8 +65,6 @@ public class SwordCollision : MonoBehaviour
 
         if (collider.gameObject.CompareTag("EnemyHitbox"))
 		{
-            Debug.Log("SWORD HIT ENEMY");
-
             if (!collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame)
             {
                 collider.gameObject.transform.parent.GetComponent<EnemyData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<EnemyData>().m_currentHealth - 1);

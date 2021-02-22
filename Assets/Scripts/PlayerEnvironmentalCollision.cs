@@ -6,51 +6,54 @@ using UnityEngine.Tilemaps;
 
 public class PlayerEnvironmentalCollision : MonoBehaviour
 {
-    private Rigidbody2D rb;
+	private Rigidbody2D rb;
 	public float knockbackMultiplier;
 
-    [SerializeField]
-    private Tilemap[] map;
+	[SerializeField]
+	private Tilemap[] map = null;
 
-    [SerializeField]
-    private List<TileData> tileDatas;
+	[SerializeField]
+	private List<TileData> tileDatas;
 
-    // Key = Variations, Value = TileType
-    private Dictionary<TileBase, TILE_TYPE> datafromTiles;
+	// Key = Variations, Value = TileType
+	private Dictionary<TileBase, TILE_TYPE> datafromTiles;
 
-    private TileBase currentTile;
+	private TileBase currentTile;
 
-    private void Awake()
-    {
-        datafromTiles = new Dictionary<TileBase, TILE_TYPE>();
+	private void Awake()
+	{
+		datafromTiles = new Dictionary<TileBase, TILE_TYPE>();
 
-        foreach (var tileData in tileDatas)
-        {
-            foreach (var tile in tileData.tiles)
-            {
-                datafromTiles.Add(tile, tileData.tiletype);
-            }
-        }
-    }
+		foreach (var tileData in tileDatas)
+		{
+			foreach (var tile in tileData.tiles)
+			{
+				datafromTiles.Add(tile, tileData.tiletype);
+			}
+		}
+	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	// Start is called before the first frame update
+	void Start()
+	{
 		if (!GetComponent<PhotonView>().IsMine)
 			return;
 
 		rb = GetComponent<Rigidbody2D>();
 
-        for (int i = 0; i < GameObject.Find("Grid").transform.childCount; i++)
-		{
-            map[i] = GameObject.Find("Grid").transform.GetChild(i).GetComponent<Tilemap>();
-		}
-    }
+		if (GameObject.Find("Grid") == null)
+			return;
 
-    // Update is called once per frame
-    void Update()
-    {
-		if (!GetComponent<PhotonView>().IsMine)
+		for (int i = 0; i < GameObject.Find("Grid").transform.childCount; i++)
+		{
+			map[i] = GameObject.Find("Grid").transform.GetChild(i).GetComponent<Tilemap>();
+		}
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+		if (!GetComponent<PhotonView>().IsMine || GameObject.Find("Grid") == null)
 			return;
 
 		Vector3 hitPosition = Vector3.zero;
@@ -96,7 +99,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 	void OnCollisionStay2D(Collision2D collision)
 	{
-		if (!GetComponent<PhotonView>().IsMine)
+		if (!GetComponent<PhotonView>().IsMine || GameObject.Find("Grid") == null)
 			return;
 
 		Vector3 hitPosition = Vector3.zero;
@@ -124,7 +127,6 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					switch (datafromTiles[TileInContact])
 					{
 						case TILE_TYPE.GROUND:
-							Debug.Log("GROUND");
 							break;
 
 						case TILE_TYPE.LAVA:

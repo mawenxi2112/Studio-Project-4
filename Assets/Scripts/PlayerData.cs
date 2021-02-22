@@ -64,9 +64,14 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 
         if (platform == 0)
         {
-            m_movementJoystick.gameObject.SetActive(false);
-            m_attackJoystick.gameObject.SetActive(false);
-            m_dashButton.gameObject.SetActive(false);
+            if (m_movementJoystick != null)
+                m_movementJoystick.gameObject.SetActive(false);
+
+            if (m_attackJoystick != null)
+                m_attackJoystick.gameObject.SetActive(false);
+
+            if (m_dashButton != null)
+                m_dashButton.gameObject.SetActive(false);
 
             if (Input.GetKey(KeyCode.Mouse0) && m_actionKeyTimer >= m_actionKeyReset)
             {

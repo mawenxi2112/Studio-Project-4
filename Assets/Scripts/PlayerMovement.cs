@@ -17,7 +17,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        GetComponent<PlayerData>().m_dashButton.onClick.AddListener(delegate { Dash(); });
+        if (GetComponent<PlayerData>().m_dashButton != null)
+            GetComponent<PlayerData>().m_dashButton.onClick.AddListener(delegate { Dash(); });
     }
 
     void Update()
@@ -40,9 +41,6 @@ public class PlayerMovement : MonoBehaviour
             movement.x = GetComponent<PlayerData>().m_movementJoystick.Horizontal;
             movement.y = GetComponent<PlayerData>().m_movementJoystick.Vertical;              
         }
-
-        movement.x += 0.1f;
-        movement.y += 0.1f;
 
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);

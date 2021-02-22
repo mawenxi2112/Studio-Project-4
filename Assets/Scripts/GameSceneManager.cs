@@ -231,7 +231,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         {
             // For Spawning of enemies, NavMesh2D needs to be disable first, then reenabled after all enemies are spawned
             NavMesh2DReference.SetActive(false);
-            for (int i = 0; i < EnemyManager.GetInstance().EnemyWaypointHolder.Count; i++)
+            for (int i = 0; i < 1; i++)
             {
                 if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("MeleeWaypoint"))
                 {
