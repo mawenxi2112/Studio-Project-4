@@ -34,6 +34,6 @@ public class ReadyButton : MonoBehaviour
         Debug.Log("Player: " + otherPlayer.NickName + "Is on the block");
         Debug.Log("This Player is Running: " + PhotonNetwork.LocalPlayer.NickName);
         isMine = PhotonNetwork.Equals(PhotonNetwork.LocalPlayer, otherPlayer);
-        lobbyManager.SetReady(false,photonView.IsMine);
+        lobbyManager.SetReady(false,isMine);
     }
 }

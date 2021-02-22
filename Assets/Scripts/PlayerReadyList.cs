@@ -24,7 +24,7 @@ public class PlayerReadyList : MonoBehaviour
         }
 
         Player player = PhotonNetwork.PlayerList[textType];
-        m_textComponent.text = "P" + textType+1 + ": "+player.NickName;
+        m_textComponent.text = "P" + (textType+1) + ": "+player.NickName;
         object bValue;
         if (player.CustomProperties.TryGetValue(GameData.PLAYER_READY,out bValue))
         {

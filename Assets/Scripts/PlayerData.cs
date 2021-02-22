@@ -90,6 +90,24 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             }
             else if (platform == 1)
             {
+                if (m_movementJoystick == null)
+                {
+                    m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
+                    m_movementJoystick.gameObject.SetActive(true);
+                }
+
+                if (m_attackJoystick == null)
+                {
+                    m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
+                    m_attackJoystick.gameObject.SetActive(true);
+                }
+
+                if (m_dashButton == null)
+                {
+                    m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
+                    m_dashButton.gameObject.SetActive(true);
+                }
+
                 if (m_movementJoystick != null)
                     m_movementJoystick.gameObject.SetActive(true);
 
@@ -152,14 +170,23 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             }
             else if (platform == 1)
             {
-                if (m_movementJoystick != null)
+                if (m_movementJoystick == null)
+                {
+                    m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
                     m_movementJoystick.gameObject.SetActive(true);
+                }
 
-                if (m_attackJoystick != null)
+                if (m_attackJoystick == null)
+                {
+                    m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
                     m_attackJoystick.gameObject.SetActive(true);
+                }
 
-                if (m_dashButton != null)
+                if (m_dashButton == null)
+                {
+                    m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
                     m_dashButton.gameObject.SetActive(true);
+                }
             }
         }
     }
