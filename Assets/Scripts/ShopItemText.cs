@@ -114,7 +114,7 @@ public class ShopItemText : MonoBehaviour
             case 0:
 
                 value = shopData.playerUpgrades[objectType] * shopData.playerUpgrades[objectType] * multiplyer + offset;
-                Debug.Log("Value: " + value);
+                //Debug.Log("Value: " + value);
                 m_TextComponent.text = value.ToString();
                 break;
 
@@ -141,11 +141,11 @@ public class ShopItemText : MonoBehaviour
             case 3:
                 if(objectType == 1)
                 {
-                    Debug.Log("PlayerAttack: " +player.m_currentAttack.ToString());
+                    //Debug.Log("PlayerAttack: " +player.m_currentAttack.ToString());
                 }
                 else if(objectType == 2)
                 {
-                    Debug.Log("PlayerAttackSpeed: " + player.m_currentAttack.ToString());
+                    //Debug.Log("PlayerAttackSpeed: " + player.m_currentAttack.ToString());
                 }
                 m_TextComponent.text = player.m_currentAttack.ToString();
 

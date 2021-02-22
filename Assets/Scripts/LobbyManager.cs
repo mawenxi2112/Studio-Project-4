@@ -187,7 +187,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
-            Debug.Log("AllPlayerReady");
+            Debug.Log("Loading Game Scene!!!!!!!!!!!!!");
             PhotonNetwork.LoadLevel("Level1Scene");
         }
 

@@ -230,6 +230,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerData>().m_dashButton = dashButton;
         camera.Follow = player.transform;
 
+        List<int> Level1EnemyViewID = new List<int>();
+        List<int> Level2EnemyViewID = new List<int>();
+
         if (PhotonNetwork.IsMasterClient)
         {
             // For Spawning of enemies, NavMesh2D needs to be disable first, then reenabled after all enemies are spawned
@@ -238,6 +241,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 NavMesh2DReference[x].SetActive(false);
                 for (int i = 0; i < EnemyManager.GetInstance().EnemyWaypointHolder[x].Count; i++)
                 {
+                    int instantiatedEnemyViewID = 0;
+
                     if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("MeleeWaypoint"))
                     {
                         GameObject enemy;
@@ -251,6 +256,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                         enemy.GetComponent<NavMeshAgent>().enabled = true;
                         enemy.GetComponent<NavMeshAgent>().updateRotation = false;
                         enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
+                        instantiatedEnemyViewID = enemy.GetComponent<PhotonView>().ViewID;
                     }
                     else if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("RangeWaypoint"))
                     {
@@ -265,6 +271,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                         enemy.GetComponent<NavMeshAgent>().enabled = true;
                         enemy.GetComponent<NavMeshAgent>().updateRotation = false;
                         enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
+                        instantiatedEnemyViewID = enemy.GetComponent<PhotonView>().ViewID;
                     }
                     else if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("RunnerWaypoint"))
                     {
@@ -279,13 +286,32 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                         enemy.GetComponent<NavMeshAgent>().enabled = true;
                         enemy.GetComponent<NavMeshAgent>().updateRotation = false;
                         enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
+                        instantiatedEnemyViewID = enemy.GetComponent<PhotonView>().ViewID;
                     }
+
+                    if (x == 0)
+                        Level1EnemyViewID.Add(instantiatedEnemyViewID);
+                    else if (x == 1)
+                        Level2EnemyViewID.Add(instantiatedEnemyViewID);
                 }
                 NavMesh2DReference[x].SetActive(true);
             }
-        }
+            
+            // Level 1
+            int[] level1EnemyArray = new int[Level1EnemyViewID.Count];
 
-        ChangeLevel(levelCount);
+            for (int i = 0; i < level1EnemyArray.Length; i++)
+                level1EnemyArray[i] = Level1EnemyViewID[i];
+
+            // Level 2
+            int[] level2EnemyArray = new int[Level2EnemyViewID.Count];
+
+            for (int i = 0; i < level2EnemyArray.Length; i++)
+                level2EnemyArray[i] = Level2EnemyViewID[i];
+
+            GetComponent<PhotonView>().RPC("SortEnemyReferences", RpcTarget.AllBuffered, level1EnemyArray, "Level1", true);
+            GetComponent<PhotonView>().RPC("SortEnemyReferences", RpcTarget.AllBuffered, level2EnemyArray, "Level2", false);
+        }
     }
 
     private bool CheckAllPlayerLoadedLevel()
@@ -365,4 +391,15 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 LevelReference[i].SetActive(false);
 		}
 	}
+
+   [PunRPC]
+   public void SortEnemyReferences(int[] EnemyViewID, string level, bool setParentActive)
+    {
+        Transform levelGameObjectParent = GameObject.Find(level).transform;
+
+        for (int i = 0; i < EnemyViewID.Length; i++)
+            PhotonView.Find(EnemyViewID[i]).transform.SetParent(levelGameObjectParent, false);
+
+        levelGameObjectParent.gameObject.SetActive(setParentActive);
+    }
 }
