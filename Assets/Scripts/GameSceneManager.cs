@@ -202,23 +202,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     private void StartGame()
     {
         levelCount = 1;
-        // REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
-        /*GameObject tmpPlayer = Instantiate(playerPrefab);
-		tmpPlayer.transform.position = new Vector3(10, 2, 0);*/
-        //Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
-        //Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
-        //Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
-        //Instantiate(spikePrefab).transform.position = new Vector3(5, 0, 0);
-        //Instantiate(moveableblockPrefab).transform.position = new Vector3(-2, 0, 0);
-        //Instantiate(torchPrefab).transform.position = new Vector3(7, 0, 0);
-        //Instantiate(campfirePrefab).transform.position = new Vector3(9, 0, 0);
-        //Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
-        //Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
-        //Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
-        //Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
-        //Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
-        //Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
-        //Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
+
         Debug.Log("Starting the game");
         GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.x, LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
         player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", new Vector3(LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.x + 1, LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
@@ -230,87 +214,47 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerData>().m_dashButton = dashButton;
         camera.Follow = player.transform;
 
-        List<int> Level1EnemyViewID = new List<int>();
-        List<int> Level2EnemyViewID = new List<int>();
-
         if (PhotonNetwork.IsMasterClient)
         {
             // For Spawning of enemies, NavMesh2D needs to be disable first, then reenabled after all enemies are spawned
+
+            // Looping through EnemyWaypointHolder
             for (int x = 0; x < EnemyManager.GetInstance().EnemyWaypointHolder.Length; x++)
             {
                 NavMesh2DReference[x].SetActive(false);
-                for (int i = 0; i < EnemyManager.GetInstance().EnemyWaypointHolder[x].Count; i++)
-                {
-                    int instantiatedEnemyViewID = 0;
+                GameObject LevelSet = null;
+                switch (x)
+				{
+                    case 0:
+                        LevelSet = GameObject.Find("Level1");
+                        break;
 
-                    if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("MeleeWaypoint"))
-                    {
-                        GameObject enemy;
-
-                        enemy = PhotonNetwork.InstantiateRoomObject("MeleeEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
-
-                        enemy.GetComponent<EnemyData>().m_ID = i;
-                        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[x][enemy.GetComponent<EnemyData>().m_ID];
+                    case 1:
+                        LevelSet = GameObject.Find("Level2");
+                        break;
+				}
+               
+                for (int i = 0, j = 0; i < LevelSet.transform.childCount; ++i)
+				{
+                    if (LevelSet.transform.GetChild(i).gameObject.CompareTag("Enemy"))
+					{
+                        GameObject enemy = LevelSet.transform.GetChild(i).gameObject;
+                        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[x][j];
+                        enemy.GetComponent<EnemyData>().m_ID = j;
                         enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
                         enemy.GetComponent<NavMeshAgentScript>().enabled = true;
                         enemy.GetComponent<NavMeshAgent>().enabled = true;
                         enemy.GetComponent<NavMeshAgent>().updateRotation = false;
                         enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
-                        instantiatedEnemyViewID = enemy.GetComponent<PhotonView>().ViewID;
+                        enemy.GetComponent<Animator>().SetInteger("Health", enemy.GetComponent<EnemyData>().m_maxHealth);
+                        j++;
                     }
-                    else if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("RangeWaypoint"))
-                    {
-                        GameObject enemy;
-
-                        enemy = PhotonNetwork.InstantiateRoomObject("RangedEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
-
-                        enemy.GetComponent<EnemyData>().m_ID = i;
-                        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[x][enemy.GetComponent<EnemyData>().m_ID];
-                        enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
-                        enemy.GetComponent<NavMeshAgentScript>().enabled = true;
-                        enemy.GetComponent<NavMeshAgent>().enabled = true;
-                        enemy.GetComponent<NavMeshAgent>().updateRotation = false;
-                        enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
-                        instantiatedEnemyViewID = enemy.GetComponent<PhotonView>().ViewID;
-                    }
-                    else if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("RunnerWaypoint"))
-                    {
-                        GameObject enemy;
-
-                        enemy = PhotonNetwork.InstantiateRoomObject("RunnerEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
-
-                        enemy.GetComponent<EnemyData>().m_ID = i;
-                        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[x][enemy.GetComponent<EnemyData>().m_ID];
-                        enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
-                        enemy.GetComponent<NavMeshAgentScript>().enabled = true;
-                        enemy.GetComponent<NavMeshAgent>().enabled = true;
-                        enemy.GetComponent<NavMeshAgent>().updateRotation = false;
-                        enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
-                        instantiatedEnemyViewID = enemy.GetComponent<PhotonView>().ViewID;
-                    }
-
-                    if (x == 0)
-                        Level1EnemyViewID.Add(instantiatedEnemyViewID);
-                    else if (x == 1)
-                        Level2EnemyViewID.Add(instantiatedEnemyViewID);
                 }
+
                 NavMesh2DReference[x].SetActive(true);
             }
-            
-            // Level 1
-            int[] level1EnemyArray = new int[Level1EnemyViewID.Count];
 
-            for (int i = 0; i < level1EnemyArray.Length; i++)
-                level1EnemyArray[i] = Level1EnemyViewID[i];
-
-            // Level 2
-            int[] level2EnemyArray = new int[Level2EnemyViewID.Count];
-
-            for (int i = 0; i < level2EnemyArray.Length; i++)
-                level2EnemyArray[i] = Level2EnemyViewID[i];
-
-            GetComponent<PhotonView>().RPC("SortEnemyReferences", RpcTarget.AllBuffered, level1EnemyArray, "Level1", true);
-            GetComponent<PhotonView>().RPC("SortEnemyReferences", RpcTarget.AllBuffered, level2EnemyArray, "Level2", false);
+            GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.All, levelCount);
         }
     }
 
@@ -379,27 +323,43 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     {
         StartGame();
     }
-
-
-    private void ChangeLevel(int LevelToChangeTo)
+    public void ChangeScene()
 	{
-        for (int i = 0; i < LevelReference.Length; i++)
-		{
-            if (i == LevelToChangeTo - 1)
-                LevelReference[i].SetActive(true);
-            else
-                LevelReference[i].SetActive(false);
-		}
+        levelCount++;
+        GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.All, levelCount);
+    }
+
+    [PunRPC]
+	public void SortEnemyReferences(int[] EnemyViewID, string level, bool setParentActive)
+	{
+		Transform levelGameObjectParent = GameObject.Find(level).transform;
+
+		for (int i = 0; i < EnemyViewID.Length; i++)
+			PhotonView.Find(EnemyViewID[i]).transform.SetParent(levelGameObjectParent, false);
+
+		levelGameObjectParent.gameObject.SetActive(setParentActive);
 	}
 
-   [PunRPC]
-   public void SortEnemyReferences(int[] EnemyViewID, string level, bool setParentActive)
-    {
-        Transform levelGameObjectParent = GameObject.Find(level).transform;
+    [PunRPC]
+    public void SetCurrentLevel(int LevelToActivate)
+	{
+        for (int i = 0; i < LevelReference.Length; i++)
+        {
+            if (i == LevelToActivate - 1)
+            {
+                LevelReference[i].SetActive(true);
+                for (int j = 0; j < LevelReference[i].transform.childCount; ++j)
+                {
+                    if (LevelReference[i].transform.GetChild(j).gameObject.CompareTag("Enemy"))
+                    {
+                        GameObject enemy = LevelReference[i].transform.GetChild(j).gameObject;
+                        enemy.GetComponent<Animator>().SetInteger("Health", enemy.GetComponent<EnemyData>().m_maxHealth);
+                    }
+                }
 
-        for (int i = 0; i < EnemyViewID.Length; i++)
-            PhotonView.Find(EnemyViewID[i]).transform.SetParent(levelGameObjectParent, false);
-
-        levelGameObjectParent.gameObject.SetActive(setParentActive);
+            }
+            else if (LevelReference[i].activeSelf != false)
+                LevelReference[i].SetActive(false);
+        }
     }
 }

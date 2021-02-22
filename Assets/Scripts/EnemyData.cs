@@ -35,6 +35,13 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
 
     public Animator animator;
 
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+        gameObject.GetComponent<NavMeshAgent>().speed = m_maxMoveSpeed;
+        animator.SetInteger("Health", m_currentHealth);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +61,7 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
     // Update is called once per frame
     void Update()
     {
+
         animator.SetInteger("Health", m_currentHealth);
 
         Player_List = GameObject.FindGameObjectsWithTag("Player");

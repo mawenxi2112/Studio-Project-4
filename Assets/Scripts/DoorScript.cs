@@ -7,8 +7,8 @@ public class DoorScript : MonoBehaviour
     public Animator animator;
     public BoxCollider2D boxCollider;
     public bool isDoorLock;
-    public GameObject StoneCollider;
-    public GameObject DoorCollider;
+    public GameObject LeftCollider;
+    public GameObject RightCollider;
 
 
     // Start is called before the first frame update
@@ -26,8 +26,8 @@ public class DoorScript : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Door_Opened"))
         {
             boxCollider.enabled = false;
-            StoneCollider.GetComponent<PolygonCollider2D>().enabled = true;
-            DoorCollider.GetComponent<BoxCollider2D>().enabled = true;
+            LeftCollider.GetComponent<BoxCollider2D>().enabled = true;
+            RightCollider.GetComponent<BoxCollider2D>().enabled = true;
         }
     }
 	void OnCollisionStay2D(Collision2D collision)

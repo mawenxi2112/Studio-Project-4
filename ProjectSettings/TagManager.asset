@@ -28,6 +28,7 @@ TagManager:
   - RunnerWaypoint
   - DataManager
   - SpikePlacement
+  - Level
   layers:
   - Default
   - TransparentFX

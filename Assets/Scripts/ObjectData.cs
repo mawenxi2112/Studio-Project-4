@@ -35,6 +35,7 @@ public enum OBJECT_TYPE
     RESETBUTTON,
     DOOR,
     GATE,
+    ENDPLATE,
 
     // Powerups
     PU_DAMAGE,
