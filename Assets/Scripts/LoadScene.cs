@@ -8,11 +8,15 @@ public class LoadScene : MonoBehaviour
  
     void Start()
     {
-        
+        SceneData.previousScene = SceneData.currentScene;
+        SceneData.currentScene = SceneManager.GetActiveScene().name;
+        Debug.Log("CurrentScene: " + SceneData.currentScene);
+        Debug.Log("PreviousScene: " + SceneData.previousScene);
+
     }
 
     // Update is called once per frame
-   
+
     public void LoadMainMenu()
     {
     
