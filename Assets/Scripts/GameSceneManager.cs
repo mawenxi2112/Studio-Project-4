@@ -28,12 +28,15 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public Text InfoText;
 
     public GameObject objectplacementManager;
-    public GameObject NavMesh2DReference;
+    public GameObject[] NavMesh2DReference;
+    public GameObject[] LevelReference;
 
     public CinemachineVirtualCamera camera;
     public Joystick movementJoystick;
     public Joystick attackJoystick;
     public Button dashButton;
+
+    public int levelCount;
 
     //public GameObject[] AsteroidPrefabs;
 
@@ -198,7 +201,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     // called by OnCountdownTimerIsExpired() when the timer ended
     private void StartGame()
     {
-
+        levelCount = 1;
         // REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
         /*GameObject tmpPlayer = Instantiate(playerPrefab);
 		tmpPlayer.transform.position = new Vector3(10, 2, 0);*/
@@ -217,8 +220,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
         //Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
         Debug.Log("Starting the game");
-        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(10, 2, 0), Quaternion.identity, 0);
-        player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", new Vector3(11, 2, 0), Quaternion.identity, 0);
+        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.x, LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
+        player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", new Vector3(LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.x + 1, LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
         player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
@@ -230,55 +233,59 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             // For Spawning of enemies, NavMesh2D needs to be disable first, then reenabled after all enemies are spawned
-            NavMesh2DReference.SetActive(false);
-            for (int i = 0; i < 1; i++)
+            for (int x = 0; x < EnemyManager.GetInstance().EnemyWaypointHolder.Length; x++)
             {
-                if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("MeleeWaypoint"))
+                NavMesh2DReference[x].SetActive(false);
+                for (int i = 0; i < EnemyManager.GetInstance().EnemyWaypointHolder[x].Count; i++)
                 {
-                    GameObject enemy;
+                    if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("MeleeWaypoint"))
+                    {
+                        GameObject enemy;
 
-                    enemy = PhotonNetwork.InstantiateRoomObject("MeleeEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+                        enemy = PhotonNetwork.InstantiateRoomObject("MeleeEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
 
-                    enemy.GetComponent<EnemyData>().m_ID = i;
-                    enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
-                    enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
-                    enemy.GetComponent<NavMeshAgentScript>().enabled = true;
-                    enemy.GetComponent<NavMeshAgent>().enabled = true;
-                    enemy.GetComponent<NavMeshAgent>().updateRotation = false;
-                    enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
+                        enemy.GetComponent<EnemyData>().m_ID = i;
+                        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[x][enemy.GetComponent<EnemyData>().m_ID];
+                        enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                        enemy.GetComponent<NavMeshAgentScript>().enabled = true;
+                        enemy.GetComponent<NavMeshAgent>().enabled = true;
+                        enemy.GetComponent<NavMeshAgent>().updateRotation = false;
+                        enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
+                    }
+                    else if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("RangeWaypoint"))
+                    {
+                        GameObject enemy;
+
+                        enemy = PhotonNetwork.InstantiateRoomObject("RangedEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+
+                        enemy.GetComponent<EnemyData>().m_ID = i;
+                        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[x][enemy.GetComponent<EnemyData>().m_ID];
+                        enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                        enemy.GetComponent<NavMeshAgentScript>().enabled = true;
+                        enemy.GetComponent<NavMeshAgent>().enabled = true;
+                        enemy.GetComponent<NavMeshAgent>().updateRotation = false;
+                        enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
+                    }
+                    else if (EnemyManager.GetInstance().EnemyWaypointHolder[x][i].CompareTag("RunnerWaypoint"))
+                    {
+                        GameObject enemy;
+
+                        enemy = PhotonNetwork.InstantiateRoomObject("RunnerEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
+
+                        enemy.GetComponent<EnemyData>().m_ID = i;
+                        enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[x][enemy.GetComponent<EnemyData>().m_ID];
+                        enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
+                        enemy.GetComponent<NavMeshAgentScript>().enabled = true;
+                        enemy.GetComponent<NavMeshAgent>().enabled = true;
+                        enemy.GetComponent<NavMeshAgent>().updateRotation = false;
+                        enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
+                    }
                 }
-                else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RangeWaypoint"))
-                {
-                    GameObject enemy;
-
-                    enemy = PhotonNetwork.InstantiateRoomObject("RangedEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
-
-                    enemy.GetComponent<EnemyData>().m_ID = i;
-                    enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
-                    enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
-                    enemy.GetComponent<NavMeshAgentScript>().enabled = true;
-                    enemy.GetComponent<NavMeshAgent>().enabled = true;
-                    enemy.GetComponent<NavMeshAgent>().updateRotation = false;
-                    enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
-                }
-                else if (EnemyManager.GetInstance().EnemyWaypointHolder[i].CompareTag("RunnerWaypoint"))
-                {
-                    GameObject enemy;
-
-                    enemy = PhotonNetwork.InstantiateRoomObject("RunnerEnemy", new Vector3(0, 0, 0), Quaternion.identity, 0);
-
-                    enemy.GetComponent<EnemyData>().m_ID = i;
-                    enemy.GetComponent<EnemyData>().m_wayPoint = EnemyManager.GetInstance().EnemyWaypointList[enemy.GetComponent<EnemyData>().m_ID];
-                    enemy.GetComponent<Transform>().position = enemy.GetComponent<EnemyData>().m_wayPoint[0].position;
-                    enemy.GetComponent<NavMeshAgentScript>().enabled = true;
-                    enemy.GetComponent<NavMeshAgent>().enabled = true;
-                    enemy.GetComponent<NavMeshAgent>().updateRotation = false;
-                    enemy.GetComponent<NavMeshAgent>().updateUpAxis = false;
-                }
+                NavMesh2DReference[x].SetActive(true);
             }
-            NavMesh2DReference.SetActive(true);
         }
 
+        ChangeLevel(levelCount);
     }
 
     private bool CheckAllPlayerLoadedLevel()
@@ -347,4 +354,15 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         StartGame();
     }
 
+
+    private void ChangeLevel(int LevelToChangeTo)
+	{
+        for (int i = 0; i < LevelReference.Length; i++)
+		{
+            if (i == LevelToChangeTo - 1)
+                LevelReference[i].SetActive(true);
+            else
+                LevelReference[i].SetActive(false);
+		}
+	}
 }

@@ -140,6 +140,7 @@ MonoBehaviour:
   coinValue: 10
   healthPackValue: 0
   blockHealth: 0
+  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!50 &2326759425143585113
 Rigidbody2D:
   serializedVersion: 4

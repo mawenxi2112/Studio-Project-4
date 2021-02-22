@@ -304,6 +304,7 @@ MonoBehaviour:
   m_movementJoystick: {fileID: 0}
   m_attackJoystick: {fileID: 0}
   m_dashButton: {fileID: 0}
+  m_isPaused: 0
   platform: 0
 --- !u!114 &4430784766013518377
 MonoBehaviour:
