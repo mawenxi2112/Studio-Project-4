@@ -61,14 +61,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         StartGame();
     }
 
-    public void SetReady(bool value)
+    public void SetReady(bool value,bool isMine)
     {
-        Hashtable props = new Hashtable
+        if (isMine)
+        {
+            Hashtable props = new Hashtable
             {
                 {GameData.PLAYER_READY,value}
             };
-        Debug.Log("Setting Who?" + PhotonNetwork.LocalPlayer.NickName);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            Debug.Log("Setting Who?" + PhotonNetwork.LocalPlayer.NickName);
+            Debug.Log("Setting to? " + value.ToString());
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
     }
 
     #endregion
@@ -195,31 +199,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // called by OnCountdownTimerIsExpired() when the timer ended
     private void StartGame()
     {
-        
-        // REMOVE THESE WHEN TESTING MULTIPLAYER, ONLY USE THIS FOR LOCAL TESTING
-        /*GameObject tmpPlayer = Instantiate(playerPrefab);
-		tmpPlayer.transform.position = new Vector3(10, 2, 0);*/
-        //Instantiate(coinPrefab).transform.position = new Vector3(1, 0, 0);
-        //Instantiate(keyPrefab).transform.position = new Vector3(2, 0, 0);
-        //Instantiate(healthpackPrefab).transform.position = new Vector3(3, 0, 0);
-        //Instantiate(spikePrefab).transform.position = new Vector3(5, 0, 0);
-        //Instantiate(moveableblockPrefab).transform.position = new Vector3(-2, 0, 0);
-        //Instantiate(torchPrefab).transform.position = new Vector3(7, 0, 0);
-        //Instantiate(campfirePrefab).transform.position = new Vector3(9, 0, 0);
-        //Instantiate(bombPrefab).transform.position = new Vector3(-5, 0, 0);
-        //Instantiate(breakableblockPrefab).transform.position = new Vector3(-5, 2, 0);
-        //Instantiate(surprisetrapblockPrefab).transform.position = new Vector3(-5, 4, 0);
-        //Instantiate(chestPrefab).transform.position = new Vector3(-7, 0, 0);
-        //Instantiate(pressureplatePrefab).transform.position = new Vector3(0, -1, 0);
-        //Instantiate(resetbuttonPrefab).transform.position = new Vector3(-2, -1, 0);
-        //Instantiate(doorPrefab).transform.position = new Vector3(-10, 0, 0);
+
         GameObject player;
         GameObject world = GameObject.Find("World");
 
          player = PhotonNetwork.Instantiate("Player", new Vector3(-4, -4, 0), Quaternion.identity, 0);
       /*  player.GetComponent<PlayerMovement>().joystick = joystick;*/
         player.transform.SetParent(world.transform);
- 
+       
         playerInfo.text = "Player Name: " +PhotonNetwork.LocalPlayer.NickName;
         serverInfo.text = "Server: " +PhotonNetwork.CurrentRoom.Name;
         /*        Hashtable props = new Hashtable
@@ -243,7 +230,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
-
+  
     private bool CheckPlayersReady()
     {
         if (!PhotonNetwork.IsMasterClient)
