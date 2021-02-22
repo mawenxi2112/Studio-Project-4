@@ -36,73 +36,105 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     public Joystick m_movementJoystick;
     public Joystick m_attackJoystick;
     public Button m_dashButton;
+    public bool m_isPaused;
     public int platform = 0; // 0 = PC, 1 = ANDROID
     void Start()
     {
-        m_currentAttack = 5;
     }
     // Update is called once per frame
     void Update()
     {
-        if (!GetComponent<PhotonView>().IsMine)
-            return;
-
-        m_actionKeyTimer += Time.deltaTime;
-
-        if (m_iFrame)
+        if (GetComponent<PhotonView>()) // Online
         {
-            // Render a different colour during iFrame
+            if (!GetComponent<PhotonView>().IsMine)
+                return;
 
-            m_iFrameCounter += Time.deltaTime;
+            m_actionKeyTimer += Time.deltaTime;
 
-            if (m_iFrameCounter >= m_iFrameThreshold)
+            if (m_iFrame)
             {
-                m_iFrame = false;
-                m_iFrameCounter = 0f;
+                // Render a different colour during iFrame
+
+                m_iFrameCounter += Time.deltaTime;
+
+                if (m_iFrameCounter >= m_iFrameThreshold)
+                {
+                    m_iFrame = false;
+                    m_iFrameCounter = 0f;
+                }
+            }
+
+            if (platform == 0)
+            {
+                if (m_movementJoystick != null)
+                    m_movementJoystick.gameObject.SetActive(false);
+
+                if (m_attackJoystick != null)
+                    m_attackJoystick.gameObject.SetActive(false);
+
+                if (m_dashButton != null)
+                    m_dashButton.gameObject.SetActive(false);
+
+                if (Input.GetKey(KeyCode.Mouse0) && m_actionKeyTimer >= m_actionKeyReset)
+                {
+                    m_actionKeyTimer = 0;
+                    m_actionKey = true;
+                }
+
+                if (!Input.GetKey(KeyCode.Mouse0))
+                {
+                    m_actionKey = false;
+                }
+            }
+            else if (platform == 1)
+            {
+                if (m_movementJoystick != null)
+                    m_movementJoystick.gameObject.SetActive(true);
+
+                if (m_attackJoystick != null)
+                    m_attackJoystick.gameObject.SetActive(true);
+
+                if (m_dashButton != null)
+                    m_dashButton.gameObject.SetActive(true);
+
+                Vector2 attackDir = new Vector2(m_attackJoystick.Horizontal, m_attackJoystick.Vertical);
+
+                if (attackDir.magnitude > 0 && m_actionKeyTimer >= m_actionKeyReset)
+                {
+                    m_actionKeyTimer = 0;
+                    m_actionKey = true;
+                }
+
+                if (attackDir.magnitude == 0)
+                {
+                    m_actionKey = false;
+                }
             }
         }
-
-        if (platform == 0)
+        else if (!GetComponent<PhotonView>()) // Offline
         {
-            if (m_movementJoystick != null)
-                m_movementJoystick.gameObject.SetActive(false);
-
-            if (m_attackJoystick != null)
-                m_attackJoystick.gameObject.SetActive(false);
-
-            if (m_dashButton != null)
-                m_dashButton.gameObject.SetActive(false);
-
-            if (Input.GetKey(KeyCode.Mouse0) && m_actionKeyTimer >= m_actionKeyReset)
+            if (platform == 0)
             {
-                m_actionKeyTimer = 0;
-                m_actionKey = true;
-            }
+                if (m_movementJoystick != null)
+                    m_movementJoystick.gameObject.SetActive(false);
 
-            if (!Input.GetKey(KeyCode.Mouse0))
+                if (m_attackJoystick != null)
+                    m_attackJoystick.gameObject.SetActive(false);
+
+                if (m_dashButton != null)
+                    m_dashButton.gameObject.SetActive(false);
+            }
+            else if (platform == 1)
             {
-                m_actionKey = false;
+                if (m_movementJoystick != null)
+                    m_movementJoystick.gameObject.SetActive(true);
+
+                if (m_attackJoystick != null)
+                    m_attackJoystick.gameObject.SetActive(true);
+
+                if (m_dashButton != null)
+                    m_dashButton.gameObject.SetActive(true);
             }
-        }
-        else if (platform == 1)
-        {
-            m_movementJoystick.gameObject.SetActive(true);
-            m_attackJoystick.gameObject.SetActive(true);
-            m_dashButton.gameObject.SetActive(true);
-
-            Vector2 attackDir = new Vector2(m_attackJoystick.Horizontal, m_attackJoystick.Vertical);
-
-            if (attackDir.magnitude > 0 && m_actionKeyTimer >= m_actionKeyReset)
-            {
-                m_actionKeyTimer = 0;
-                m_actionKey = true;
-            }
-
-            if (attackDir.magnitude == 0)
-            {
-                m_actionKey = false;
-            }
-
         }
     }
 

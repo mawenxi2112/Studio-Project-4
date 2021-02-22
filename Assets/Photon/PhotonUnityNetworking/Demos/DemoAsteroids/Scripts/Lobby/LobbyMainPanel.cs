@@ -10,7 +10,7 @@ namespace Photon.Pun.Demo.Asteroids
     {
         [Header("Login Panel")]
         public GameObject LoginPanel;
-
+        
         public InputField PlayerNameInput;
 
         [Header("Selection Panel")]
@@ -33,6 +33,7 @@ namespace Photon.Pun.Demo.Asteroids
 
         [Header("Inside Room Panel")]
         public GameObject InsideRoomPanel;
+
 
         public Button StartGameButton;
         public GameObject PlayerListEntryPrefab;
@@ -112,6 +113,7 @@ namespace Photon.Pun.Demo.Asteroids
                 {AsteroidsGame.PLAYER_LOADED_LEVEL, false}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+       
             PhotonNetwork.LoadLevel("GameLobbyScene");
 
         }

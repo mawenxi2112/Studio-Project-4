@@ -6,7 +6,7 @@ public class PopUpExit : MonoBehaviour
 {
     // Start is called before the first frame update
     public PopUpMenu popupMenu;
-    public PlayerMenuMovement player;
+    public GameObject player;
     void Start()
     {
         
@@ -18,6 +18,6 @@ public class PopUpExit : MonoBehaviour
         
         Debug.Log("Settings Inactive");
         popupMenu.gameObject.SetActive(false);
-        player.isPaused = false;
+        player.GetComponent<PlayerData>().m_isPaused = false;
     }
 }

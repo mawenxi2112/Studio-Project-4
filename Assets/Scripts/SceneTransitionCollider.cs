@@ -6,7 +6,7 @@ public class SceneTransitionCollider : MonoBehaviour
 {
     // Start is called before the first frame update
     public LoadScene sceneManager;
-    public PlayerMenuMovement player;
+    public GameObject player;
     public PopUpMenu popupMenu;
     public int ID;
     public bool pausedOnce;
@@ -34,7 +34,7 @@ public class SceneTransitionCollider : MonoBehaviour
         switch (ID)
         {
             case -1:
-                player.isPaused = true;
+                player.GetComponent<PlayerData>().m_isPaused = true;
                 Debug.Log("Active: " + popupMenu.gameObject.activeSelf);
                 if (popupMenu)
                     popupMenu.PopUp();
@@ -68,7 +68,7 @@ public class SceneTransitionCollider : MonoBehaviour
                 break;
             case 5:
                 sceneManager.LoadShopMenu();
-                player.isPaused = true;
+                player.GetComponent<PlayerData>().m_isPaused = true;
                 break;
         }
     }
