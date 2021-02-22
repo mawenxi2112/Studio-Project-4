@@ -24,13 +24,21 @@ public class GateScript : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         isGateLock = true;
         animator.SetBool("IsLock", isGateLock);
+
+        // Link ObjectsRequiredToOpenGate from the scene to the gate
+        GameObject GateParent = gameObject.transform.parent.gameObject;
+        GameObject ObjectsToUnlockGate = GateParent.transform.Find("ObjectsToUnlockGate").gameObject;
+        for (int i = 0; i < ObjectsToUnlockGate.transform.childCount; i++)
+		{
+            ListOfObjectRequiredToOpenGate.Add(ObjectsToUnlockGate.transform.GetChild(i).gameObject);
+		}
     }
 
     // Update is called once per frame
     void Update()
     {
         bool WillGateOpen = true;
-        //Debug.Log("Number of Objects linked to Gate " + ListOfObjectRequiredToOpenGate.Count);
+
         for (int i = 0; i < ListOfObjectRequiredToOpenGate.Count; i++)
 		{
             switch(ListOfObjectRequiredToOpenGate[i].GetComponent<ObjectData>().object_type)

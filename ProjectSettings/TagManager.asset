@@ -27,6 +27,7 @@ TagManager:
   - KeyPlacement
   - RunnerWaypoint
   - DataManager
+  - SpikePlacement
   layers:
   - Default
   - TransparentFX

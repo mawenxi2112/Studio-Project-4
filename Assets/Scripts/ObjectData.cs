@@ -9,6 +9,13 @@ public class ObjectData : MonoBehaviour
     public int coinValue;
     public int healthPackValue;
     public int blockHealth;
+
+    public Vector3 originalPosition;
+
+	public void Start()
+	{
+        originalPosition = gameObject.GetComponent<Transform>().position;
+	}
 }
 public enum OBJECT_TYPE
 {
