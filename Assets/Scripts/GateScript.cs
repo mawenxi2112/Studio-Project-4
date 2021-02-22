@@ -64,6 +64,8 @@ public class GateScript : MonoBehaviour
 
         if (WillGateOpen)
             UnlockGate();
+        else if (!WillGateOpen)
+            CloseGate();
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Gate_Opened"))
         {
@@ -76,6 +78,12 @@ public class GateScript : MonoBehaviour
     public void UnlockGate()
 	{
         isGateLock = false;
+        animator.SetBool("IsLock", isGateLock);
+	}
+
+    public void CloseGate()
+	{
+        isGateLock = true;
         animator.SetBool("IsLock", isGateLock);
 	}
 }
