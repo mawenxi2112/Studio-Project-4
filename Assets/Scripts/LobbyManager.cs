@@ -204,7 +204,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         GameObject world = GameObject.Find("World");
 
          player = PhotonNetwork.Instantiate("Player", new Vector3(-4, -4, 0), Quaternion.identity, 0);
-      /*  player.GetComponent<PlayerMovement>().joystick = joystick;*/
         player.transform.SetParent(world.transform);
         player.GetComponent<PlayerData>().platform = 1;
         playerInfo.text = "Player Name: " +PhotonNetwork.LocalPlayer.NickName;

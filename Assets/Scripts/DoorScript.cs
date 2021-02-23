@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,6 @@ public class DoorScript : MonoBehaviour
 {
     public Animator animator;
     public BoxCollider2D boxCollider;
-    public bool isDoorLock;
     public GameObject LeftCollider;
     public GameObject RightCollider;
 
@@ -16,8 +16,7 @@ public class DoorScript : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
-        isDoorLock = true;
-        animator.SetBool("IsLock", isDoorLock);
+        animator.SetBool("IsLock", true);
     }
 
     // Update is called once per frame
@@ -34,20 +33,16 @@ public class DoorScript : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-            if (collision.gameObject.GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.KEY && Input.GetKeyDown(KeyCode.Mouse0) && isDoorLock)
+            if (!collision.gameObject.GetComponent<PhotonView>().IsMine)
+                return;
+
+            if (collision.gameObject.GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.KEY &&
+                animator.GetBool("IsLock"))
 			{
-                isDoorLock = false;
-                animator.SetBool("IsLock", isDoorLock);
+                PlayerData.TransferOwnership(gameObject, collision.gameObject);
+                animator.SetBool("IsLock", false);
 			}
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.gameObject.CompareTag("Hitbox") && !isDoorLock)
-		{
-            // Start next level
-            Debug.Log("POWER UP + NEXT LEVEL");
-		}
-	}
 }

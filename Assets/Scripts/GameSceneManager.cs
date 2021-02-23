@@ -259,17 +259,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-	public void SortEnemyReferences(int[] EnemyViewID, string level, bool setParentActive)
-	{
-		Transform levelGameObjectParent = GameObject.Find(level).transform;
-
-		for (int i = 0; i < EnemyViewID.Length; i++)
-			PhotonView.Find(EnemyViewID[i]).transform.SetParent(levelGameObjectParent, false);
-
-		levelGameObjectParent.gameObject.SetActive(setParentActive);
-	}
-
-    [PunRPC]
     public void SetCurrentLevel(int LevelToActivate)
 	{
         for (int i = 0; i < LevelReference.Length; i++)

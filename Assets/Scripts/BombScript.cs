@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,6 @@ public class BombScript : MonoBehaviour
     public CircleCollider2D circleCollider;
 
     public bool startCountDown;
-    public bool isBlowingUp;
-    
-    float Countdown = 0;
     double tickDuration = 0;
     double tickRequiredToChange = 0.2;
 
@@ -23,12 +21,22 @@ public class BombScript : MonoBehaviour
         animator = GetComponent<Animator>();
         circleCollider = GetComponent<CircleCollider2D>();
         startCountDown = false;
-        isBlowingUp = false;
+        animator.SetFloat("Countdown", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Since we're gonna do collision detection locally, we have to get the synced countdown value and then check when to increase the explosive radius
+        if (animator.GetFloat("Countdown") >= 10)
+        {
+            circleCollider.enabled = !circleCollider.enabled;
+            circleCollider.radius = expandedColliderSize;
+        }
+
+        if (!GetComponent<PhotonView>().IsMine)
+            return;
+
         if (startCountDown)
         {
             tickDuration += Time.deltaTime;
@@ -36,30 +44,22 @@ public class BombScript : MonoBehaviour
             if (tickDuration >= tickRequiredToChange)
             {
                 tickDuration = 0;
-                Countdown++;
-                animator.SetFloat("Countdown", Countdown);
-
-                if (Countdown >= 10)
-                {
-                    circleCollider.enabled = !circleCollider.enabled;
-                    circleCollider.radius = expandedColliderSize;
-                    isBlowingUp = true;
-                }
+                animator.SetFloat("Countdown", animator.GetFloat("Countdown") + 1);
             }
 
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Bomb_Despawn"))
-            {
-                gameObject.SetActive(false);
-                Destroy(this);
-            }
+                PhotonNetwork.Destroy(this.gameObject);
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isBlowingUp)
+        // Only during the explosion state, we will check for explosion
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Explosion_Idle"))
         {
-            collision.gameObject.SetActive(false);
+            // If the gameobject is a networked object and we are able to control the gameobject that's inside the explosion radius, we will then destroy it
+            if (collision.gameObject.GetComponent<PhotonView>() && collision.gameObject.GetComponent<PhotonView>().IsMine)
+                PhotonNetwork.Destroy(collision.gameObject);
         }
     }
 }

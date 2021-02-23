@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class CampfireScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetBool("IsLit", IsLit);
+        if (GetComponent<PhotonView>().IsMine)
+            animator.SetBool("IsLit", IsLit);
     }
 }

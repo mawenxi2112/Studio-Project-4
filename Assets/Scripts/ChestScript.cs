@@ -39,6 +39,16 @@ public class ChestScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Chest_Finish"))
+        {
+            if (color.a > 0)
+            {
+                alphaedit -= Time.deltaTime * 80;
+                color = new Color(1, 1, 1, alphaedit / 255);
+                spriterender.color = color;
+            }
+        }
+
         if (!GetComponent<PhotonView>().IsMine)
             return;
 
@@ -97,15 +107,9 @@ public class ChestScript : MonoBehaviour
                 itemDropped = true;
             }
 
-			if (color.a > 0)
-			{
-				alphaedit -= Time.deltaTime * 80;
-				color = new Color(1, 1, 1, alphaedit / 255);
-				spriterender.color = color;
-            }
             if (color.a <= 0)
 			{
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
 			}
         }
 	}

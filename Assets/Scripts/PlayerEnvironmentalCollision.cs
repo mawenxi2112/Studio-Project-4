@@ -216,8 +216,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.COIN:
 					GetComponent<PlayerData>().SetCurrency(GetComponent<PlayerData>().m_currency + collision.gameObject.GetComponent<ObjectData>().coinValue);
 					//collision.gameObject.SetActive(false);
-
-					GetComponent<PlayerData>().TransferOwnership(collision.gameObject, this.gameObject);
+					
+					PlayerData.TransferOwnership(collision.gameObject, this.gameObject);
 					PhotonNetwork.Destroy(collision.gameObject);
 					break;
 
@@ -227,7 +227,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth + collision.gameObject.GetComponent<ObjectData>().healthPackValue);
 						//collision.gameObject.SetActive(false);
 
-						GetComponent<PlayerData>().TransferOwnership(collision.gameObject, this.gameObject);
+						PlayerData.TransferOwnership(collision.gameObject, this.gameObject);
 						PhotonNetwork.Destroy(collision.gameObject);
 					}
 					break;

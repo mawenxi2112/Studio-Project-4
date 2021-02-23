@@ -184,7 +184,7 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         m_currency = value;
 	}
 
-    public void TransferOwnership(GameObject gameObject, GameObject newOwner)
+    public static void TransferOwnership(GameObject gameObject, GameObject newOwner)
     {
         // If it isn't already the owner
         if (newOwner.GetComponent<PhotonView>().Controller != gameObject.GetComponent<PhotonView>().Controller)
