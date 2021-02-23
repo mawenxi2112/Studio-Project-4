@@ -29,6 +29,7 @@ TagManager:
   - DataManager
   - SpikePlacement
   - Level
+  - Boss
   layers:
   - Default
   - TransparentFX

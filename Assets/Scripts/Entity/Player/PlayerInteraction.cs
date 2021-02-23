@@ -210,7 +210,7 @@ public class PlayerInteraction : MonoBehaviour
         GameObject pickUpGameObject = PhotonView.Find(pickUpGameObjectViewID).gameObject;
 
         // If the owner of the gameobject is not the same as the pickup player, then we change the ownership
-        PlayerData.TransferOwnership(pickUpGameObject, this.gameObject);
+        PlayerData.TransferOwner(gameObject, pickUpGameObject);
 
         // Temp code to hide sword
         if (m_hand == m_sword)
@@ -257,7 +257,6 @@ public class PlayerInteraction : MonoBehaviour
         m_hand = m_sword;
         m_sword.SetActive(true);
     }
-    
 }
 
 

@@ -191,6 +191,7 @@ namespace Photon.Pun.Demo.Asteroids
             RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
             PhotonNetwork.LocalPlayer.NickName = PlayerNameInput.text;
             PhotonNetwork.CreateRoom(roomName, options, null);
+            PhotonNetwork.AutomaticallySyncScene = true;
             Debug.Log("Trying to join Scene");
    
  

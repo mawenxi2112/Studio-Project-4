@@ -180,15 +180,14 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 	}
 
     public void SetCurrency(int value)
-	{
-        m_currency = value;
-	}
-
-    public static void TransferOwnership(GameObject gameObject, GameObject newOwner)
     {
-        // If it isn't already the owner
-        if (newOwner.GetComponent<PhotonView>().Controller != gameObject.GetComponent<PhotonView>().Controller)
-            gameObject.GetComponent<PhotonView>().SetControllerInternal(newOwner.GetComponent<PhotonView>().Controller.ActorNumber);
+        m_currency = value;
+    }
+
+    public static void TransferOwner(GameObject newOwner, GameObject gameobject)
+    {
+        if (newOwner.GetComponent<PhotonView>().Controller != gameobject.GetComponent<PhotonView>().Controller)
+            gameobject.GetComponent<PhotonView>().TransferOwnership(newOwner.GetComponent<PhotonView>().Controller);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

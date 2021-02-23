@@ -12,7 +12,18 @@ public class LoadScene : MonoBehaviour
         SceneData.currentScene = SceneManager.GetActiveScene().name;
         Debug.Log("CurrentScene: " + SceneData.currentScene);
         Debug.Log("PreviousScene: " + SceneData.previousScene);
+        
+        
+    }
+    public IEnumerator LoadMainLevelAsync(AsyncOperation async)
+    {
+      
+        async = SceneManager.LoadSceneAsync("Level1Scene", LoadSceneMode.Single);
+        while(!async.isDone)
+        {
+        yield return null;
 
+        }
     }
 
     // Update is called once per frame

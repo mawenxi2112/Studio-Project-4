@@ -215,9 +215,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 			{
 				case OBJECT_TYPE.COIN:
 					GetComponent<PlayerData>().SetCurrency(GetComponent<PlayerData>().m_currency + collision.gameObject.GetComponent<ObjectData>().coinValue);
-					//collision.gameObject.SetActive(false);
-					
-					PlayerData.TransferOwnership(collision.gameObject, this.gameObject);
+					PlayerData.TransferOwner(gameObject, collision.gameObject);
 					PhotonNetwork.Destroy(collision.gameObject);
 					break;
 
@@ -225,9 +223,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					if (GetComponent<PlayerData>().m_currentHealth < GetComponent<PlayerData>().m_maxHealth)
 					{
 						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth + collision.gameObject.GetComponent<ObjectData>().healthPackValue);
-						//collision.gameObject.SetActive(false);
-
-						PlayerData.TransferOwnership(collision.gameObject, this.gameObject);
+						PlayerData.TransferOwner(gameObject, collision.gameObject);
 						PhotonNetwork.Destroy(collision.gameObject);
 					}
 					break;
@@ -276,7 +272,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.CAMPFIRE:
 					if (GetComponent<PlayerData>().m_actionKey && GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.TORCH)
 					{
-						collision.gameObject.GetComponent<CampfireScript>().IsLit = !collision.gameObject.GetComponent<CampfireScript>().IsLit;
+						PlayerData.TransferOwner(gameObject, collision.gameObject);
+						collision.gameObject.GetComponent<Animator>().SetBool("IsLit", !collision.gameObject.GetComponent<Animator>().GetBool("IsLit"));
 						GetComponent<PlayerData>().m_actionKey = false;
 					}
 					break;
@@ -294,6 +291,11 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					break;
 
 				case OBJECT_TYPE.DOOR:
+					if (GetComponent<PlayerData>().m_actionKey && GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.KEY && collision.gameObject.GetComponent<Animator>().GetBool("IsLock"))
+					{
+						PlayerData.TransferOwner(gameObject, collision.gameObject);
+						collision.gameObject.GetComponent<Animator>().SetBool("IsLock", false);
+					}
 					break;
 
 				case OBJECT_TYPE.GATE:
@@ -302,11 +304,10 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
                 case OBJECT_TYPE.PU_DAMAGE:
                     GetComponent<PlayerData>().m_maxHealth += 10;
 
-                    if (GetComponent<PhotonView>().Controller != collision.gameObject.GetComponent<PhotonView>().Controller)
-                        collision.gameObject.GetComponent<PhotonView>().TransferOwnership(GetComponent<PhotonView>().Controller);
+					PlayerData.TransferOwner(gameObject, collision.gameObject);
 
-                    // Destroy the Damage Powerup
-                    PhotonNetwork.Destroy(collision.gameObject);
+					// Destroy the Damage Powerup
+					PhotonNetwork.Destroy(collision.gameObject);
 
                     break;
 
@@ -315,11 +316,10 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
                     // Need to change
                     GetComponent<PlayerData>().m_maxHealth += 10;
 
-                    if (GetComponent<PhotonView>().Controller != collision.gameObject.GetComponent<PhotonView>().Controller)
-                        collision.gameObject.GetComponent<PhotonView>().TransferOwnership(GetComponent<PhotonView>().Controller);
+					PlayerData.TransferOwner(gameObject, collision.gameObject);
 
-                    // Destroy the Damage Powerup
-                    PhotonNetwork.Destroy(collision.gameObject);
+					// Destroy the Damage Powerup
+					PhotonNetwork.Destroy(collision.gameObject);
 
                     break;
 
@@ -328,11 +328,10 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
                     // Need to change
                     GetComponent<PlayerData>().m_maxMoveSpeed += 700;
 
-                    if (GetComponent<PhotonView>().Controller != collision.gameObject.GetComponent<PhotonView>().Controller)
-                        collision.gameObject.GetComponent<PhotonView>().TransferOwnership(GetComponent<PhotonView>().Controller);
+					PlayerData.TransferOwner(gameObject, collision.gameObject);
 
-                    // Destroy the Damage Powerup
-                    PhotonNetwork.Destroy(collision.gameObject);
+					// Destroy the Damage Powerup
+					PhotonNetwork.Destroy(collision.gameObject);
                     break;
 			}
 		}

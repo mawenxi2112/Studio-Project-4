@@ -44,14 +44,14 @@ public class GateScript : MonoBehaviour
             switch(ListOfObjectRequiredToOpenGate[i].GetComponent<ObjectData>().object_type)
 			{
                 case OBJECT_TYPE.CAMPFIRE:
-                    if (!ListOfObjectRequiredToOpenGate[i].GetComponent<CampfireScript>().IsLit)
+                    if (!ListOfObjectRequiredToOpenGate[i].GetComponent<Animator>().GetBool("IsLit"))
 					{
                         WillGateOpen = false;
 					}
                     break;
 
                 case OBJECT_TYPE.PRESSUREPLATE:
-                    if (!ListOfObjectRequiredToOpenGate[i].GetComponent<PressurePlateScript>().isSteppedOn)
+                    if (!ListOfObjectRequiredToOpenGate[i].GetComponent<Animator>().GetBool("isPressed"))
                     {
                         WillGateOpen = false;
                     }

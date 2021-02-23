@@ -102,6 +102,7 @@ namespace Photon.Realtime
         /// <summary>ToString but with more details.</summary>
         public string ToStringFull()
         {
+            
             return string.Format(
                 "appId {0}{1}{2}{3}" +
                 "use ns: {4}, reg: {5}, {9}, " +

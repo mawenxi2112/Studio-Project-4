@@ -6,7 +6,7 @@ public class ItemPopupText : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool pausedOnce;
-    public PlayerMenuMovement player;
+    public PlayerData player;
     public PopUpMenu popUp;
     void Start()
     {
@@ -26,7 +26,7 @@ public class ItemPopupText : MonoBehaviour
 
 
         Debug.Log("SetAlready "  + popUp.name);
-        player.isPaused = true;
+        player.m_isPaused = true;
 
         popUp.gameObject.SetActive(true);
     }

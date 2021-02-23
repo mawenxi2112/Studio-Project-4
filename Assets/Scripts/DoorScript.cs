@@ -28,21 +28,15 @@ public class DoorScript : MonoBehaviour
             LeftCollider.GetComponent<BoxCollider2D>().enabled = true;
             RightCollider.GetComponent<BoxCollider2D>().enabled = true;
         }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Door_Lock"))
+        {
+            boxCollider.enabled = true;
+            LeftCollider.GetComponent<BoxCollider2D>().enabled = false;
+            RightCollider.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 	void OnCollisionStay2D(Collision2D collision)
 	{
-		if (collision.gameObject.CompareTag("Player"))
-		{
-            if (!collision.gameObject.GetComponent<PhotonView>().IsMine)
-                return;
-
-            if (collision.gameObject.GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.KEY &&
-                animator.GetBool("IsLock"))
-			{
-                PlayerData.TransferOwnership(gameObject, collision.gameObject);
-                animator.SetBool("IsLock", false);
-			}
-		}
 	}
 
 }
