@@ -43,9 +43,25 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         // Load player stats from save file
-        m_maxHealth = SceneData.storage.maxHealth;
+        /*m_maxHealth = SceneData.storage.maxHealth;
         m_maxMoveSpeed = SceneData.storage.speed;
-        m_currency = SceneData.storage.coins;
+        m_currency = SceneData.storage.coins;*/
+
+        if (!m_movementJoystick)
+            m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
+
+        if (!m_attackJoystick)
+            m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
+
+        if (!m_dashButton)
+            m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
+
+        if (platform == 0)
+        {
+            m_movementJoystick.gameObject.SetActive(false);
+            m_attackJoystick.gameObject.SetActive(false);
+            m_dashButton.gameObject.SetActive(false);
+        }
 
         m_currentHealth = m_maxHealth;
         m_currentMoveSpeed = m_maxMoveSpeed;
@@ -76,15 +92,6 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 
             if (platform == 0)
             {
-                if (m_movementJoystick != null)
-                    m_movementJoystick.gameObject.SetActive(false);
-
-                if (m_attackJoystick != null)
-                    m_attackJoystick.gameObject.SetActive(false);
-
-                if (m_dashButton != null)
-                    m_dashButton.gameObject.SetActive(false);
-
                 if (Input.GetKey(KeyCode.Mouse0) && m_actionKeyTimer >= m_actionKeyReset)
                 {
                     m_actionKeyTimer = 0;
@@ -98,34 +105,7 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             }
             else if (platform == 1)
             {
-                if (m_movementJoystick == null)
-                {
-                    m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
-                    m_movementJoystick.gameObject.SetActive(true);
-                }
-
-                if (m_attackJoystick == null)
-                {
-                    m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
-                    m_attackJoystick.gameObject.SetActive(true);
-                }
-
-                if (m_dashButton == null)
-                {
-                    m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
-                    m_dashButton.gameObject.SetActive(true);
-                }
-
-                if (m_movementJoystick != null)
-                    m_movementJoystick.gameObject.SetActive(true);
-
-                if (m_attackJoystick != null)
-                    m_attackJoystick.gameObject.SetActive(true);
-
-                if (m_dashButton != null)
-                    m_dashButton.gameObject.SetActive(true);
-
-                Vector2 attackDir = new Vector2(m_attackJoystick.Horizontal, m_attackJoystick.Vertical);
+                Vector2 attackDir = m_attackJoystick.Direction;
 
                 if (m_currentEquipment == EQUIPMENT.SWORD)
                 {
@@ -163,40 +143,6 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
         }
-        else if (!GetComponent<PhotonView>()) // Offline
-        {
-            if (platform == 0)
-            {
-                if (m_movementJoystick != null)
-                    m_movementJoystick.gameObject.SetActive(false);
-
-                if (m_attackJoystick != null)
-                    m_attackJoystick.gameObject.SetActive(false);
-
-                if (m_dashButton != null)
-                    m_dashButton.gameObject.SetActive(false);
-            }
-            else if (platform == 1)
-            {
-                if (m_movementJoystick == null)
-                {
-                    m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
-                    m_movementJoystick.gameObject.SetActive(true);
-                }
-
-                if (m_attackJoystick == null)
-                {
-                    m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
-                    m_attackJoystick.gameObject.SetActive(true);
-                }
-
-                if (m_dashButton == null)
-                {
-                    m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
-                    m_dashButton.gameObject.SetActive(true);
-                }
-            }
-        }
     }
 
     public void SetCurrentHealth(int value)
@@ -213,8 +159,6 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 	{
         m_currency = value;
 	}
-
-    #region IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -245,6 +189,4 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             GetComponent<PlayerInteraction>().m_handAnimator = PhotonView.Find(otherPlayerSwordView).gameObject.GetComponent<Animator>();
         }
     }
-
-    #endregion
 }

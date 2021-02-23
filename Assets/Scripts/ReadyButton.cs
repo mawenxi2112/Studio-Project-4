@@ -14,16 +14,19 @@ public class ReadyButton : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
+        // There's an error currently so I'm going to change it temporary.
+        // - Wen Xi
 
-
-        bool isMine;
-
+/*        bool isMine;
         Player otherPlayer = other.gameObject.GetComponent<PhotonView>().Controller;
         Debug.Log("Player: " + otherPlayer.NickName + "Is on the block");
         Debug.Log("This Player is Running: " + PhotonNetwork.LocalPlayer.NickName);
-        isMine = PhotonNetwork.Equals(PhotonNetwork.LocalPlayer, otherPlayer);
+        isMine = PhotonNetwork.Equals(PhotonNetwork.LocalPlayer, otherPlayer);*/
+        
+        // NEED TO ADD A CHECK WHEN PLAYER LEAVES THE LOBBY
 
-        lobbyManager.SetReady(true,isMine);
+        if (other.gameObject.GetComponent<PhotonView>().IsMine)
+            lobbyManager.SetReady(true, true);
     }
     void OnTriggerExit2D(Collider2D other)
     {

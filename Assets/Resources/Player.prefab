@@ -60,11 +60,11 @@ GameObject:
   - component: {fileID: 5897938160372026081}
   - component: {fileID: 8216742315242213946}
   - component: {fileID: 4972446312323525747}
-  - component: {fileID: 3912384810610162383}
   - component: {fileID: 7104929258688915183}
   - component: {fileID: 64694709170736815}
   - component: {fileID: 7670004085083852396}
   - component: {fileID: 6577412233344338210}
+  - component: {fileID: 3912384810610162383}
   - component: {fileID: 4430784766013518377}
   - component: {fileID: 5858090850472955523}
   m_Layer: 0
@@ -201,21 +201,6 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3912384810610162383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2806126621235551223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c388ec73bc09df4a995785e78bbd34c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  movement: {x: 0, y: 0}
 --- !u!95 &7104929258688915183
 Animator:
   serializedVersion: 3
@@ -307,6 +292,21 @@ MonoBehaviour:
   m_attackJoystick: {fileID: 0}
   m_OnAttackJoystickDown: 0
   platform: 0
+--- !u!114 &3912384810610162383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806126621235551223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c388ec73bc09df4a995785e78bbd34c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  animator: {fileID: 0}
+  movement: {x: 0, y: 0}
 --- !u!114 &4430784766013518377
 MonoBehaviour:
   m_ObjectHideFlags: 0

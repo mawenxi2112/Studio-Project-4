@@ -104,8 +104,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (GetComponent<PlayerData>().platform == 1) // Android Platform
             {
-                movement.x = GetComponent<PlayerData>().m_movementJoystick.Horizontal;
-                movement.y = GetComponent<PlayerData>().m_movementJoystick.Vertical;
+                movement = GetComponent<PlayerData>().m_movementJoystick.Direction;
             }
 
             animator.SetFloat("Horizontal", movement.x);
