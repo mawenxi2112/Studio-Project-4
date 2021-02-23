@@ -216,8 +216,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.COIN:
 					GetComponent<PlayerData>().SetCurrency(GetComponent<PlayerData>().m_currency + collision.gameObject.GetComponent<ObjectData>().coinValue);
 					//collision.gameObject.SetActive(false);
-					
-					PlayerData.TransferOwnership(collision.gameObject, this.gameObject);
+
+					GetComponent<PhotonView>().RPC("TransferOwnership", RpcTarget.All, GetComponent<PhotonView>().ViewID, collision.gameObject.GetComponent<PhotonView>().ViewID);
 					PhotonNetwork.Destroy(collision.gameObject);
 					break;
 
@@ -227,7 +227,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth + collision.gameObject.GetComponent<ObjectData>().healthPackValue);
 						//collision.gameObject.SetActive(false);
 
-						PlayerData.TransferOwnership(collision.gameObject, this.gameObject);
+						GetComponent<PhotonView>().RPC("TransferOwnership", RpcTarget.All, GetComponent<PhotonView>().ViewID, collision.gameObject.GetComponent<PhotonView>().ViewID);
 						PhotonNetwork.Destroy(collision.gameObject);
 					}
 					break;
@@ -276,7 +276,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.CAMPFIRE:
 					if (GetComponent<PlayerData>().m_actionKey && GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.TORCH)
 					{
-						PlayerData.TransferOwnership(collision.gameObject, gameObject);
+						GetComponent<PhotonView>().RPC("TransferOwnership", RpcTarget.All, GetComponent<PhotonView>().ViewID, collision.gameObject.GetComponent<PhotonView>().ViewID);
 						collision.gameObject.GetComponent<Animator>().SetBool("IsLit", !collision.gameObject.GetComponent<Animator>().GetBool("IsLit"));
 						GetComponent<PlayerData>().m_actionKey = false;
 					}
@@ -297,7 +297,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.DOOR:
 					if (GetComponent<PlayerData>().m_actionKey && GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.KEY && collision.gameObject.GetComponent<Animator>().GetBool("IsLock"))
 					{
-						PlayerData.TransferOwnership(collision.gameObject, gameObject);
+						GetComponent<PhotonView>().RPC("TransferOwnership", RpcTarget.All, GetComponent<PhotonView>().ViewID, collision.gameObject.GetComponent<PhotonView>().ViewID);
 						collision.gameObject.GetComponent<Animator>().SetBool("IsLock", false);
 					}
 					break;
