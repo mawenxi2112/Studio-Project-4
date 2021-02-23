@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public class DoorScript : MonoBehaviour
 {
@@ -14,10 +13,7 @@ public class DoorScript : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    { 
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
+    {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         isDoorLock = true;
@@ -27,9 +23,6 @@ public class DoorScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Door_Opened"))
         {
             boxCollider.enabled = false;
@@ -39,10 +32,7 @@ public class DoorScript : MonoBehaviour
     }
 	void OnCollisionStay2D(Collision2D collision)
 	{
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
-        if (collision.gameObject.CompareTag("Player"))
+		if (collision.gameObject.CompareTag("Player"))
 		{
             if (collision.gameObject.GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.KEY && Input.GetKeyDown(KeyCode.Mouse0) && isDoorLock)
 			{
@@ -57,7 +47,7 @@ public class DoorScript : MonoBehaviour
 		if (collision.gameObject.CompareTag("Hitbox") && !isDoorLock)
 		{
             // Start next level
-            //Debug.Log("POWER UP + NEXT LEVEL");
+            Debug.Log("POWER UP + NEXT LEVEL");
 		}
 	}
 }

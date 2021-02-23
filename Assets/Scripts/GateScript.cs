@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,9 +20,6 @@ public class GateScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         isGateLock = true;
@@ -41,9 +37,6 @@ public class GateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
         bool WillGateOpen = true;
 
         for (int i = 0; i < ListOfObjectRequiredToOpenGate.Count; i++)
@@ -84,18 +77,12 @@ public class GateScript : MonoBehaviour
 
     public void UnlockGate()
 	{
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
         isGateLock = false;
         animator.SetBool("IsLock", isGateLock);
 	}
 
     public void CloseGate()
 	{
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
         isGateLock = true;
         animator.SetBool("IsLock", isGateLock);
 	}
