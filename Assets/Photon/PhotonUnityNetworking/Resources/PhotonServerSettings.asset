@@ -46,6 +46,7 @@ MonoBehaviour:
   - UpdateReady
   - SortEnemyReferences
   - SetCurrentLevel
+  - LoadingScene
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
