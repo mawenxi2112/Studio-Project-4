@@ -48,18 +48,6 @@ public class EnemyRechargingScript : StateMachineBehaviour
 			animator.SetBool("IsRecharging", false);
 			animator.GetComponent<NavMeshAgent>().speed = animator.GetComponent<EnemyData>().m_maxMoveSpeed;
 
-			// Check if any player enters the enemy detection range
-			GameObject closestPlayer = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_detectionRange);
-			if (closestPlayer)
-			{
-				animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
-				animator.SetBool("IsChasing", true);
-			}
-			else if (!closestPlayer)
-			{
-				animator.SetBool("IsChasing", false);
-			}
-
 			// Meele - reenable detection collider
 			// Range - None
 			switch (animator.gameObject.GetComponent<EnemyData>().m_type)
