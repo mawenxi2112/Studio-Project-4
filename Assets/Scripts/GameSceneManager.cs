@@ -187,9 +187,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             }
             else
             {
-                // not all players loaded yet. wait:
+/*                // not all players loaded yet. wait:
                 Debug.Log("setting text waiting for players! ", this.InfoText);
-                InfoText.text = "Waiting for other players...";
+                InfoText.text = "Waiting for other players...";*/
             }
         }
 

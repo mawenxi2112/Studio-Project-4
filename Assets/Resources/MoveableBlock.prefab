@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 8998612683399600860}
   - component: {fileID: -8493627169226588194}
   - component: {fileID: -1080956806105771271}
-  - component: {fileID: 7732780718098607563}
   m_Layer: 0
   m_Name: MoveableBlock
   m_TagString: Objects
@@ -152,6 +151,7 @@ MonoBehaviour:
   coinValue: 0
   healthPackValue: 0
   blockHealth: 0
+  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!208 &8998612683399600860
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   ObservedComponents:
   - {fileID: -1080956806105771271}
-  - {fileID: 7732780718098607563}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -207,19 +207,3 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &7732780718098607563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6641217289784227308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
