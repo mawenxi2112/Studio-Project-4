@@ -1,12 +1,11 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ResetButtonScript : MonoBehaviour
 {
     public Animator animator;
-    public bool isSteppedOn;
-
     public List<GameObject> ListOfObjectToReset;
 
 	void Awake()
@@ -18,7 +17,6 @@ public class ResetButtonScript : MonoBehaviour
 	void Start()
     {
         animator = GetComponent<Animator>();
-        isSteppedOn = false;
 
         // Link ObjectsToReset from the scene to the reset button
         GameObject ResetButtonParent = gameObject.transform.parent.gameObject;
@@ -35,29 +33,22 @@ public class ResetButtonScript : MonoBehaviour
 
     }
 
-	void OnTriggerStay2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
 	{
-        if (collision.CompareTag("Player") || collision.CompareTag("Objects"))
+        if (PhotonNetwork.IsMasterClient && (collision.CompareTag("Player") || collision.CompareTag("Objects")))
         {
-            if (animator.GetFloat("TriggerChange") == 0)
-            {
-                animator.SetFloat("TriggerChange", 1);
-                isSteppedOn = true;
+            animator.SetBool("isPressed", true);
 
-                for (int i = 0; i < ListOfObjectToReset.Count; i++)
-				{
-                    ListOfObjectToReset[i].GetComponent<Transform>().position = ListOfObjectToReset[i].GetComponent<ObjectData>().originalPosition;
-				}
+            for (int i = 0; i < ListOfObjectToReset.Count; i++)
+            {
+                ListOfObjectToReset[i].GetComponent<Transform>().position = ListOfObjectToReset[i].GetComponent<ObjectData>().originalPosition;
             }
         }
     }
 
 	void OnTriggerExit2D(Collider2D collision)
 	{
-        if (animator.GetFloat("TriggerChange") == 1)
-        {
-            animator.SetFloat("TriggerChange", 0);
-            isSteppedOn = false;
-        }
+        if (PhotonNetwork.IsMasterClient && (collision.CompareTag("Player") || collision.CompareTag("Objects")))
+            animator.SetBool("isPressed", false);
     }
 }
