@@ -12,20 +12,20 @@ public class SceneData : MonoBehaviour
     public static string currentScene;
     public static int playerCurrency;
 
-    private static string savedFilepath;
+    //private static string savedFilepath;
 
-    public static PlayerStorage storage;
+    //public static PlayerStorage storage;
 
     void Start()
     {
-        savedFilepath = Application.persistentDataPath + "/pdata.json";
+/*        savedFilepath = Application.persistentDataPath + "/pdata.json";
 
         Debug.Log("is hererehagdjha");
 
         if (storage == null)
             storage = new PlayerStorage();
 
-        LoadData();
+        LoadData();*/
 
         GameObject[] array = GameObject.FindGameObjectsWithTag("DataManager");
 
@@ -51,7 +51,7 @@ public class SceneData : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    void LoadData()
+/*    void LoadData()
     {
         string playerData = null;
 
@@ -85,6 +85,5 @@ public class SceneData : MonoBehaviour
     void OnApplicationQuit()
     {
         SaveData();
-    }
+    }*/
 }
-

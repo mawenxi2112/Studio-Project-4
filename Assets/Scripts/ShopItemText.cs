@@ -88,7 +88,7 @@ public class ShopItemText : MonoBehaviour
     // Update is called once per frame
     public void Restart()
     {
-      
+        m_TextComponent = GetComponent<TMP_Text>();
         int value;
         int offset = 0;
         int multiplyer = 0;

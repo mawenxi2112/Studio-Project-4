@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f1267666d4e894eb8bd262f65bf031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  object_type: 18
+  object_type: 19
   coinValue: 0
   healthPackValue: 0
   blockHealth: 0
