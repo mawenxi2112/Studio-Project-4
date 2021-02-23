@@ -47,20 +47,23 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         m_maxMoveSpeed = SceneData.storage.speed;
         m_currency = SceneData.storage.coins;*/
 
-        if (!m_movementJoystick)
-            m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
-
-        if (!m_attackJoystick)
-            m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
-
-        if (!m_dashButton)
-            m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
-
-        if (platform == 0)
+        if (GetComponent<PhotonView>().IsMine)
         {
-            m_movementJoystick.gameObject.SetActive(false);
-            m_attackJoystick.gameObject.SetActive(false);
-            m_dashButton.gameObject.SetActive(false);
+            if (!m_movementJoystick)
+                m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
+
+            if (!m_attackJoystick)
+                m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
+
+            if (!m_dashButton)
+                m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
+
+            if (platform == 0)
+            {
+                m_movementJoystick.gameObject.SetActive(false);
+                m_attackJoystick.gameObject.SetActive(false);
+                m_dashButton.gameObject.SetActive(false);
+            }
         }
 
         m_currentHealth = m_maxHealth;
