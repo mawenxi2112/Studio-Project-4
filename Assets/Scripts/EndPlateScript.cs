@@ -27,7 +27,7 @@ public class EndPlateScript : MonoBehaviour
             if (!PhotonNetwork.IsMasterClient)
                 return;
 
-            if (NoOfPlayerIn == PhotonNetwork.CountOfPlayers)
+            if (NoOfPlayerIn == PhotonNetwork.PlayerList.Length)
             {
                 GameObject.Find("GameManager").GetComponent<GameSceneManager>().ChangeScene();
             }
