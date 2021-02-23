@@ -6,7 +6,7 @@ using UnityEngine;
 public class EndPlateScript : MonoBehaviour
 {
 
-    public int NoOfPlayerIn;
+    public int NoOfPlayerIn = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -16,13 +16,6 @@ public class EndPlateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
-        if (NoOfPlayerIn == PhotonNetwork.CountOfPlayers)
-        {
-            GameObject.Find("GameManager").GetComponent<GameSceneManager>().ChangeScene();
-        }
     }
 
 	void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +23,14 @@ public class EndPlateScript : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             NoOfPlayerIn++;
+
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+
+            if (NoOfPlayerIn == PhotonNetwork.CountOfPlayers)
+            {
+                GameObject.Find("GameManager").GetComponent<GameSceneManager>().ChangeScene();
+            }
         }
     }
 
