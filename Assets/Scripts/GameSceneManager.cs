@@ -51,16 +51,11 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     {
         base.OnEnable();
 
-        CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
+        //CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
     }
 
     public void Start()
     {
-        Hashtable props = new Hashtable
-            {
-                {GameData.PLAYER_LOADED_LEVEL, true}
-            };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         StartGame();
     }
 
@@ -68,7 +63,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     {
         base.OnDisable();
 
-        CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
+        //CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
     }
 
     #endregion
@@ -159,38 +154,18 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        Debug.Log("Running Into Game");
         if (changedProps.ContainsKey(GameData.PLAYER_LIVES))
         {
-            CheckEndOfGame();
+           //CheckEndOfGame();
             return;
         }
 
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
-
-
-        // if there was no countdown yet, the master client (this one) waits until everyone loaded the level and sets a timer start
-        int startTimestamp;
-        bool startTimeIsSet = CountdownTimer.TryGetStartTime(out startTimestamp);
 
         if (changedProps.ContainsKey(GameData.PLAYER_LOADED_LEVEL))
         {
+            // Once all the players has loaded we hide our loading screen
             if (CheckAllPlayerLoadedLevel())
-            {
-                if (!startTimeIsSet)
-                {
-                    CountdownTimer.SetStartTime();
-                }
-            }
-            else
-            {
-/*                // not all players loaded yet. wait:
-                Debug.Log("setting text waiting for players! ", this.InfoText);
-                InfoText.text = "Waiting for other players...";*/
-            }
+                GameObject.Find("LoadingScreen").SetActive(false);
         }
 
     }
@@ -277,52 +252,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
         return true;
     }
-
-    private void CheckEndOfGame()
-    {
-
-        bool allDestroyed = true;
-
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            object lives;
-            if (p.CustomProperties.TryGetValue(GameData.PLAYER_LIVES, out lives))
-            {
-                if ((int)lives > 0)
-                {
-                    allDestroyed = false;
-                    break;
-                }
-            }
-        }
-
-        if (allDestroyed)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                StopAllCoroutines();
-            }
-
-            string winner = "";
-            int score = -1;
-
-            foreach (Player p in PhotonNetwork.PlayerList)
-            {
-                if (p.GetScore() > score)
-                {
-                    winner = p.NickName;
-                    score = p.GetScore();
-                }
-            }
-
-            StartCoroutine(EndOfGame(winner, score));
-        }
-    }
-
-    private void OnCountdownTimerIsExpired()
-    {
-        StartGame();
-    }
     public void ChangeScene()
 	{
         levelCount++;
@@ -361,5 +290,20 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             else if (LevelReference[i].activeSelf != false)
                 LevelReference[i].SetActive(false);
         }
+
+        if (LevelToActivate == 1)
+        {
+            Hashtable props = new Hashtable
+            {
+                {GameData.PLAYER_LOADED_LEVEL, true}
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
+    }
+
+    [PunRPC]
+    public void LoadingScene(bool active)
+    {
+
     }
 }
