@@ -52,6 +52,13 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             if (!GetComponent<PhotonView>().IsMine)
                 return;
 
+            PlayerStorage.Load();
+
+            m_currency = PlayerStorage.coins;
+            m_maxHealth = PlayerStorage.maxHealth;
+            m_maxMoveSpeed = PlayerStorage.speed;
+            m_currentAttack = PlayerStorage.damage;
+
             if (!m_movementJoystick)
                 m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
 
@@ -70,6 +77,13 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         }
         else // Offline
         {
+            PlayerStorage.Load();
+
+            m_currency = PlayerStorage.coins;
+            m_maxHealth = PlayerStorage.maxHealth;
+            m_maxMoveSpeed = PlayerStorage.speed;
+            m_currentAttack = PlayerStorage.damage;
+
             if (!m_movementJoystick)
                 m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
 

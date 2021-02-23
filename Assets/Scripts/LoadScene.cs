@@ -39,7 +39,7 @@ public class LoadScene : MonoBehaviour
     }
     public void LoadPlayMenu()
     {
-       
+        PlayerStorage.Save();
         SceneData.previousScene = SceneManager.GetActiveScene().name;
         SceneData.currentScene = "PlayMenu";
         SceneManager.LoadScene("PlayMenu");

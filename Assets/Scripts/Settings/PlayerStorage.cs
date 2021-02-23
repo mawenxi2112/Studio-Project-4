@@ -24,10 +24,15 @@ public static class PlayerStorage
 
     public static void Save()
     {
-        PlayerPrefs.SetInt("PMaxHealth", maxHealth);
-        PlayerPrefs.SetInt("PMaxSpeed", speed);
-        PlayerPrefs.SetInt("PDamage", damage);
-        PlayerPrefs.SetInt("PCoins", coins);
-        PlayerPrefs.Save();
+
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            Debug.Log("Saving values: " + GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>().m_maxHealth + " " + (int)GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>().m_maxMoveSpeed + " " + GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>().m_currentAttack + " " + GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>().m_currency);
+            PlayerPrefs.SetInt("PMaxHealth", GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>().m_maxHealth);
+            PlayerPrefs.SetInt("PMaxSpeed", (int)GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>().m_maxMoveSpeed);
+            PlayerPrefs.SetInt("PDamage", GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>().m_currentAttack);
+            PlayerPrefs.SetInt("PCoins", GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>().m_currency);
+            PlayerPrefs.Save();
+        }
     }
 }
