@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -85,5 +85,9 @@ public class GateScript : MonoBehaviour
 	{
         isGateLock = true;
         animator.SetBool("IsLock", isGateLock);
-	}
+
+        boxCollider.enabled = true;
+        LeftCollider.GetComponent<BoxCollider2D>().enabled = false;
+        RightCollider.GetComponent<BoxCollider2D>().enabled = false;
+    }
 }
