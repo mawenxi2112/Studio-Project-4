@@ -47,20 +47,44 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         m_maxMoveSpeed = SceneData.storage.speed;
         m_currency = SceneData.storage.coins;*/
 
-        if (!m_movementJoystick)
-            m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
-
-        if (!m_attackJoystick)
-            m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
-
-        if (!m_dashButton)
-            m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
-
-        if (GetComponent<PhotonView>().IsMine && platform == 0) // If player is online and on pc platform, hide the joysticks
+        if (GetComponent<PhotonView>()) // Online
         {
-            m_movementJoystick.gameObject.SetActive(false);
-            m_attackJoystick.gameObject.SetActive(false);
-            m_dashButton.gameObject.SetActive(false);
+            if (!GetComponent<PhotonView>().IsMine)
+                return;
+
+            if (!m_movementJoystick)
+                m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
+
+            if (!m_attackJoystick)
+                m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
+
+            if (!m_dashButton)
+                m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
+
+            if (platform == 0) // If on pc platform, hide the joystick
+            {
+                m_movementJoystick.gameObject.SetActive(false);
+                m_attackJoystick.gameObject.SetActive(false);
+                m_dashButton.gameObject.SetActive(false);
+            }
+        }
+        else // Offline
+        {
+            if (!m_movementJoystick)
+                m_movementJoystick = GameObject.Find("Movement Joystick").GetComponent<Joystick>();
+
+            if (!m_attackJoystick)
+                m_attackJoystick = GameObject.Find("Attack Joystick").GetComponent<Joystick>();
+
+            if (!m_dashButton)
+                m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
+
+            if (platform == 0) // If on pc platform, hide the joystick
+            {
+                m_movementJoystick.gameObject.SetActive(false);
+                m_attackJoystick.gameObject.SetActive(false);
+                m_dashButton.gameObject.SetActive(false);
+            }
         }
 
         m_currentHealth = m_maxHealth;
