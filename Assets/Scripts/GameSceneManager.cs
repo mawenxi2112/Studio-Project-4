@@ -326,7 +326,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public void ChangeScene()
 	{
         levelCount++;
-        GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.All, levelCount);
+        GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.AllViaServer, levelCount);
     }
 
     [PunRPC]
