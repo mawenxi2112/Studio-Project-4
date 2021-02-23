@@ -184,6 +184,12 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         m_currency = value;
     }
 
+    public static void TransferOwner(GameObject newOwner, GameObject gameobject)
+    {
+        if (newOwner.GetComponent<PhotonView>().Controller != gameobject.GetComponent<PhotonView>().Controller)
+            gameobject.GetComponent<PhotonView>().TransferOwnership(newOwner.GetComponent<PhotonView>().Controller);
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -212,19 +218,5 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             GetComponent<PlayerInteraction>().m_hand = PhotonView.Find(otherPlayerSwordView).gameObject;
             GetComponent<PlayerInteraction>().m_handAnimator = PhotonView.Find(otherPlayerSwordView).gameObject.GetComponent<Animator>();
         }
-    }
-
-    [PunRPC]
-    public void TransferOwnership(int newOwnerID, int gameObjectID)
-    {
-        // Do it once, and only when the player belongs to you
-        if (!GetComponent<PhotonView>().IsMine)
-            return;
-
-        GameObject newOwner = PhotonView.Find(newOwnerID).gameObject;
-        GameObject gameObjectChange = PhotonView.Find(gameObjectID).gameObject;
-
-        if (newOwner.GetComponent<PhotonView>().Controller != gameObjectChange.GetComponent<PhotonView>().Controller)
-            gameObjectChange.GetComponent<PhotonView>().SetControllerInternal(newOwner.GetComponent<PhotonView>().Controller.ActorNumber);
     }
 }
