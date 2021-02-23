@@ -189,6 +189,7 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
         // If it isn't already the owner
         if (newOwner.GetComponent<PhotonView>().Controller != gameObject.GetComponent<PhotonView>().Controller)
             gameObject.GetComponent<PhotonView>().SetControllerInternal(newOwner.GetComponent<PhotonView>().Controller.ActorNumber);
+        Debug.Log("called transferred ownership");
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

@@ -44,7 +44,7 @@ public class GateScript : MonoBehaviour
             switch(ListOfObjectRequiredToOpenGate[i].GetComponent<ObjectData>().object_type)
 			{
                 case OBJECT_TYPE.CAMPFIRE:
-                    if (!ListOfObjectRequiredToOpenGate[i].GetComponent<CampfireScript>().IsLit)
+                    if (!ListOfObjectRequiredToOpenGate[i].GetComponent<Animator>().GetBool("IsLit"))
 					{
                         WillGateOpen = false;
 					}
