@@ -822,7 +822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupMenu: {fileID: 207378457}
-  player: {fileID: 0}
+  player: {fileID: 1142217363}
 --- !u!114 &189366437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3102120093583544418, guid: 96952fac4fb1406419f5ee7d1ef03ea0, type: 3}
   m_PrefabInstance: {fileID: 3933073517127330508}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1142217363}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dd8554b09a41f34cb72d69f555eef36, type: 3}
@@ -1224,7 +1224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupMenu: {fileID: 212180679}
-  player: {fileID: 0}
+  player: {fileID: 1142217363}
 --- !u!114 &415092073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2058,7 +2058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupMenu: {fileID: 1181568154}
-  player: {fileID: 0}
+  player: {fileID: 1142217363}
 --- !u!114 &640296572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4365,6 +4365,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124182077}
   m_CullTransparentMesh: 0
+--- !u!1 &1142217363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6249313010698502839, guid: 96952fac4fb1406419f5ee7d1ef03ea0, type: 3}
+  m_PrefabInstance: {fileID: 3933073517127330508}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1168547418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4804,7 +4809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausedOnce: 0
-  player: {fileID: 0}
+  player: {fileID: 384556660}
   popUp: {fileID: 212180679}
 --- !u!1 &1247899630
 GameObject:
@@ -6056,7 +6061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausedOnce: 0
-  player: {fileID: 0}
+  player: {fileID: 384556660}
   popUp: {fileID: 207378457}
 --- !u!1 &1556734266
 GameObject:
@@ -8180,7 +8185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausedOnce: 0
-  player: {fileID: 0}
+  player: {fileID: 384556660}
   popUp: {fileID: 1181568154}
 --- !u!1 &2106794299
 GameObject:

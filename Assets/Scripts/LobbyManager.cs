@@ -27,7 +27,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Camera camera;
     public PhotonView photonView;
     public Joystick joystick;
-
+    private AsyncOperation async;
     public LoadScene SceneManager;
     public int playerReady;
     //public GameObject[] AsteroidPrefabs;
@@ -40,8 +40,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     void Update()
     {
-      /*  if (PhotonNetwork.IsMasterClient)
-            Debug.Log("PlayerAmount: " + PhotonNetwork.PlayerList.Length);*/
+        /*  if (PhotonNetwork.IsMasterClient)
+              Debug.Log("PlayerAmount: " + PhotonNetwork.PlayerList.Length);*/
+        Debug.Log(PhotonNetwork.LevelLoadingProgress);
     }
     public override void OnEnable()
     {
@@ -185,10 +186,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
         if(CheckPlayersReady())
         {
+            if(async.isDone)
+            {
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
             Debug.Log("Loading Game Scene!!!!!!!!!!!!!");
             PhotonNetwork.LoadLevel("Level1Scene");
+
+            }
         }
 
     }
@@ -199,7 +204,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // called by OnCountdownTimerIsExpired() when the timer ended
     private void StartGame()
     {
-
+        StartCoroutine(SceneManager.LoadMainLevelAsync(async));
         GameObject player;
         GameObject world = GameObject.Find("World");
 
