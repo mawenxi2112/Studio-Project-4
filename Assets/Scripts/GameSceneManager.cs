@@ -261,24 +261,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public void ChangeScene()
 	{
         GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.AllViaServer);
-
-        // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
-        string level = "Level" + levelCount;
-        List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
-
-        for (int i = 0; i < rootGO.Count; i++)
-        {
-            if (rootGO[i].name.Contains(level))
-            {
-                for (int j = 0; j < rootGO[i].transform.childCount; i++)
-                {
-                    if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
-                    {
-                        GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
-                    }
-                }
-            }
-        }
     }
 
     [PunRPC]
@@ -311,6 +293,24 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 {GameData.PLAYER_LOADED_LEVEL, true}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
+
+        // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
+        string level = "Level" + levelCount;
+        List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
+
+        for (int i = 0; i < rootGO.Count; i++)
+        {
+            if (rootGO[i].name.Contains(level))
+            {
+                for (int j = 0; j < rootGO[i].transform.childCount; i++)
+                {
+                    if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
+                    {
+                        GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
+                    }
+                }
+            }
         }
     }
 
