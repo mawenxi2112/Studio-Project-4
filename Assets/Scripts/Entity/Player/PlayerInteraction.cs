@@ -191,7 +191,7 @@ public class PlayerInteraction : MonoBehaviour
         else if (GetComponent<PlayerData>().platform == 1)
         {
             // Get the direction of the joystick
-            m_dir = new Vector2(GetComponent<PlayerData>().m_attackJoystick.Horizontal, GetComponent<PlayerData>().m_attackJoystick.Vertical);
+            m_dir = GetComponent<PlayerData>().m_attackJoystick.Direction;
             // Possibly rework this! 
             Vector2 scaledRelativePosition = new Vector2(m_dir.x, m_dir.y) * GetComponent<PlayerData>().m_weaponRadius;
 
