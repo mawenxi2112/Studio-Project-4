@@ -384,7 +384,11 @@ MonoBehaviour:
   m_rechargeDuration: 0
   BossBoundary: {fileID: 0}
   TeleportBoundary: {fileID: 0}
-  TeleportRangeCheck: 5
+  TeleportRangeCheck: 10
+  m_teleportCooldown: 15
+  m_teleportTickdown: 15
+  m_summonOnce: 1
+  m_summonCount: 5
   originalPosition: {x: 0, y: 0, z: 0}
   Player_List: []
   Player_In_TeleportRange: []

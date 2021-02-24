@@ -31,6 +31,7 @@ public class BossIdleScript : StateMachineBehaviour
 		{
 			animator.gameObject.GetComponent<NavMeshAgentScript>().target = null;
 			animator.gameObject.GetComponent<NavMeshAgentScript>().HomingTarget = animator.gameObject.GetComponent<BossData>().originalPosition;
+			animator.gameObject.GetComponent<BossData>().m_teleportTickdown = animator.gameObject.GetComponent<BossData>().m_teleportCooldown;
 			animator.SetBool("IsChasing", false);
 		}
 	}

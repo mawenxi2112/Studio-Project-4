@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class BossData : MonoBehaviour
 {
@@ -18,7 +19,12 @@ public class BossData : MonoBehaviour
 
     public GameObject BossBoundary;
     public GameObject TeleportBoundary;
-    public int TeleportRangeCheck = 5;
+    public int TeleportRangeCheck = 10;
+    public double m_teleportCooldown = 15;
+    public double m_teleportTickdown = 15;
+
+    public bool m_summonOnce = true;
+    public int m_summonCount = 5;
 
     public Vector3 originalPosition;
 
@@ -59,6 +65,8 @@ public class BossData : MonoBehaviour
         animator.SetInteger("Health", m_currentHealth);
 
         Player_List = GameObject.FindGameObjectsWithTag("Player");
+
+        m_teleportTickdown -= Time.deltaTime;
 
         if (m_iFrame)
         {
@@ -189,7 +197,15 @@ public class BossData : MonoBehaviour
 
     public void Summon()
 	{
+        Debug.Log("SUMMON FUNCTION CALLED");
+        BoxCollider2D boundaryCollider = TeleportBoundary.GetComponent<BoxCollider2D>();
 
+        for (int i = 0; i < m_summonCount; i++)
+		{
+            Vector3 PositionPicked = new Vector3(Random.Range(boundaryCollider.bounds.min.x, boundaryCollider.bounds.max.x), Random.Range(boundaryCollider.bounds.min.y, boundaryCollider.bounds.max.y), 0);
+
+            GameObject wisp = PhotonNetwork.Instantiate("Wisp", PositionPicked, Quaternion.identity);
+		}
 	}
 
     public void Despawn()

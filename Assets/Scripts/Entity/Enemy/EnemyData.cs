@@ -9,6 +9,7 @@ public enum ENEMY_TYPE
     MELEE,
     RANGED,
     RUNNER,
+    WISP
 }
 
 public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
@@ -113,7 +114,7 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
     public void SpawnEnemyProjectile()
 	{
         Vector2 dir = ( new Vector2(gameObject.GetComponent<NavMeshAgentScript>().target.position.x, gameObject.GetComponent<NavMeshAgentScript>().target.position.y) - new Vector2(gameObject.transform.position.x, gameObject.transform.position.y)).normalized;
-        GameObject projectiletmp = Instantiate(projectilePrefab);
+        GameObject projectiletmp = PhotonNetwork.Instantiate("EnemyProjectile", new Vector3(0,0,0), Quaternion.identity);
         projectiletmp.GetComponent<Transform>().position = gameObject.transform.Find("ProjectileSpawnPoint").position;
         projectiletmp.GetComponent<Transform>().eulerAngles = new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
         projectiletmp.GetComponent<EnemyProjectileScript>().rb.AddForce(dir * projectiletmp.GetComponent<EnemyProjectileScript>().moveSpeed, ForceMode2D.Impulse);
@@ -133,5 +134,15 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
             m_currentHealth = (int)stream.ReceiveNext();
         }
     }
+
+    public void Despawn()
+	{
+        Destroy(gameObject);
+	}
+
+    public void EnableHitbox()
+	{
+        gameObject.transform.Find("Hitbox").GetComponent<PolygonCollider2D>().enabled = true;
+	}
 
 }
