@@ -138,9 +138,9 @@ MonoBehaviour:
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
   m_SynchronizeParameters:
-  - Type: 1
+  - Type: 4
     SynchronizeType: 2
-    Name: TriggerChange
+    Name: isPressed
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
@@ -173,8 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c242364123509e40862a1e870daed72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  isSteppedOn: 0
 --- !u!212 &646841435614492268
 SpriteRenderer:
   m_ObjectHideFlags: 0
