@@ -33,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
                     this.transform.localPosition = new Vector3(6.0f, -0.1f, 0.0f);
                 }
+                else if(SceneData.previousScene == "GameLobbyScene" || SceneData.previousScene == "Level1Scene")
+                {
+                    this.transform.localPosition = new Vector3(0.0f, -0.1f, 0.0f);
+                }
             }
         }
 

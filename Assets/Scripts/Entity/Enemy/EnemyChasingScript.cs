@@ -17,15 +17,20 @@ public class EnemyChasingScript : StateMachineBehaviour
 		GameObject closestPlayer = animator.GetComponent<EnemyData>().CheckIfPlayerEnterRange(animator, animator.GetComponent<EnemyData>().m_detectionRange);
 		if (closestPlayer)
 		{
-			animator.SetBool("IsChasing", true);
-			animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
+			if (animator.gameObject.GetComponent<EnemyData>().m_type == ENEMY_TYPE.WISP)
+			{
+
+			}
+			else
+			{
+				animator.SetBool("IsChasing", true);
+				animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
+			}
 		}
 	}
 
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		//if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
-		//	return;
 
 		if (!PhotonNetwork.IsMasterClient)
 			return;
@@ -38,7 +43,12 @@ public class EnemyChasingScript : StateMachineBehaviour
 		}
 		else if (!closestPlayer)
 		{
-			animator.SetBool("IsChasing", false);
+			if (animator.gameObject.GetComponent<EnemyData>().m_type == ENEMY_TYPE.WISP)
+			{
+
+			}
+			else
+				animator.SetBool("IsChasing", false);
 		}
 
 		// TO ENTER ATTACKING STATE
@@ -66,6 +76,9 @@ public class EnemyChasingScript : StateMachineBehaviour
 					animator.GetComponent<NavMeshAgentScript>().target = RunnerPlayerInAttackRange.transform;
 					animator.SetBool("IsAttacking", true);
 				}
+				break;
+
+			case ENEMY_TYPE.WISP:
 				break;
 		}
 

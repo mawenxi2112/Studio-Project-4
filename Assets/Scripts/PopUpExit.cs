@@ -15,8 +15,7 @@ public class PopUpExit : MonoBehaviour
     // Update is called once per frame
     public void DisablePopup()
     {
-        
-        Debug.Log("Settings Inactive");
+       
         popupMenu.gameObject.SetActive(false);
         player.GetComponent<PlayerData>().m_isPaused = false;
     }

@@ -37,7 +37,38 @@ public class BossChasingScript : StateMachineBehaviour
 			animator.gameObject.GetComponent<NavMeshAgentScript>().target = null;
 			animator.gameObject.GetComponent<NavMeshAgentScript>().HomingTarget = animator.gameObject.GetComponent<BossData>().originalPosition;
 			animator.SetBool("IsChasing", false);
+			return;
 		}
+
+		if (animator.GetBool("UseAttackOne") != true && animator.GetBool("UseAttackTwo") != true)
+		{
+
+			if (animator.gameObject.GetComponent<BossData>().m_summonOnce && animator.gameObject.GetComponent<BossData>().m_currentHealth <= animator.gameObject.GetComponent<BossData>().m_maxHealth / 2)
+			{
+				Debug.Log("SUMMONING");
+				animator.SetBool("UseSummon", true);
+				animator.gameObject.GetComponent<BossData>().m_summonOnce = false;
+			}
+			else if (animator.gameObject.GetComponent<BossData>().CheckIfPlayerEnterBoundary(false) == true && animator.gameObject.GetComponent<BossData>().m_teleportTickdown <= 0)
+			{
+				animator.gameObject.GetComponent<BossData>().m_teleportTickdown = animator.gameObject.GetComponent<BossData>().m_teleportCooldown;
+				int count = 0;
+				for (int i = 0; i < animator.gameObject.GetComponent<BossData>().Player_In_TeleportRange.Count; i++)
+				{
+					if (Vector2.Distance(animator.gameObject.transform.position, animator.GetComponent<BossData>().Player_List[i].transform.position) >= 10)
+					{
+						count++;
+					}
+				}
+				if (count == animator.gameObject.GetComponent<BossData>().Player_In_TeleportRange.Count)
+				{
+					animator.SetBool("UseTeleport", true);
+					animator.gameObject.GetComponent<BossData>().m_rechargeDuration = 0.2f;
+					return;
+				}
+			}
+		}
+
 	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state

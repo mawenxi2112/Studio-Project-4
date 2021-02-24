@@ -30,27 +30,23 @@ public class SceneTransitionCollider : MonoBehaviour
             pausedOnce = true;
 
   
-        Debug.Log("Colliding with?" + this.name);
+   
         switch (ID)
         {
             case -1:
                 player.GetComponent<PlayerData>().m_isPaused = true;
-                Debug.Log("Active: " + popupMenu.gameObject.activeSelf);
+
                 if (popupMenu)
                     popupMenu.PopUp();
                 if (!popupMenu.gameObject.activeSelf)
                 {
                     popupMenu.gameObject.SetActive(true);
-                    Debug.Log("Settings to Active");
                 }
-                Debug.Log("ActiveTest: " + popupMenu.gameObject.activeSelf);
-                Debug.Log("Pausing");
                 break;
             case 0:
                 
                 sceneManager.LoadMainMenu();
            
-                Debug.Log("Moving to Main Menu");
                 break;
             case 1:
             

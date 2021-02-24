@@ -17,6 +17,7 @@ public class BossRechargingScript : StateMachineBehaviour
 		m_currentCountDown = animator.GetComponent<BossData>().m_rechargeDuration;
 		animator.GetComponent<NavMeshAgentScript>().target = null;
 		animator.GetComponent<NavMeshAgent>().speed = 0;
+		animator.gameObject.GetComponent<NavMeshAgentScript>().HomingTarget = animator.gameObject.transform.position;
 
 		animator.SetBool("IsRecharging", true);
 		animator.SetBool("IsChasing", false);
@@ -38,6 +39,7 @@ public class BossRechargingScript : StateMachineBehaviour
 		{
 			animator.SetBool("IsRecharging", false);
 			animator.GetComponent<NavMeshAgent>().speed = animator.GetComponent<BossData>().m_maxMoveSpeed;
+			animator.gameObject.GetComponent<BossData>().DetectCollider.GetComponent<PolygonCollider2D>().enabled = true;
 		}
 	}
 

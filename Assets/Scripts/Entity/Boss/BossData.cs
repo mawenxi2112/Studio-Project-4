@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class BossData : MonoBehaviour
 {
@@ -18,7 +19,12 @@ public class BossData : MonoBehaviour
 
     public GameObject BossBoundary;
     public GameObject TeleportBoundary;
-    public int TelportRangeCheck = 5;
+    public int TeleportRangeCheck = 10;
+    public double m_teleportCooldown = 15;
+    public double m_teleportTickdown = 15;
+
+    public bool m_summonOnce = true;
+    public int m_summonCount = 5;
 
     public Vector3 originalPosition;
 
@@ -59,6 +65,8 @@ public class BossData : MonoBehaviour
         animator.SetInteger("Health", m_currentHealth);
 
         Player_List = GameObject.FindGameObjectsWithTag("Player");
+
+        m_teleportTickdown -= Time.deltaTime;
 
         if (m_iFrame)
         {
@@ -152,6 +160,56 @@ public class BossData : MonoBehaviour
 
     public void Teleport()
 	{
+        BoxCollider2D boundaryCollider = TeleportBoundary.GetComponent<BoxCollider2D>();
 
+        bool found = false;
+        while(!found)
+		{
+            Vector3 PositionPicked = new Vector3(Random.Range(boundaryCollider.bounds.min.x, boundaryCollider.bounds.max.x), Random.Range(boundaryCollider.bounds.min.y, boundaryCollider.bounds.max.y), 0);
+
+            for (int i = 0; i < Player_In_TeleportRange.Count; i++)
+            {
+                if (Vector2.Distance(PositionPicked, Player_In_TeleportRange[i].transform.position) <= TeleportRangeCheck)
+				{
+                    gameObject.transform.position = PositionPicked;
+                    found = true;
+                    break;
+				}
+            }
+        }
+    }
+
+    public void SetActivateOfAttackColliderOne(int value)
+	{
+        if (value == 0)
+            AttackColliderOne.GetComponent<PolygonCollider2D>().enabled = false;
+        else if (value == 1)
+            AttackColliderOne.GetComponent<PolygonCollider2D>().enabled = true;
+    }
+
+    public void SetActivateOfAttackColliderTwo(int value)
+	{
+        if (value == 0)
+            AttackColliderTwo.GetComponent<PolygonCollider2D>().enabled = false;
+        else if (value == 1)
+            AttackColliderTwo.GetComponent<PolygonCollider2D>().enabled = true;
+    }
+
+    public void Summon()
+	{
+        Debug.Log("SUMMON FUNCTION CALLED");
+        BoxCollider2D boundaryCollider = TeleportBoundary.GetComponent<BoxCollider2D>();
+
+        for (int i = 0; i < m_summonCount; i++)
+		{
+            Vector3 PositionPicked = new Vector3(Random.Range(boundaryCollider.bounds.min.x, boundaryCollider.bounds.max.x), Random.Range(boundaryCollider.bounds.min.y, boundaryCollider.bounds.max.y), 0);
+
+            GameObject wisp = PhotonNetwork.Instantiate("Wisp", PositionPicked, Quaternion.identity);
+		}
+	}
+
+    public void Despawn()
+	{
+        Destroy(gameObject);
 	}
 }

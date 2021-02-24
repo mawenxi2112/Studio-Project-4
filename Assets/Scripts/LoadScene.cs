@@ -10,9 +10,6 @@ public class LoadScene : MonoBehaviour
     {
         SceneData.previousScene = SceneData.currentScene;
         SceneData.currentScene = SceneManager.GetActiveScene().name;
-        Debug.Log("CurrentScene: " + SceneData.currentScene);
-        Debug.Log("PreviousScene: " + SceneData.previousScene);
-        
         
     }
     public IEnumerator LoadMainLevelAsync(AsyncOperation async)

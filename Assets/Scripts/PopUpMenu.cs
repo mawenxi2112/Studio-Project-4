@@ -17,6 +17,5 @@ public class PopUpMenu : MonoBehaviour
     public void PopUp()
     {
         this.gameObject.SetActive(true);
-        Debug.Log("Popping Up" + this.gameObject.name);
     }
 }
