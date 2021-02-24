@@ -26,7 +26,13 @@ public class BossChasingScript : StateMachineBehaviour
 		if (!PhotonNetwork.IsMasterClient)
 			return;
 
-		if (!animator.gameObject.GetComponent<BossData>().CheckIfPlayerEnterBoundary(true))
+		GameObject closestPlayer = animator.GetComponent<BossData>().FindClosestPlayer();
+		if (closestPlayer)
+		{
+			animator.SetBool("IsChasing", true);
+			animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
+		}
+		else if (!animator.gameObject.GetComponent<BossData>().CheckIfPlayerEnterBoundary(true))
 		{
 			animator.gameObject.GetComponent<NavMeshAgentScript>().target = null;
 			animator.gameObject.GetComponent<NavMeshAgentScript>().HomingTarget = animator.gameObject.GetComponent<BossData>().originalPosition;

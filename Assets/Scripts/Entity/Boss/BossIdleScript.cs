@@ -17,6 +17,11 @@ public class BossIdleScript : StateMachineBehaviour
 		if (!PhotonNetwork.IsMasterClient)
 			return;
 
+		if (animator.gameObject.GetComponent<BossData>() == null)
+		{
+			return;
+		}
+
 		if (animator.gameObject.GetComponent<BossData>().CheckIfPlayerEnterBoundary(true))
 		{
 			animator.gameObject.GetComponent<BossData>().FindClosestPlayer();

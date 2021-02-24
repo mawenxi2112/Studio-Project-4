@@ -86,6 +86,9 @@ public class BossData : MonoBehaviour
 
     public bool CheckIfPlayerEnterBoundary(bool BorderOrTeleport) // True = Border, False = Teleport Check
 	{
+        if (Player_List.Length <= 0)
+            return false;
+
         // Check for player within the Enemy Border
         if (BorderOrTeleport == true)
         {
