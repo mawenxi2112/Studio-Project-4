@@ -2867,7 +2867,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3102120093583544418, guid: 96952fac4fb1406419f5ee7d1ef03ea0, type: 3}
       propertyPath: platform
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3102120093583544418, guid: 96952fac4fb1406419f5ee7d1ef03ea0, type: 3}
       propertyPath: m_movementJoystick
@@ -2879,7 +2879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6169596405825587329, guid: 96952fac4fb1406419f5ee7d1ef03ea0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.98
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 6169596405825587329, guid: 96952fac4fb1406419f5ee7d1ef03ea0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3815,7 +3815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupMenu: {fileID: 1455687288}
-  player: {fileID: 0}
+  player: {fileID: 469109303}
 --- !u!114 &1346645416
 MonoBehaviour:
   m_ObjectHideFlags: 0

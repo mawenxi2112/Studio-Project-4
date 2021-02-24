@@ -40,10 +40,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     void Update()
     {
-        /*  if (PhotonNetwork.IsMasterClient)
-              Debug.Log("PlayerAmount: " + PhotonNetwork.PlayerList.Length);*/
-        if (PhotonNetwork.InRoom)
-            Debug.Log("Host:" + PhotonNetwork.MasterClient.NickName);
+
        
     }
     public override void OnEnable()
@@ -73,8 +70,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             {
                 {GameData.PLAYER_READY,value}
             };
-            Debug.Log("Setting Who?" + PhotonNetwork.LocalPlayer.NickName);
-            Debug.Log("Setting to? " + value.ToString());
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
     }
@@ -200,7 +195,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        Debug.Log("Running Into Game");
 
     
         if(CheckPlayersReady())
@@ -209,7 +203,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             {*/
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
-            Debug.Log("Loading Game Scene!!!!!!!!!!!!!");
             PhotonNetwork.LoadLevel("Level1Scene");
 
 
@@ -243,8 +236,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateReady", RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName, false);
         playerReadyList.Add(PhotonNetwork.LocalPlayer.NickName, false);*/
         Physics.IgnoreLayerCollision(0, 9);
-        Debug.Log("PlayerReady: " + CheckPlayersReady().ToString());
-        Debug.Log("Size of PlayerList: " + PhotonNetwork.PlayerList.Length.ToString());
     }
     public void SetPlayerReady(bool State)
     {
@@ -264,11 +255,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
       
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            Debug.Log("PlayerName: " + p.NickName);
             object isPlayerReady;
             if (p.CustomProperties.TryGetValue(GameData.PLAYER_READY, out isPlayerReady))
             {
-                Debug.Log("PlayerReady: " + (bool)isPlayerReady);
                 if (!(bool)isPlayerReady)
                 {
                     return false;
