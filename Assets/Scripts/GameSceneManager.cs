@@ -267,11 +267,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public void SetCurrentLevel()
 	{
         levelCount++;
+
         for (int i = 0; i < LevelReference.Length; i++)
         {
             if (i == levelCount - 1)
             {
                 LevelReference[i].SetActive(true);
+
                 for (int j = 0; j < LevelReference[i].transform.childCount; ++j)
                 {
                     if (LevelReference[i].transform.GetChild(j).gameObject.CompareTag("Enemy"))
@@ -286,6 +288,27 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 LevelReference[i].SetActive(false);
         }
 
+        if (levelCount >= 2)
+        {
+            // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
+            string level = "Level" + levelCount;
+            List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
+
+            for (int i = 0; i < rootGO.Count; i++)
+            {
+                if (rootGO[i].name.Contains(level))
+                {
+                    for (int j = 0; j < rootGO[i].transform.childCount; i++)
+                    {
+                        if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
+                        {
+                            GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
+                        }
+                    }
+                }
+            }
+        }
+
         if (levelCount == 1)
         {
             Hashtable props = new Hashtable
@@ -293,24 +316,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 {GameData.PLAYER_LOADED_LEVEL, true}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        }
-
-        // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
-        string level = "Level" + levelCount;
-        List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
-
-        for (int i = 0; i < rootGO.Count; i++)
-        {
-            if (rootGO[i].name.Contains(level))
-            {
-                for (int j = 0; j < rootGO[i].transform.childCount; i++)
-                {
-                    if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
-                    {
-                        GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
-                    }
-                }
-            }
         }
     }
 
