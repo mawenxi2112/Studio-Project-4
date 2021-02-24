@@ -179,7 +179,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     // called by OnCountdownTimerIsExpired() when the timer ended
     private void StartGame()
     {
-        levelCount = 1;
+        levelCount = 0;
 
         Debug.Log("Starting the game");
         GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.x, LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
@@ -235,7 +235,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 NavMesh2DReference[x].SetActive(true);
             }
 
-            GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.All, levelCount);
+            GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.All);
         }
     }
 
@@ -260,8 +260,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     }
     public void ChangeScene()
 	{
-        levelCount++;
-        GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.AllViaServer, levelCount);
+        GetComponent<PhotonView>().RPC("SetCurrentLevel", RpcTarget.AllViaServer);
 
         // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
         string level = "Level" + levelCount;
@@ -283,11 +282,12 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void SetCurrentLevel(int LevelToActivate)
+    public void SetCurrentLevel()
 	{
+        levelCount++;
         for (int i = 0; i < LevelReference.Length; i++)
         {
-            if (i == LevelToActivate - 1)
+            if (i == levelCount - 1)
             {
                 LevelReference[i].SetActive(true);
                 for (int j = 0; j < LevelReference[i].transform.childCount; ++j)
@@ -304,7 +304,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 LevelReference[i].SetActive(false);
         }
 
-        if (LevelToActivate == 1)
+        if (levelCount == 1)
         {
             Hashtable props = new Hashtable
             {

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class EnemyProjectileScript : MonoBehaviour
 {
     public Rigidbody2D rb;
@@ -28,7 +28,7 @@ public class EnemyProjectileScript : MonoBehaviour
                 collision.gameObject.GetComponent<PlayerData>().SetCurrentHealth(collision.gameObject.GetComponent<PlayerData>().m_currentHealth - 1);
                 collision.gameObject.GetComponent<PlayerData>().m_iFrame = true;
             }
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
         else if (collision.gameObject.CompareTag("Objects"))
 		{
@@ -39,13 +39,13 @@ public class EnemyProjectileScript : MonoBehaviour
                  collision.gameObject.GetComponent<ObjectData>().object_type == OBJECT_TYPE.MOVEABLEBLOCK ||
                  collision.gameObject.GetComponent<ObjectData>().object_type == OBJECT_TYPE.SURPRISETRAPBLOCK)
 			{
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
 
         if (collision.gameObject.name == "WallTiles")
 		{
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
 	}
 }
