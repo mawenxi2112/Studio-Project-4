@@ -42,7 +42,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         /*  if (PhotonNetwork.IsMasterClient)
               Debug.Log("PlayerAmount: " + PhotonNetwork.PlayerList.Length);*/
-
+        if (PhotonNetwork.InRoom)
+            Debug.Log("Host:" + PhotonNetwork.MasterClient.NickName);
        
     }
     public override void OnEnable()
@@ -146,7 +147,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void PlayerLeaveRoom()
     {
         if(PhotonNetwork.InRoom)
-        PhotonNetwork.LeaveRoom();
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (PhotonNetwork.PlayerList.Length > 1)
+                {
+                    PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerListOthers[0]);
+                }
+            }
+           PhotonNetwork.LeaveRoom();
+        }    
       /*  StartCoroutine(LeaveRoomAndLoad());*/
     }
 
@@ -170,8 +180,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
+        
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
         {
+          
             //StartCoroutine(SpawnAsteroid());
         }
     }
