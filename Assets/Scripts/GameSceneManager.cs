@@ -182,8 +182,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         levelCount = 0;
 
         Debug.Log("Starting the game");
-        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.x, LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
-        player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", new Vector3(LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.x + 1, LevelReference[levelCount - 1].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
+        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(LevelReference[levelCount].transform.Find("SpawnPoint").position.x, LevelReference[levelCount].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
+        player.GetComponent<PlayerInteraction>().m_hand = PhotonNetwork.Instantiate("Sword", new Vector3(LevelReference[levelCount].transform.Find("SpawnPoint").position.x + 1, LevelReference[levelCount].transform.Find("SpawnPoint").position.y, 0), Quaternion.identity, 0);
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
         player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
@@ -287,7 +287,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         levelCount++;
         for (int i = 0; i < LevelReference.Length; i++)
         {
-            if (i == levelCount - 1)
+            if (i == levelCount)
             {
                 LevelReference[i].SetActive(true);
                 for (int j = 0; j < LevelReference[i].transform.childCount; ++j)
