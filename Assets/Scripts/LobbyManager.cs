@@ -27,7 +27,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Camera camera;
     public PhotonView photonView;
     public Joystick joystick;
-    private AsyncOperation async;
+    
     public LoadScene SceneManager;
     public int playerReady;
     //public GameObject[] AsteroidPrefabs;
