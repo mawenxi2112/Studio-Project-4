@@ -65,11 +65,23 @@ public class SwordCollision : MonoBehaviour
 
         if (collider.gameObject.CompareTag("EnemyHitbox"))
 		{
-            if (!collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame)
+            if (collider.gameObject.transform.parent.GetComponent<EnemyData>() != null)
             {
-                collider.gameObject.transform.parent.GetComponent<EnemyData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<EnemyData>().m_currentHealth - 1);
-                collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame = true;
+                if (!collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame)
+                {
+                    collider.gameObject.transform.parent.GetComponent<EnemyData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<EnemyData>().m_currentHealth - 1);
+                    collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame = true;
+                }
             }
+            else if (collider.gameObject.transform.parent.GetComponent<BossData>() != null)
+			{
+                if (!collider.gameObject.transform.parent.GetComponent<BossData>().m_iFrame)
+				{
+                    collider.gameObject.transform.parent.GetComponent<BossData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<BossData>().m_currentHealth - 1);
+                    collider.gameObject.transform.parent.GetComponent<BossData>().m_iFrame = true;
+                }
+			}
+
 		}
     }
 

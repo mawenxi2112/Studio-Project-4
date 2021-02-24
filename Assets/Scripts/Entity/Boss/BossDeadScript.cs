@@ -1,49 +1,29 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BossRechargingScript : StateMachineBehaviour
+public class BossDeadScript : StateMachineBehaviour
 {
-	public float m_currentCountDown;
-
-	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		if (!PhotonNetwork.IsMasterClient)
-			return;
-
-		m_currentCountDown = animator.GetComponent<BossData>().m_rechargeDuration;
 		animator.GetComponent<NavMeshAgentScript>().target = null;
 		animator.GetComponent<NavMeshAgent>().speed = 0;
-		animator.gameObject.GetComponent<NavMeshAgentScript>().HomingTarget = animator.gameObject.transform.position;
 
-		animator.SetBool("IsRecharging", true);
+		animator.SetBool("IsRecharging", false);
 		animator.SetBool("IsChasing", false);
 		animator.SetBool("UseAttackOne", false);
 		animator.SetBool("UseAttackTwo", false);
 		animator.SetBool("UseTeleport", false);
 		animator.SetBool("UseSummon", false);
+
 	}
 
-	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		if (!PhotonNetwork.IsMasterClient)
-			return;
 
-		m_currentCountDown -= Time.deltaTime;
-
-		if (m_currentCountDown <= 0)
-		{
-			animator.SetBool("IsRecharging", false);
-			animator.GetComponent<NavMeshAgent>().speed = animator.GetComponent<BossData>().m_maxMoveSpeed;
-			animator.gameObject.GetComponent<BossData>().DetectCollider.GetComponent<PolygonCollider2D>().enabled = true;
-		}
 	}
 
-	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 
