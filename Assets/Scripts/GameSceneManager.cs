@@ -297,19 +297,22 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             if (playerList[i].GetComponent<PhotonView>().IsMine)
                 playerList[i].GetComponent<Transform>().position = spawnPoint;
 
-        // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
-        string level = "Level" + levelCount;
-        List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
-
-        for (int i = 0; i < rootGO.Count; i++)
+        if (levelCount >= 2)
         {
-            if (rootGO[i].name.Contains(level))
+            // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
+            string level = "Level" + levelCount;
+            List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
+
+            for (int i = 0; i < rootGO.Count; i++)
             {
-                for (int j = 0; j < rootGO[i].transform.childCount; i++)
+                if (rootGO[i].name.Contains(level))
                 {
-                    if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
+                    for (int j = 0; j < rootGO[i].transform.childCount; i++)
                     {
-                        GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
+                        if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
+                        {
+                            GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
+                        }
                     }
                 }
             }
