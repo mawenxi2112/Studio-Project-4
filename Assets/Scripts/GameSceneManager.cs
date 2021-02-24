@@ -287,7 +287,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         levelCount++;
         for (int i = 0; i < LevelReference.Length; i++)
         {
-            if (i == levelCount)
+            if (i == levelCount - 1)
             {
                 LevelReference[i].SetActive(true);
                 for (int j = 0; j < LevelReference[i].transform.childCount; ++j)
