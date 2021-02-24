@@ -50,14 +50,6 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
         animator.SetInteger("Health", m_currentHealth);
     }
 
-    void InitializeStat()
-    {
-        switch (m_type)
-        {
-        }
-
-    }
-
     // Update is called once per frame
     void Update()
     {
