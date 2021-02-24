@@ -27,5 +27,9 @@ public class CampfireScript : MonoBehaviour
         {
             particle.SetActive(true);
         }
+        else if (animator.GetBool("IsLit") == false)
+        {
+            particle.SetActive(false);
+        }
     }
 }
