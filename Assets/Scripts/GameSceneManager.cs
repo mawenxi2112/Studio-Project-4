@@ -268,14 +268,17 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 	{
         levelCount++;
 
+        Vector3 spawnPoint = new Vector3(0, 0, 0);
         for (int i = 0; i < LevelReference.Length; i++)
         {
             if (i == levelCount - 1)
             {
                 LevelReference[i].SetActive(true);
-
                 for (int j = 0; j < LevelReference[i].transform.childCount; ++j)
                 {
+                    if (LevelReference[i].transform.GetChild(j).gameObject.name == "SpawnPoint")
+                        spawnPoint = LevelReference[i].transform.GetChild(j).gameObject.transform.position;
+
                     if (LevelReference[i].transform.GetChild(j).gameObject.CompareTag("Enemy"))
                     {
                         GameObject enemy = LevelReference[i].transform.GetChild(j).gameObject;
@@ -288,22 +291,25 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 LevelReference[i].SetActive(false);
         }
 
-        if (levelCount >= 2)
-        {
-            // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
-            string level = "Level" + levelCount;
-            List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
+        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
 
-            for (int i = 0; i < rootGO.Count; i++)
+        for (int i = 0; i < playerList.Length; i++)
+            if (playerList[i].GetComponent<PhotonView>().IsMine)
+                playerList[i].GetComponent<Transform>().position = spawnPoint;
+
+        // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
+        string level = "Level" + levelCount;
+        List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
+
+        for (int i = 0; i < rootGO.Count; i++)
+        {
+            if (rootGO[i].name.Contains(level))
             {
-                if (rootGO[i].name.Contains(level))
+                for (int j = 0; j < rootGO[i].transform.childCount; i++)
                 {
-                    for (int j = 0; j < rootGO[i].transform.childCount; i++)
+                    if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
                     {
-                        if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
-                        {
-                            GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
-                        }
+                        GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
                     }
                 }
             }
