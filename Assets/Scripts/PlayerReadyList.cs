@@ -17,6 +17,11 @@ public class PlayerReadyList : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PhotonNetwork.InRoom)
+        {
+            m_textComponent.text = "";
+            return;
+        }
         if (textType == PhotonNetwork.PlayerList.Length)
         {
             m_textComponent.text = "";
