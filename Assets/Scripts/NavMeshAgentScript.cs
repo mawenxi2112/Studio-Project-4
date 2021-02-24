@@ -30,6 +30,9 @@ public class NavMeshAgentScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        EnemyData enemyData = gameObject.GetComponent<EnemyData>();
+        BossData bossData = gameObject.GetComponent<BossData>();
+
         if (target != null)
         {
             agent.SetDestination(target.position);
@@ -50,7 +53,30 @@ public class NavMeshAgentScript : MonoBehaviour
                     gameObject.GetComponent<Transform>().localScale = new Vector3(-tmp.x, tmp.y, tmp.z);
 			}
         }
-        else if (gameObject.GetComponent<EnemyData>().m_type == ENEMY_TYPE.RUNNER)
+        else if (enemyData != null)
+		{
+            if (gameObject.GetComponent<EnemyData>().m_type == ENEMY_TYPE.RUNNER)
+            {
+                agent.SetDestination(HomingTarget);
+
+                m_dir = (new Vector2(gameObject.transform.position.x, gameObject.transform.position.y) - m_previousPosition).normalized;
+
+                m_previousPosition = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+
+                Vector3 tmp = new Vector3(gameObject.GetComponent<Transform>().localScale.x, gameObject.GetComponent<Transform>().localScale.y, gameObject.GetComponent<Transform>().localScale.z);
+                if (m_dir.x < 0)
+                {
+                    if (tmp.x > 0)
+                        gameObject.GetComponent<Transform>().localScale = new Vector3(-tmp.x, tmp.y, tmp.z);
+                }
+                else if (m_dir.x > 0)
+                {
+                    if (tmp.x < 0)
+                        gameObject.GetComponent<Transform>().localScale = new Vector3(-tmp.x, tmp.y, tmp.z);
+                }
+            }
+        }
+        else if (bossData != null)
 		{
             agent.SetDestination(HomingTarget);
 
