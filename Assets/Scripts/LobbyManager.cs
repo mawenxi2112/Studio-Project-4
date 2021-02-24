@@ -42,7 +42,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         /*  if (PhotonNetwork.IsMasterClient)
               Debug.Log("PlayerAmount: " + PhotonNetwork.PlayerList.Length);*/
-        Debug.Log("Host: " + PhotonNetwork.MasterClient.NickName);
+
+       
     }
     public override void OnEnable()
     {
@@ -64,6 +65,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void SetReady(bool value,bool isMine)
     {
+
         if (isMine)
         {
             Hashtable props = new Hashtable
@@ -137,12 +139,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         UnityEngine.SceneManagement.SceneManager.LoadScene("DemoAsteroids-LobbyScene");
     }
         public override void OnLeftRoom()
-    {
-      
-    }
+        {
+        SceneManager.LoadPlayMenu();
+        base.OnLeftRoom();
+        }
     public void PlayerLeaveRoom()
     {
-        StartCoroutine(LeaveRoomAndLoad());
+        if(PhotonNetwork.InRoom)
+        PhotonNetwork.LeaveRoom();
+      /*  StartCoroutine(LeaveRoomAndLoad());*/
     }
 
     IEnumerator LeaveRoomAndLoad()
@@ -152,7 +157,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         while(PhotonNetwork.InRoom)
         yield return null;
 
-        SceneManager.LoadPlayMenu();
+       
     }
     
     public override void OnJoinedRoom()
