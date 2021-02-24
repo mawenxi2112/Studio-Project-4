@@ -42,7 +42,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         /*  if (PhotonNetwork.IsMasterClient)
               Debug.Log("PlayerAmount: " + PhotonNetwork.PlayerList.Length);*/
-        Debug.Log(PhotonNetwork.LevelLoadingProgress);
+        Debug.Log("Host: " + PhotonNetwork.MasterClient.NickName);
     }
     public override void OnEnable()
     {

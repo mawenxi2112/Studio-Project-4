@@ -188,7 +188,7 @@ namespace Photon.Pun.Demo.Asteroids
 
             maxPlayers = 2;
 
-            RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
+            RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 0 };
             PhotonNetwork.LocalPlayer.NickName = PlayerNameInput.text;
             PhotonNetwork.CreateRoom(roomName, options, null);
             PhotonNetwork.AutomaticallySyncScene = true;

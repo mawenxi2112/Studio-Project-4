@@ -22,7 +22,11 @@ public class PlayerReadyList : MonoBehaviour
             m_textComponent.text = "";
             return;
         }
-
+        if(PhotonNetwork.PlayerList[textType] == null)
+        {
+            m_textComponent.text = "";
+            return;
+        }
         Player player = PhotonNetwork.PlayerList[textType];
         m_textComponent.text = "P" + (textType+1) + ": "+player.NickName;
         object bValue;
