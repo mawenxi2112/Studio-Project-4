@@ -147,8 +147,8 @@ MonoBehaviour:
   object_type: 4
   coinValue: 0
   healthPackValue: 0
-  campfireLitOrNot: 0
   blockHealth: 0
+  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!50 &8441003269619200686
 Rigidbody2D:
   serializedVersion: 4
@@ -275,7 +275,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
