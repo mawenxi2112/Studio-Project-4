@@ -191,7 +191,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         // Force the game to quit/end
-
+        if (otherPlayer.IsMasterClient)
+            PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerList[0]);
+        base.OnPlayerLeftRoom(otherPlayer);
         //CheckEndOfGame();
     }
 
