@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91391b382f77a444ba6a1a92f21b0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPattern: 0
 --- !u!1 &2945100087043660678
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,28 +338,28 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 3
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Health
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: IsChasing
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: UseAttackOne
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: UseAttackTwo
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: UseTeleport
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: UseSummon
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: IsRecharging
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!114 &5769496102981353077
 MonoBehaviour:
@@ -383,7 +384,7 @@ MonoBehaviour:
   m_rechargeDuration: 0
   BossBoundary: {fileID: 0}
   TeleportBoundary: {fileID: 0}
-  TelportRangeCheck: 5
+  TeleportRangeCheck: 5
   originalPosition: {x: 0, y: 0, z: 0}
   Player_List: []
   Player_In_TeleportRange: []
