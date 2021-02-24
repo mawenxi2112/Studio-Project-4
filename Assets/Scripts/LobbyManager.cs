@@ -186,14 +186,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
         if(CheckPlayersReady())
         {
-            if(async.isDone)
-            {
+/*            if(async.isDone)
+            {*/
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
             Debug.Log("Loading Game Scene!!!!!!!!!!!!!");
             PhotonNetwork.LoadLevel("Level1Scene");
 
-            }
+
         }
 
     }
@@ -204,13 +204,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // called by OnCountdownTimerIsExpired() when the timer ended
     private void StartGame()
     {
-        StartCoroutine(SceneManager.LoadMainLevelAsync(async));
+/*        StartCoroutine(SceneManager.LoadMainLevelAsync(async));*/
         GameObject player;
         GameObject world = GameObject.Find("World");
 
          player = PhotonNetwork.Instantiate("Player", new Vector3(-4, -4, 0), Quaternion.identity, 0);
         player.transform.SetParent(world.transform);
-        player.GetComponent<PlayerData>().platform = 1;
+        player.GetComponent<PlayerData>().platform = 0;
         playerInfo.text = "Player Name: " +PhotonNetwork.LocalPlayer.NickName;
         serverInfo.text = "Server: " +PhotonNetwork.CurrentRoom.Name;
 

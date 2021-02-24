@@ -30,6 +30,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public GameObject objectplacementManager;
     public GameObject[] NavMesh2DReference;
     public GameObject[] LevelReference;
+    public Health healthbar;
 
     public CinemachineVirtualCamera camera;
     public Joystick movementJoystick;
@@ -187,6 +188,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerData>().m_movementJoystick = movementJoystick;
         player.GetComponent<PlayerData>().m_attackJoystick = attackJoystick;
         player.GetComponent<PlayerData>().m_dashButton = dashButton;
+        healthbar.player = player.GetComponent<PlayerData>();
         camera.Follow = player.transform;
 
         if (PhotonNetwork.IsMasterClient)
