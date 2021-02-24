@@ -45,7 +45,6 @@ public class BossChasingScript : StateMachineBehaviour
 
 			if (animator.gameObject.GetComponent<BossData>().m_summonOnce && animator.gameObject.GetComponent<BossData>().m_currentHealth <= animator.gameObject.GetComponent<BossData>().m_maxHealth / 2)
 			{
-				Debug.Log("SUMMONING");
 				animator.SetBool("UseSummon", true);
 				animator.gameObject.GetComponent<BossData>().m_summonOnce = false;
 			}

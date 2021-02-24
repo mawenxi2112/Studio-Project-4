@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,9 @@ public class RunnerEnemyDashScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("RunnerEnemy_Dashing"))
         {
             if (gameObject.GetComponent<NavMeshAgentScript>().target != null)

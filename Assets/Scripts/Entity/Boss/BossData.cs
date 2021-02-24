@@ -197,7 +197,9 @@ public class BossData : MonoBehaviour
 
     public void Summon()
 	{
-        Debug.Log("SUMMON FUNCTION CALLED");
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         BoxCollider2D boundaryCollider = TeleportBoundary.GetComponent<BoxCollider2D>();
 
         for (int i = 0; i < m_summonCount; i++)
