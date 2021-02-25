@@ -53,7 +53,7 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
                 return;
 
             PlayerStorage.Load();
-
+            m_isPaused = false;
             m_currency = PlayerStorage.coins;
             m_maxHealth = PlayerStorage.maxHealth;
             m_maxMoveSpeed = PlayerStorage.speed;
@@ -159,7 +159,10 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             else if (platform == 1)
             {
                 Vector2 attackDir = m_attackJoystick.Direction;
-
+                if (Input.GetKey(KeyCode.Escape))
+                {
+                    m_isPaused = !m_isPaused;
+                }
                 if (m_currentEquipment == EQUIPMENT.SWORD)
                 {
                     if (attackDir.magnitude > 0 && m_actionKeyTimer >= m_actionKeyReset)
