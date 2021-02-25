@@ -92,13 +92,24 @@ namespace Photon.Pun.Demo.Asteroids
                 {AsteroidsGame.PLAYER_LOADED_LEVEL, false}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-       
+            Hashtable props2 = new Hashtable
+            {
+                {AsteroidsGame.PLAYER_READY, false}
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props2);
+
+
             PhotonNetwork.LoadLevel("GameLobbyScene");
 
         }
         public override void OnCreatedRoom()
         {
-            Debug.Log("CREATED A ROOM!");
+  
+            Hashtable props2 = new Hashtable
+            {
+                {AsteroidsGame.PLAYER_READY, false}
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props2);
             Hashtable props = new Hashtable
             {
                 {AsteroidsGame.PLAYER_LOADED_LEVEL, false}

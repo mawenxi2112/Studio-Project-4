@@ -167,9 +167,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
     public override void OnJoinedRoom()
     {
-/*        object isPlayerReady;
-        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(GameData.PLAYER_READY, out isPlayerReady);
-        Debug.Log("Starting Value: " + (bool)isPlayerReady);*/
+        /*        object isPlayerReady;
+                PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(GameData.PLAYER_READY, out isPlayerReady);
+                Debug.Log("Starting Value: " + (bool)isPlayerReady);*/
+
+        Hashtable props = new Hashtable
+            {
+                {GameData.PLAYER_READY, false}
+            };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         base.OnJoinedRoom();
     }
 
@@ -188,6 +194,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // Force the game to quit/end
         if (otherPlayer.IsMasterClient)
             PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerList[0]);
+
+        PhotonNetwork.DestroyPlayerObjects(otherPlayer);
         base.OnPlayerLeftRoom(otherPlayer);
         //CheckEndOfGame();
     }

@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (GetComponent<PlayerData>().m_isPaused)
+            return;
         if (GetComponent<PhotonView>()) // Online
         {
             if (!GetComponent<PhotonView>().IsMine)
@@ -148,12 +150,18 @@ public class PlayerMovement : MonoBehaviour
         if (!GetComponent<PhotonView>() && GetComponent<PlayerData>().m_isPaused) // If in offline mode and isPaused
             return;
 
+        if (GetComponent<PlayerData>().m_isPaused)
+            return;
+
         rb.AddForce(movement * GetComponent<PlayerData>().m_currentMoveSpeed * Time.fixedDeltaTime);
     }
 
     void Dash()
     {
         if (!GetComponent<PhotonView>() && GetComponent<PlayerData>().m_isPaused) // If in offline mode and isPaused
+            return;
+
+        if (GetComponent<PlayerData>().m_isPaused)
             return;
 
         rb.AddForce(movement.normalized * GetComponent<PlayerData>().m_dashSpeed, ForceMode2D.Impulse);

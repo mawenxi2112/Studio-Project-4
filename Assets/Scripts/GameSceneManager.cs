@@ -39,7 +39,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public Joystick attackJoystick;
     public Button dashButton;
     public ChooseReward chooseReward;
-    public MinimapTransform minimap;
+    public LoadScene SceneManager;
+    public PlayerData playerData;
+    public PauseScreen pauseUI;
 
     public int levelCount;
 
@@ -69,6 +71,11 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         base.OnDisable();
 
         //CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
+    }
+
+    public void PausePlayer()
+    {
+        playerData.m_isPaused = !playerData.m_isPaused;
     }
 
     #endregion
@@ -134,11 +141,28 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        PhotonNetwork.Disconnect();
+        SceneManager.LoadPlayMenu();
+        base.OnLeftRoom();
     }
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+    }
+
+    public void PlayerLeaveRoom()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (PhotonNetwork.PlayerList.Length > 1)
+                {
+                    PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerListOthers[0]);
+                }
+            }
+            PhotonNetwork.LeaveRoom();
+        }
+        /*  StartCoroutine(LeaveRoomAndLoad());*/
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -151,9 +175,11 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        // Force the game to quit/end
+        if (otherPlayer.IsMasterClient)
+            PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerList[0]);
 
-        //CheckEndOfGame();
+        PhotonNetwork.DestroyPlayerObjects(otherPlayer);
+        base.OnPlayerLeftRoom(otherPlayer);
     }
   
 
@@ -165,6 +191,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             return;
         }
 
+      
 
         if (changedProps.ContainsKey(GameData.PLAYER_LOADED_LEVEL))
         {
@@ -192,11 +219,12 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerData>().m_movementJoystick = movementJoystick;
         player.GetComponent<PlayerData>().m_attackJoystick = attackJoystick;
         player.GetComponent<PlayerData>().m_dashButton = dashButton;
-        healthbar.player = player.GetComponent<PlayerData>();
-        chooseReward.player = player.GetComponent<PlayerData>();
-        minimap.player = player.GetComponent<PlayerData>();
-        handUI.player = player.GetComponent<PlayerData>();
-        moneyUI.player = player.GetComponent<PlayerData>();
+        playerData = player.GetComponent<PlayerData>();
+        healthbar.player = playerData;
+        chooseReward.player = playerData;
+        handUI.player = playerData;
+        moneyUI.player = playerData;
+        pauseUI.player = playerData;
         camera.Follow = player.transform;
 
         if (PhotonNetwork.IsMasterClient)
