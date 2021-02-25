@@ -9,8 +9,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 	private Rigidbody2D rb;
 	public float knockbackMultiplier;
 
-	[SerializeField]
-	private Tilemap[] map = null;
+	public Tilemap[] map = null;
 
 	[SerializeField]
 	private List<TileData> tileDatas;

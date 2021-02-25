@@ -20,6 +20,7 @@ using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Cinemachine;
 using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
@@ -269,6 +270,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         levelCount++;
 
         Vector3 spawnPoint = new Vector3(0, 0, 0);
+        Tilemap[] levelmap = null;
         for (int i = 0; i < LevelReference.Length; i++)
         {
             if (i == levelCount - 1)
@@ -278,6 +280,15 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 {
                     if (LevelReference[i].transform.GetChild(j).gameObject.name == "SpawnPoint")
                         spawnPoint = LevelReference[i].transform.GetChild(j).gameObject.transform.position;
+
+                    if (LevelReference[i].transform.GetChild(j).gameObject.name == "Grid")
+					{
+                        levelmap = new Tilemap[LevelReference[i].transform.GetChild(j).childCount];
+                        for (int k = 0; k < LevelReference[i].transform.GetChild(j).childCount; k++)
+                        {
+                            levelmap[k] = LevelReference[i].transform.GetChild(j).GetChild(k).gameObject.GetComponent<Tilemap>();
+                        }
+                    }
 
                     if (LevelReference[i].transform.GetChild(j).gameObject.CompareTag("Enemy"))
                     {
@@ -295,7 +306,10 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < playerList.Length; i++)
             if (playerList[i].GetComponent<PhotonView>().IsMine)
+            {
                 playerList[i].GetComponent<Transform>().position = spawnPoint;
+                playerList[i].GetComponent<PlayerEnvironmentalCollision>().map = levelmap;
+            }
 
         if (levelCount >= 2)
         {
