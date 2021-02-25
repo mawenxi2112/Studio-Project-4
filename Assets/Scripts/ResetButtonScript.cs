@@ -41,7 +41,8 @@ public class ResetButtonScript : MonoBehaviour
 
             for (int i = 0; i < ListOfObjectToReset.Count; i++)
             {
-                ListOfObjectToReset[i].GetComponent<Transform>().position = ListOfObjectToReset[i].GetComponent<ObjectData>().originalPosition;
+                if (ListOfObjectToReset[i].CompareTag("Objects"))
+                    ListOfObjectToReset[i].GetComponent<Transform>().position = ListOfObjectToReset[i].GetComponent<ObjectData>().originalPosition;
             }
         }
     }
