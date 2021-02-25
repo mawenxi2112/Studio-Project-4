@@ -42,11 +42,6 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     // Start is called before the first frame update
     void Start()
     {
-        // Load player stats from save file
-        /*m_maxHealth = SceneData.storage.maxHealth;
-        m_maxMoveSpeed = SceneData.storage.speed;
-        m_currency = SceneData.storage.coins;*/
-
         if (GetComponent<PhotonView>()) // Online
         {
             if (!GetComponent<PhotonView>().IsMine)
