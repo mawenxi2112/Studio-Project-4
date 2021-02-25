@@ -43,12 +43,6 @@ public class EnemyManager : MonoBehaviour
                 }
 
             }
-
-            for (int i = 0; i < waypointManager.transform.childCount; i++)
-            {
-                Debug.Log("Number of EnemyWaypointHolder in " + i + ": " + EnemyWaypointHolder[i].Count);
-                Debug.Log("Number of EnemyWaypointList in " + i + ": " + EnemyWaypointList[i].Count);
-            }
         }
     }
     public static EnemyManager GetInstance()

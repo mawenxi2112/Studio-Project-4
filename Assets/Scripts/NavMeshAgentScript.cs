@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class NavMeshAgentScript : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class NavMeshAgentScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         EnemyData enemyData = gameObject.GetComponent<EnemyData>();
         BossData bossData = gameObject.GetComponent<BossData>();
 
