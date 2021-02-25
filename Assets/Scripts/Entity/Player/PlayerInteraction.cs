@@ -55,7 +55,6 @@ public class PlayerInteraction : MonoBehaviour
         // Throwaway current item mechanic
         if (GetComponent<PlayerData>().m_actionKey && !areTherePossibleMechanics() && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.SWORD && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.NONE)
         {
-            //EquipSword();
             GetComponent<PhotonView>().RPC("EquipSword", RpcTarget.All);
             GetComponent<PlayerData>().m_actionKey = false;
         }
@@ -235,12 +234,17 @@ public class PlayerInteraction : MonoBehaviour
         }
         pickUpGameObject.GetComponent<SpriteRenderer>().sortingOrder = 101;
 
-        GetComponent<PlayerData>().m_currentEquipment = equipmentType;
 
         // Only auto throw current held item if the player isn't holding a sword.
-        if (m_hand != m_sword)
-            Throw(m_hand, new Vector3(0, 0, 0), 0);
+
+        if (GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.NONE || GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.SWORD)
+        {
+            if (m_hand != null)
+                Throw(m_hand, new Vector3(0, 0, 0), 0);
+        }
+
         m_hand = pickUpGameObject;
+        GetComponent<PlayerData>().m_currentEquipment = equipmentType;
         StartCoroutine(IgnoreCollisionWithTag(m_hand, "All", true, 0f));
         //IgnoreCollisionWithTag(m_hand, "All", true); // Ignore the collision between the held object and every other game objects with collider
         GetComponent<PlayerData>().m_currentEquipment = equipmentType;
@@ -256,6 +260,23 @@ public class PlayerInteraction : MonoBehaviour
         GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         m_hand = m_sword;
         m_sword.SetActive(true);
+    }
+
+    [PunRPC]
+    public void DeadHand(PhotonMessageInfo info)
+    {
+        if (GetComponent<PhotonView>().ViewID != info.photonView.ViewID)
+            return;
+
+        if (m_hand == null || GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.NONE)
+            return;
+
+        if (m_hand != m_sword)
+            Throw(m_hand, new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0), 2);
+
+        GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.NONE;
+        m_hand = null;
+        m_sword.SetActive(false);
     }
 }
 
