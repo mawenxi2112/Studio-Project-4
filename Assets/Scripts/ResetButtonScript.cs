@@ -35,7 +35,7 @@ public class ResetButtonScript : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
 	{
-        if (PhotonNetwork.IsMasterClient && (collision.CompareTag("Player") || collision.CompareTag("Objects")))
+        if (PhotonNetwork.IsMasterClient && (collision.CompareTag("Player")))
         {
             animator.SetBool("isPressed", true);
 
@@ -48,7 +48,7 @@ public class ResetButtonScript : MonoBehaviour
 
 	void OnTriggerExit2D(Collider2D collision)
 	{
-        if (PhotonNetwork.IsMasterClient && (collision.CompareTag("Player") || collision.CompareTag("Objects")))
+        if (PhotonNetwork.IsMasterClient && (collision.CompareTag("Player")))
             animator.SetBool("isPressed", false);
     }
 }
