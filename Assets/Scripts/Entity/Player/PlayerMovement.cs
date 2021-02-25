@@ -51,6 +51,13 @@ public class PlayerMovement : MonoBehaviour
             if (!GetComponent<PhotonView>().IsMine)
                 return;
 
+            if (GetComponent<PlayerData>().m_currentHealth <= 0)
+            {
+                movement.x = 0;
+                movement.y = 0;
+                return;
+            }
+
             if (GetComponent<PlayerData>().platform == 0) // PC Platform
             {
                 movement.x = Input.GetAxisRaw("Horizontal");
