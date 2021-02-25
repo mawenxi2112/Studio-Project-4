@@ -5,32 +5,26 @@ using UnityEngine;
 
 public class MinimapTransform : MonoBehaviour
 {
-    public Transform playersTransform;
+    public PlayerData player;
 
-    // Start is called before the first frame update
+    private Transform playerTransform;
+
     void Start()
     {
-        playersTransform = null;
+        playerTransform = null;
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        // If playersTransform is not assigned
-        if (playersTransform == null)
+        if (playerTransform == null)
         {
-            GameObject[] playerGO = GameObject.FindGameObjectsWithTag("Player");
-
-            for (int i = 0; i < playerGO.Length; i++)
-            {
-                Debug.Log(playerGO[i].name);
-
-
-                if (playerGO[i].GetComponent<PhotonView>().IsMine)
-                {
-                    //gameObject.transform = playerGO[i].GetComponent<Transform>();
-                }
-            }
+            playerTransform = player.gameObject.GetComponent<Transform>();
+        }
+        else
+        {
+            Vector3 newPosition = playerTransform.position;
+            newPosition.z = transform.position.z;
+            transform.position = newPosition;
         }
     }
 }

@@ -39,6 +39,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public Joystick attackJoystick;
     public Button dashButton;
     public ChooseReward chooseReward;
+    public MinimapTransform minimap;
 
     public int levelCount;
 
@@ -193,6 +194,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerData>().m_dashButton = dashButton;
         healthbar.player = player.GetComponent<PlayerData>();
         chooseReward.player = player.GetComponent<PlayerData>();
+        minimap.player = player.GetComponent<PlayerData>();
         handUI.player = player.GetComponent<PlayerData>();
         moneyUI.player = player.GetComponent<PlayerData>();
         camera.Follow = player.transform;
