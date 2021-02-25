@@ -255,8 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockbackMultiplier: 10
-  map1: []
-  map2: []
+  map: []
   tileDatas:
   - {fileID: 11400000, guid: b79e5d4e54781ae4f85547568c333650, type: 2}
   - {fileID: 11400000, guid: 522c90ad4ee88d7489a04f7902efe3ea, type: 2}

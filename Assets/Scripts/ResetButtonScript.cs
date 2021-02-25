@@ -21,9 +21,17 @@ public class ResetButtonScript : MonoBehaviour
         // Link ObjectsToReset from the scene to the reset button
         GameObject ResetButtonParent = gameObject.transform.parent.gameObject;
         GameObject ObjectsToReset = ResetButtonParent.transform.Find("ObjectsToReset").gameObject;
+        GameObject ObjectsToMessGate = ResetButtonParent.transform.Find("ObjectsToMessGate").gameObject;
         for (int i = 0; i < ObjectsToReset.transform.childCount; i++)
         {
             ListOfObjectToReset.Add(ObjectsToReset.transform.GetChild(i).gameObject);
+        }
+        if (ObjectsToMessGate != null)
+		{
+            for (int i = 0; i < ObjectsToMessGate.transform.childCount; i++)
+            {
+                ListOfObjectToReset.Add(ObjectsToMessGate.transform.GetChild(i).gameObject);
+            }
         }
     }
 

@@ -17,6 +17,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f15a87657dd084645ada847dd4718821, type: 2}
   - {fileID: 11400000, guid: 248499a5123d2284a9ee0caed8e710e7, type: 2}
   - {fileID: 11400000, guid: ea90b429d8cefd346a31b8105ffe6d8e, type: 2}
-  TakeDamageWhenOn: 0
-  IsMoveable: 0
+  - {fileID: 11400000, guid: ea3586544b73b0d4c80ab3d11f36ea15, type: 2}
   tiletype: 1

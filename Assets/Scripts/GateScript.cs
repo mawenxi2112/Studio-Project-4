@@ -11,10 +11,12 @@ public class GateScript : MonoBehaviour
     public GameObject RightCollider;
 
     public List<GameObject> ListOfObjectRequiredToOpenGate;
+    public List<GameObject> ListOfObjectMessGate;
 
-	void Awake()
+    void Awake()
 	{
         ListOfObjectRequiredToOpenGate = new List<GameObject>();
+        ListOfObjectMessGate = new List<GameObject>();
     }
 
     // Start is called before the first frame update
@@ -27,11 +29,19 @@ public class GateScript : MonoBehaviour
 
         // Link ObjectsRequiredToOpenGate from the scene to the gate
         GameObject GateParent = gameObject.transform.parent.gameObject;
+        GameObject ObjectsToMessGate = GateParent.transform.Find("ObjectsToMessGate").gameObject;
         GameObject ObjectsToUnlockGate = GateParent.transform.Find("ObjectsToUnlockGate").gameObject;
         for (int i = 0; i < ObjectsToUnlockGate.transform.childCount; i++)
 		{
             ListOfObjectRequiredToOpenGate.Add(ObjectsToUnlockGate.transform.GetChild(i).gameObject);
 		}
+        if (ObjectsToMessGate != null)
+        {
+            for (int i = 0; i < ObjectsToMessGate.transform.childCount; i++)
+            {
+                ListOfObjectMessGate.Add(ObjectsToMessGate.transform.GetChild(i).gameObject);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -61,6 +71,26 @@ public class GateScript : MonoBehaviour
             if (!WillGateOpen)
                 break;
 		}
+
+        for (int i = 0; i < ListOfObjectMessGate.Count; i++)
+        {
+            switch (ListOfObjectMessGate[i].GetComponent<ObjectData>().object_type)
+            {
+                case OBJECT_TYPE.CAMPFIRE:
+                    if (ListOfObjectMessGate[i].GetComponent<Animator>().GetBool("IsLit"))
+                    {
+                        WillGateOpen = false;
+                    }
+                    break;
+
+                case OBJECT_TYPE.PRESSUREPLATE:
+                    if (ListOfObjectMessGate[i].GetComponent<Animator>().GetBool("isPressed"))
+                    {
+                        WillGateOpen = false;
+                    }
+                    break;
+            }
+        }
 
         if (WillGateOpen)
             UnlockGate();

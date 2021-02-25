@@ -28,6 +28,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 			foreach (var tile in tileData.tiles)
 			{
 				datafromTiles.Add(tile, tileData.tiletype);
+				Debug.Log(tileData.tiletype);
 			}
 		}
 	}
