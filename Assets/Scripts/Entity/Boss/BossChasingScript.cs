@@ -26,11 +26,14 @@ public class BossChasingScript : StateMachineBehaviour
 		if (!PhotonNetwork.IsMasterClient)
 			return;
 
-		GameObject closestPlayer = animator.GetComponent<BossData>().FindClosestPlayer();
-		if (closestPlayer)
+		if (animator.gameObject.GetComponent<BossData>().CheckIfPlayerEnterBoundary(true))
 		{
-			animator.SetBool("IsChasing", true);
-			animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
+			GameObject closestPlayer = animator.GetComponent<BossData>().FindClosestPlayer();
+			if (closestPlayer)
+			{
+				animator.SetBool("IsChasing", true);
+				animator.GetComponent<NavMeshAgentScript>().target = closestPlayer.transform;
+			}
 		}
 		else if (!animator.gameObject.GetComponent<BossData>().CheckIfPlayerEnterBoundary(true))
 		{
@@ -50,7 +53,6 @@ public class BossChasingScript : StateMachineBehaviour
 			}
 			else if (animator.gameObject.GetComponent<BossData>().CheckIfPlayerEnterBoundary(false) == true && animator.gameObject.GetComponent<BossData>().m_teleportTickdown <= 0)
 			{
-				animator.gameObject.GetComponent<BossData>().m_teleportTickdown = animator.gameObject.GetComponent<BossData>().m_teleportCooldown;
 				int count = 0;
 				for (int i = 0; i < animator.gameObject.GetComponent<BossData>().Player_In_TeleportRange.Count; i++)
 				{
@@ -63,6 +65,7 @@ public class BossChasingScript : StateMachineBehaviour
 				{
 					animator.SetBool("UseTeleport", true);
 					animator.gameObject.GetComponent<BossData>().m_rechargeDuration = 0.2f;
+					animator.gameObject.GetComponent<BossData>().m_teleportTickdown = animator.gameObject.GetComponent<BossData>().m_teleportCooldown;
 					return;
 				}
 			}

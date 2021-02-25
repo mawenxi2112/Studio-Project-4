@@ -337,6 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 300138747656695489}
   - component: {fileID: 4683350647687950744}
+  - component: {fileID: 8918409471232725231}
   m_Layer: 0
   m_Name: AttackCollider
   m_TagString: AttackCollider
@@ -394,3 +395,15 @@ PolygonCollider2D:
       - {x: 0.31723955, y: -0.5316996}
       - {x: 0.14311323, y: -0.14864472}
       - {x: 0.06852424, y: 0.20893611}
+--- !u!114 &8918409471232725231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8570190125882377816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff7c401eecadb44abb7374d8eff30af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

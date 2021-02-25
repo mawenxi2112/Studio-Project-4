@@ -19,7 +19,7 @@ public class BossData : MonoBehaviour
 
     public GameObject BossBoundary;
     public GameObject TeleportBoundary;
-    public int TeleportRangeCheck = 10;
+    public int TeleportRangeCheck = 8;
     public double m_teleportCooldown = 15;
     public double m_teleportTickdown = 15;
 
