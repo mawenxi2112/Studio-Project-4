@@ -160,6 +160,10 @@ public class BossData : MonoBehaviour
 
     public void Teleport()
 	{
+
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         BoxCollider2D boundaryCollider = TeleportBoundary.GetComponent<BoxCollider2D>();
 
         bool found = false;
