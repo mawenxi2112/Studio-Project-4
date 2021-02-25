@@ -301,38 +301,38 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					break;
 
                 case OBJECT_TYPE.PU_DAMAGE:
-                    GetComponent<PlayerData>().m_maxHealth += 10;
+                    GetComponent<PlayerData>().m_currentAttack += 1;
 
-					PlayerData.TransferOwner(gameObject, collision.gameObject);
+                    PlayerData.TransferOwner(gameObject, collision.gameObject);
 
-					// Destroy the Damage Powerup
-					PhotonNetwork.Destroy(collision.gameObject);
+                    // Destroy the Damage Powerup
+                    PhotonNetwork.Destroy(collision.gameObject);
 
                     break;
 
                 case OBJECT_TYPE.PU_MAXHEALTH:
 
                     // Need to change
-                    GetComponent<PlayerData>().m_maxHealth += 10;
+                    GetComponent<PlayerData>().m_maxHealth += 1;
 
-					PlayerData.TransferOwner(gameObject, collision.gameObject);
+                    PlayerData.TransferOwner(gameObject, collision.gameObject);
 
-					// Destroy the Damage Powerup
-					PhotonNetwork.Destroy(collision.gameObject);
+                    // Destroy the Damage Powerup
+                    PhotonNetwork.Destroy(collision.gameObject);
 
                     break;
 
                 case OBJECT_TYPE.PU_SPEED:
 
                     // Need to change
-                    GetComponent<PlayerData>().m_maxMoveSpeed += 700;
+                    GetComponent<PlayerData>().m_maxMoveSpeed += 50;
 
-					PlayerData.TransferOwner(gameObject, collision.gameObject);
+                    PlayerData.TransferOwner(gameObject, collision.gameObject);
 
-					// Destroy the Damage Powerup
-					PhotonNetwork.Destroy(collision.gameObject);
+                    // Destroy the Damage Powerup
+                    PhotonNetwork.Destroy(collision.gameObject);
                     break;
-			}
+            }
 		}
 	}
 }

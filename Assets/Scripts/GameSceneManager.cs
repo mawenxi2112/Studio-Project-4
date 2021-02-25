@@ -38,7 +38,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public Joystick movementJoystick;
     public Joystick attackJoystick;
     public Button dashButton;
-
+    public ChooseReward chooseReward;
 
     public int levelCount;
 
@@ -192,6 +192,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerData>().m_attackJoystick = attackJoystick;
         player.GetComponent<PlayerData>().m_dashButton = dashButton;
         healthbar.player = player.GetComponent<PlayerData>();
+        chooseReward.player = player.GetComponent<PlayerData>();
         handUI.player = player.GetComponent<PlayerData>();
         moneyUI.player = player.GetComponent<PlayerData>();
         camera.Follow = player.transform;
@@ -313,21 +314,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
         if (levelCount >= 2)
         {
-            // Assigns the Level's Camera boundary Grid to the Cinemachine Camera Confiner GameObject
-            string level = "Level" + levelCount;
-            List<GameObject> rootGO = SceneGameObjects.GetRootGameObjects();
+            chooseReward.AllowChooseReward();
 
-            for (int i = 0; i < rootGO.Count; i++)
+            for (int i = 0; i < LevelReference[levelCount - 1].transform.childCount; i++)
             {
-                if (rootGO[i].name.Contains(level))
+                if (LevelReference[levelCount - 1].transform.GetChild(i).name.Contains("Grid"))
                 {
-                    for (int j = 0; j < rootGO[i].transform.childCount; i++)
-                    {
-                        if (rootGO[i].transform.GetChild(j).name.Contains("Grid"))
-                        {
-                            GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = rootGO[i].transform.GetChild(j).gameObject.GetComponent<PolygonCollider2D>();
-                        }
-                    }
+                    GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = LevelReference[levelCount - 1].transform.GetChild(i).gameObject.GetComponent<PolygonCollider2D>();
                 }
             }
         }

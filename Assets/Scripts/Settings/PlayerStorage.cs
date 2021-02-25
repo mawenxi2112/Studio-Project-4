@@ -34,4 +34,13 @@ public static class PlayerStorage
             PlayerPrefs.Save();
         }
     }
+
+    public static void Save(int maxHealthV, int moveSpeedV, int damageV, int coinsV)
+    {
+        PlayerPrefs.SetInt("PMaxHealth", maxHealthV);
+        PlayerPrefs.SetInt("PMaxSpeed", moveSpeedV);
+        PlayerPrefs.SetInt("PDamage", damageV);
+        PlayerPrefs.SetInt("PCoins", coinsV);
+        PlayerPrefs.Save();
+    }
 }
