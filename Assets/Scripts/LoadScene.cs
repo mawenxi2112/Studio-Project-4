@@ -34,6 +34,12 @@ public class LoadScene : MonoBehaviour
         
      
     }
+    public void LoadTutorial()
+    {
+        SceneData.previousScene = SceneManager.GetActiveScene().name;
+        SceneData.currentScene = "Tutorial";
+        SceneManager.LoadScene("Tutorial");
+    }
     public void LoadPlayMenu()
     {
         PlayerStorage.Save();
