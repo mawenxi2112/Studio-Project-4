@@ -39,6 +39,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public Joystick attackJoystick;
     public Button dashButton;
     public ChooseReward chooseReward;
+    public MinimapTransform minimap;
     public LoadScene SceneManager;
     public PlayerData playerData;
     public PauseScreen pauseUI;
@@ -222,6 +223,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         playerData = player.GetComponent<PlayerData>();
         healthbar.player = playerData;
         chooseReward.player = playerData;
+        minimap.player = player.GetComponent<PlayerData>();
         handUI.player = playerData;
         moneyUI.player = playerData;
         pauseUI.player = playerData;
