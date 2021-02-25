@@ -14,6 +14,8 @@ public class ReadyButton : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.GetComponent<PhotonView>() == null)
+            return;
         // There's an error currently so I'm going to change it temporary.
         // - Wen Xi
 
@@ -31,6 +33,8 @@ public class ReadyButton : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.GetComponent<PhotonView>() == null)
+            return;
         if (!PhotonNetwork.InRoom)
             return;
         Debug.Log("Player is not on the button");

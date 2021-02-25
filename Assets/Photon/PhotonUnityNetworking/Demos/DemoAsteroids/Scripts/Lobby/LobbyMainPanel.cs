@@ -176,6 +176,11 @@ namespace Photon.Pun.Demo.Asteroids
 
         public void OnCreateRoomButtonClicked()
         {
+            if (!PhotonNetwork.IsConnected)
+            {
+                Debug.Log("Player is not yet connected");
+            }
+
             string roomName = RoomNameInputField.text;
      
             roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
@@ -225,7 +230,8 @@ namespace Photon.Pun.Demo.Asteroids
 
         public void OnJoinButtonClicked()
         {
-            if(!PhotonNetwork.IsConnected)
+   
+            if (!PhotonNetwork.IsConnected)
             {
                 Debug.Log("Player is not yet connected");
             }
