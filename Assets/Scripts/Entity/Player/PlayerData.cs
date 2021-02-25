@@ -113,12 +113,27 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             if (!GetComponent<PhotonView>().IsMine)
                 return;
 
+            // If player dies
+            if (m_currentHealth <= 0)
+            {
+                GetComponent<Animator>().SetBool("isDead", true);
+
+                if (m_currentEquipment != EQUIPMENT.NONE)
+                    GetComponent<PhotonView>().RPC("DeadHand", RpcTarget.All);
+
+                return;
+            }
+            else
+            {
+                GetComponent<Animator>().SetBool("isDead", false);
+            }
+
             m_actionKeyTimer += Time.deltaTime;
 
             if (m_iFrame)
             {
                 // Render a different colour during iFrame
-
+                m_actionKey = false;
                 m_iFrameCounter += Time.deltaTime;
 
                 if (m_iFrameCounter >= m_iFrameThreshold)

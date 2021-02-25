@@ -208,6 +208,14 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 		if (!GetComponent<PhotonView>().IsMine)
 			return;
 
+		if (collision.gameObject.tag == "Player")
+		{
+			if (collision.gameObject.GetComponent<PlayerData>().m_currentHealth <= 0 && GetComponent<PlayerData>().m_actionKey) // Revive
+			{
+				collision.gameObject.GetComponent<PlayerData>().m_currentHealth = collision.gameObject.GetComponent<PlayerData>().m_maxHealth;
+			}
+		}
+
 		// Collision with in-game objects with IsTrigger on
 		if (collision.gameObject.tag == "Objects")
 		{

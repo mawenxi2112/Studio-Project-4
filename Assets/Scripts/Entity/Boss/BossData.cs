@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
-public class BossData : MonoBehaviour
+public class BossData : MonoBehaviourPunCallbacks, IPunObservable
 {
     public int m_ID;
     public int m_currentHealth;
@@ -218,4 +218,16 @@ public class BossData : MonoBehaviour
 	{
         Destroy(gameObject);
 	}
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(m_currentHealth);
+        }
+        else
+        {
+            m_currentHealth = (int)stream.ReceiveNext();
+        }
+    }
 }
