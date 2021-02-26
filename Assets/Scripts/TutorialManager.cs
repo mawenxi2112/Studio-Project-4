@@ -12,11 +12,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject sword;
     void Start()
     {
-       
-        player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
-        player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
-        player.GetComponent<PlayerInteraction>().m_hand = sword;
-        player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
+    
         player.GetComponent<PlayerData>().m_movementJoystick = movementJoystick;
         player.GetComponent<PlayerData>().m_attackJoystick = attackJoystick;
         player.GetComponent<PlayerData>().m_dashButton = dashButton;
