@@ -141,6 +141,14 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
+        GameObject[] PlayerList = GameObject.FindGameObjectsWithTag("Player");
+
+        for (int i = 0; i < PlayerList.Length; i++)
+        {
+            if (!PlayerList[i].GetComponent<PhotonView>().IsMine && transform.GetChild(0).gameObject.GetComponent<CapsuleCollider2D>().IsTouching(PlayerList[i].transform.GetChild(0).gameObject.GetComponent<CapsuleCollider2D>()))
+                return true;
+        }
+
         return false;
     }
 
@@ -268,14 +276,15 @@ public class PlayerInteraction : MonoBehaviour
         if (GetComponent<PhotonView>().ViewID != info.photonView.ViewID)
             return;
 
-        if (m_hand == null || GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.NONE)
-            return;
+        if (GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.NONE)
+            GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.NONE;
 
         if (m_hand != m_sword)
             Throw(m_hand, new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0), 2);
 
-        GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.NONE;
-        m_hand = null;
+        if (m_hand != null)
+            m_hand = null;
+
         m_sword.SetActive(false);
     }
 }
