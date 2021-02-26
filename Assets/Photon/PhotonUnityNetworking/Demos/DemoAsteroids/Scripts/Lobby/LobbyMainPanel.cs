@@ -202,7 +202,7 @@ namespace Photon.Pun.Demo.Asteroids
             }
             byte maxPlayers;
 
-            maxPlayers = 2;
+            maxPlayers = 3;
 
             RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 0 };
             PhotonNetwork.LocalPlayer.NickName = PlayerNameInput.text;
