@@ -4,12 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public enum SOUNDTYPE
-{
-    BGM,
-    FX
-}
-
 public class GameSettings : MonoBehaviour
 {
     public static GameSettings instance = null;
@@ -28,6 +22,12 @@ public class GameSettings : MonoBehaviour
 
     public bool SoundFXEnabled = true;
     public int SoundFXVolume = 100;
+
+    public enum SOUNDTYPE
+    {
+        BGM,
+        FX
+    }
 
     void Awake()
     {
@@ -85,21 +85,9 @@ public class GameSettings : MonoBehaviour
         File.WriteAllText(settingsFilepath, jsonText);
     }
 
-    public bool CanPlayAudio(SOUNDTYPE soundType)
+    public void CanPlayAudio()
     {
-        if (!MasterVolumeEnabled || MasterVolume == 0)
-            return false;
 
-        if (soundType == SOUNDTYPE.BGM && (BGMEnabled || BGMVolume > 0))
-        {
-            return true;
-        }
-        else if (soundType == SOUNDTYPE.FX && (SoundFXEnabled || SoundFXVolume > 0))
-        {
-            return true;
-        }
-
-        return false;
     }
 
     public static GameSettings GetInstance()
