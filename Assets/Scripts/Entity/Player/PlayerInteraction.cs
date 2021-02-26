@@ -288,11 +288,11 @@ public class PlayerInteraction : MonoBehaviour
         if (GetComponent<PhotonView>().ViewID != info.photonView.ViewID)
             return;
 
-        if (GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.NONE)
-            GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.NONE;
-
         if (m_hand != m_sword)
             Throw(m_hand, new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0), 2);
+
+        if (GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.NONE)
+            GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.NONE;
 
         m_sword.SetActive(false);
     }
