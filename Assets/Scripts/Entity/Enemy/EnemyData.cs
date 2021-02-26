@@ -116,6 +116,9 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
 
     public void SpawnEnemyProjectile()
 	{
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         Vector2 dir = ( new Vector2(gameObject.GetComponent<NavMeshAgentScript>().target.position.x, gameObject.GetComponent<NavMeshAgentScript>().target.position.y) - new Vector2(gameObject.transform.position.x, gameObject.transform.position.y)).normalized;
         GameObject projectiletmp = PhotonNetwork.Instantiate("EnemyProjectile", new Vector3(0,0,0), Quaternion.identity);
         projectiletmp.GetComponent<Transform>().position = gameObject.transform.Find("ProjectileSpawnPoint").position;
