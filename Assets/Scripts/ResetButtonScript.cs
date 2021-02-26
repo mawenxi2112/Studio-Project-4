@@ -43,7 +43,7 @@ public class ResetButtonScript : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
 	{
-        if (PhotonNetwork.IsMasterClient && (collision.CompareTag("Player")))
+        if (collision.CompareTag("Player") && PhotonNetwork.IsMasterClient)
         {
             animator.SetBool("isPressed", true);
 
@@ -51,7 +51,7 @@ public class ResetButtonScript : MonoBehaviour
             {
                 if (ListOfObjectToReset[i].CompareTag("Objects"))
 				{
-                    PlayerData.TransferOwner(collision.gameObject, gameObject);
+                    PlayerData.TransferOwner(collision.gameObject, ListOfObjectToReset[i]);
                     ListOfObjectToReset[i].GetComponent<Transform>().position = ListOfObjectToReset[i].GetComponent<ObjectData>().originalPosition;
 				}
             }
