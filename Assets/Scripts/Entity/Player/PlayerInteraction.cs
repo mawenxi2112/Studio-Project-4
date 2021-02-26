@@ -311,8 +311,12 @@ public class PlayerInteraction : MonoBehaviour
     [PunRPC]
     public void RevivePlayer(int reviveID, PhotonMessageInfo info)
     {
-        if (GetComponent<PhotonView>().IsMine && GetComponent<PhotonView>().ViewID == reviveID)
-            GetComponent<PlayerData>().m_currentHealth = GetComponent<PlayerData>().m_maxHealth;
+        if (PhotonView.Find(reviveID).gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            Debug.Log("reviving me!");
+            PhotonView.Find(reviveID).gameObject.GetComponent<PlayerData>().m_currentHealth = PhotonView.Find(reviveID).gameObject.GetComponent<PlayerData>().m_maxHealth;
+        }
+        Debug.Log("tried to reveive me!");
     }
 }
 

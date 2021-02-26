@@ -55,17 +55,17 @@ public class BombScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         // Only during the explosion state, we will check for explosion
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Explosion_Idle"))
         {
-            Debug.Log("Enters first if");
             // If the gameobject is a networked object and we are able to control the gameobject that's inside the explosion radius, we will then destroy it
             if (collision.gameObject.GetComponent<PhotonView>() && collision.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                Debug.Log("Enters second if");
                 if (collision.gameObject.CompareTag("Objects"))
                 {
-                    Debug.Log("Enters third if");
                     if (collision.gameObject.GetComponent<ObjectData>().object_type == OBJECT_TYPE.BREAKABLEBLOCK)
                         PhotonNetwork.Destroy(collision.gameObject);
                 }
