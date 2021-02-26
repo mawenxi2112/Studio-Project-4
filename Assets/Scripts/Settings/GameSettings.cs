@@ -23,12 +23,6 @@ public class GameSettings : MonoBehaviour
     public bool SoundFXEnabled = true;
     public int SoundFXVolume = 100;
 
-    public enum SOUNDTYPE
-    {
-        BGM,
-        FX
-    }
-
     void Awake()
     {
         instance = GetInstance();
@@ -83,11 +77,6 @@ public class GameSettings : MonoBehaviour
             File.Create(settingsFilepath).Close();
 
         File.WriteAllText(settingsFilepath, jsonText);
-    }
-
-    public void CanPlayAudio()
-    {
-
     }
 
     public static GameSettings GetInstance()
