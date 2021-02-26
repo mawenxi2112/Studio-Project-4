@@ -212,7 +212,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 		{
 			if (collision.gameObject.GetComponent<PlayerData>().m_currentHealth <= 0 && GetComponent<PlayerData>().m_actionKey) // Revive
 			{
-				collision.gameObject.GetComponent<PlayerData>().m_currentHealth = collision.gameObject.GetComponent<PlayerData>().m_maxHealth;
+				GetComponent<PhotonView>().RPC("RevivePlayer", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
 			}
 		}
 
