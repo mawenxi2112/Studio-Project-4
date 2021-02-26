@@ -13,6 +13,6 @@ public class PauseScreen : MonoBehaviour
         if (player.m_isPaused)
             this.transform.GetChild(0).gameObject.SetActive(true);
         else
-            this.transform.GetChild(0).gameObject.SetActive(false); 
+            this.transform.GetChild(0).gameObject.SetActive(false); ;
     }
 }
