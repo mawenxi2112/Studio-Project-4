@@ -16,6 +16,8 @@ public class MinimapTransform : MonoBehaviour
 
     void LateUpdate()
     {
+        if (player == null)
+            return;
         if (playerTransform == null)
         {
             playerTransform = player.gameObject.GetComponent<Transform>();

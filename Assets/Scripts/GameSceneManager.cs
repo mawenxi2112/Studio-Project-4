@@ -179,7 +179,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         if (otherPlayer.IsMasterClient)
             PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerList[0]);
 
-        PhotonNetwork.DestroyPlayerObjects(otherPlayer);
+      //  PhotonNetwork.DestroyPlayerObjects(otherPlayer);
         base.OnPlayerLeftRoom(otherPlayer);
     }
   

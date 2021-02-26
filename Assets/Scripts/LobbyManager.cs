@@ -27,8 +27,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Camera camera;
     public PhotonView photonView;
     public Joystick joystick;
-    
+    public GameObject setToDelete;
     public LoadScene SceneManager;
+    private GameObject player;
     public int playerReady;
     //public GameObject[] AsteroidPrefabs;
 
@@ -195,7 +196,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (otherPlayer.IsMasterClient)
             PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerList[0]);
 
-        PhotonNetwork.DestroyPlayerObjects(otherPlayer);
+ 
         base.OnPlayerLeftRoom(otherPlayer);
         //CheckEndOfGame();
     }
@@ -225,12 +226,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void StartGame()
     {
 /*        StartCoroutine(SceneManager.LoadMainLevelAsync(async));*/
-        GameObject player;
         GameObject world = GameObject.Find("World");
 
          player = PhotonNetwork.Instantiate("Player", new Vector3(-4, -4, 0), Quaternion.identity, 0);
         player.transform.SetParent(world.transform);
         player.GetComponent<PlayerData>().platform = 0;
+        photonView = player.GetComponent<PhotonView>();
         playerInfo.text = "Player Name: " +PhotonNetwork.LocalPlayer.NickName;
         serverInfo.text = "Server: " +PhotonNetwork.CurrentRoom.Name;
 

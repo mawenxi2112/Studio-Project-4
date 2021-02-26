@@ -17,10 +17,10 @@ MonoBehaviour:
     AppIdChat: 
     AppIdVoice: 
     AppVersion: 
-    UseNameServer: 0
+    UseNameServer: 1
     FixedRegion: 
-    Server: 172.26.176.86
-    Port: 50550
+    Server: 
+    Port: 0
     ProxyServer: 
     Protocol: 0
     EnableProtocolFallback: 1
@@ -49,6 +49,8 @@ MonoBehaviour:
   - LoadingScene
   - TransferOwnership
   - DeadHand
+  - GiveSword
+  - RevivePlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
