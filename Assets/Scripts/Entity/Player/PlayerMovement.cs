@@ -37,6 +37,10 @@ public class PlayerMovement : MonoBehaviour
                 {
                     this.transform.localPosition = new Vector3(0.0f, -0.1f, 0.0f);
                 }
+                else if (SceneData.previousScene == "Tutorial")
+                {
+                    this.transform.localPosition = new Vector3(-5.6f, -0.1f, 0.0f);
+                }
             }
         }
 
