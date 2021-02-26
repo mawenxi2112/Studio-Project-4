@@ -7,9 +7,6 @@ public class EnemyChasingScript : StateMachineBehaviour
 {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		//if (!animator.gameObject.GetComponent<PhotonView>().IsMine)
-		//	return;
-
 		if (!PhotonNetwork.IsMasterClient)
 			return;
 

@@ -93,6 +93,9 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
         GameObject closestPlayer = null;
         for (int i = 0; i < animator.GetComponent<EnemyData>().Player_List.Length; i++)
         {
+            if (animator.GetComponent<EnemyData>().Player_List[i].GetComponent<PlayerData>().m_currentHealth <= 0)
+                continue;
+
             if (Vector2.Distance(animator.transform.position, animator.GetComponent<EnemyData>().Player_List[i].transform.position) <= tempdistance)
             {
                 closestPlayer = animator.GetComponent<EnemyData>().Player_List[i];

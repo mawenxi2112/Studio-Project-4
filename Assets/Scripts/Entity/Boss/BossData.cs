@@ -103,6 +103,9 @@ public class BossData : MonoBehaviourPunCallbacks, IPunObservable
             BoxCollider2D boundaryCollider = BossBoundary.GetComponent<BoxCollider2D>();
             for (int i = 0; i < Player_List.Length; i++)
             {
+                if (Player_List[i].GetComponent<PlayerData>().m_currentHealth <= 0)
+                    continue;
+
                 if (Player_List[i].transform.position.x > boundaryCollider.bounds.min.x &&
                     Player_List[i].transform.position.x < boundaryCollider.bounds.max.x &&
                     Player_List[i].transform.position.y > boundaryCollider.bounds.min.y &&
@@ -119,6 +122,9 @@ public class BossData : MonoBehaviourPunCallbacks, IPunObservable
             List<GameObject> PlayerFound = new List<GameObject>();
             for (int i = 0; i < Player_List.Length; i++)
             {
+                if (Player_List[i].GetComponent<PlayerData>().m_currentHealth <= 0)
+                    continue;
+
                 if (Player_List[i].transform.position.x > boundaryCollider.bounds.min.x &&
                     Player_List[i].transform.position.x < boundaryCollider.bounds.max.x &&
                     Player_List[i].transform.position.y > boundaryCollider.bounds.min.y &&
@@ -148,6 +154,9 @@ public class BossData : MonoBehaviourPunCallbacks, IPunObservable
         GameObject closestPlayer = null;
         for (int i = 0; i < Player_List.Length; i++)
         {
+            if (Player_List[i].GetComponent<PlayerData>().m_currentHealth <= 0)
+                continue;
+
             if (Vector2.Distance(gameObject.transform.position, Player_List[i].transform.position) <= tempdistance)
             {
                 closestPlayer = Player_List[i];

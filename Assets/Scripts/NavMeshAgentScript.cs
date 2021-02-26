@@ -31,6 +31,8 @@ public class NavMeshAgentScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
 
         EnemyData enemyData = gameObject.GetComponent<EnemyData>();
         BossData bossData = gameObject.GetComponent<BossData>();
