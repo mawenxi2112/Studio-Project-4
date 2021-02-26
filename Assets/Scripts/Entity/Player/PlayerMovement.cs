@@ -44,8 +44,8 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
-        if (GetComponent<PlayerData>().m_dashButton == null)
+    
+        if (GetComponent<PlayerData>().m_dashButton == null && GetComponent<PlayerData>().platform==1)
             GetComponent<PlayerData>().m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
 
         if (GetComponent<PlayerData>().m_dashButton != null)
