@@ -960,7 +960,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.45
       minScalar: 0
       maxCurve:
         serializedVersion: 2

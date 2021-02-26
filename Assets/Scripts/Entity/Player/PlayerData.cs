@@ -40,6 +40,14 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     // Temporary using this to seperate the different platforms.
     public int platform = 0; // 0 = PC, 1 = ANDROID
 
+    private double changeToRedTimer;
+    private Color goColor;
+
+    private float colorA;
+    private float colorR;
+    private float colorG;
+    private float colorB;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -103,6 +111,10 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 
         m_currentHealth = m_maxHealth;
         m_currentMoveSpeed = m_maxMoveSpeed;
+
+        goColor.a = goColor.r = goColor.g = goColor.b = colorA = colorR = colorG = colorB = 1.0f;
+
+        changeToRedTimer = 0;
     }
 
     // Update is called once per frame
@@ -110,6 +122,13 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (GetComponent<PhotonView>()) // Online
         {
+            goColor.a = colorA;
+            goColor.r = colorR;
+            goColor.g = colorG;
+            goColor.b = colorB;
+
+            GetComponent<SpriteRenderer>().color = goColor;
+
             if (!GetComponent<PhotonView>().IsMine)
                 return;
 
@@ -138,11 +157,16 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
                 // Render a different colour during iFrame
                 m_actionKey = false;
                 m_iFrameCounter += Time.deltaTime;
+                changeToRedTimer += Time.deltaTime;
+
+                colorG = colorB = (float)changeToRedTimer / ((float)m_iFrameThreshold);
 
                 if (m_iFrameCounter >= m_iFrameThreshold)
                 {
                     m_iFrame = false;
                     m_iFrameCounter = 0f;
+                    changeToRedTimer = 0f;
+                    colorA = colorR = colorG = colorB = 1.0f;
                 }
             }
 
@@ -233,6 +257,10 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(m_currentHealth);
             stream.SendNext(m_maxHealth);
             stream.SendNext(m_maxMoveSpeed);
+            stream.SendNext(colorA);
+            stream.SendNext(colorR);
+            stream.SendNext(colorG);
+            stream.SendNext(colorB);
         }
         else
         {
@@ -240,6 +268,10 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             m_currentHealth = (int)stream.ReceiveNext();
             m_maxHealth = (int)stream.ReceiveNext();
             m_maxMoveSpeed = (float)stream.ReceiveNext();
+            colorA = (float)stream.ReceiveNext();
+            colorR = (float)stream.ReceiveNext();
+            colorG = (float)stream.ReceiveNext();
+            colorB = (float)stream.ReceiveNext();
         }
     }
 
