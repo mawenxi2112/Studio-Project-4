@@ -12,9 +12,9 @@ public class TutorialSceneBackground : MonoBehaviour
     void Start()
     {
        
-        if (player.platform == 0)
+        if (Application.platform == RuntimePlatform.WindowsEditor)
             spriteRenderer.sprite = PCSprite;
-        else if (player.platform == 1)
+        else if (Application.platform == RuntimePlatform.Android)
             spriteRenderer.sprite = mobileSprite;
     }
 
