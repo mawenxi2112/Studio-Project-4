@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class PlayerInteraction : MonoBehaviour
@@ -28,6 +29,9 @@ public class PlayerInteraction : MonoBehaviour
         // Later on for multiplayer, set the camera if the photonView is mine.
         camera = Camera.main;
 
+        if (SceneManager.GetActiveScene().name != "Level1Scene")
+            return;
+
         switch (GetComponent<PlayerData>().m_currentEquipment)
         {
             case EQUIPMENT.SWORD:
@@ -48,7 +52,7 @@ public class PlayerInteraction : MonoBehaviour
         // These updates are for PC platform!
         // Need to add custom player interactions for mobile etc.
 
-        if (!GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine || SceneManager.GetActiveScene().name != "Level1Scene")
             return;
 
         if (m_hand == null) // Fail safe check when m_hand is null
@@ -179,7 +183,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (GetComponent<PhotonView>()) // Online
         {
-            if (!GetComponent<PhotonView>().IsMine || GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.NONE)
+            if (SceneManager.GetActiveScene().name != "Level1Scene" || !GetComponent<PhotonView>().IsMine || GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.NONE)
                 return;
 
         }

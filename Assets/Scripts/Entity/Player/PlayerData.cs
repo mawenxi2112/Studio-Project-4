@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum EQUIPMENT
@@ -120,7 +121,7 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
-                if (m_currentEquipment == EQUIPMENT.NONE)
+                if (m_currentEquipment == EQUIPMENT.NONE && SceneManager.GetActiveScene().name == "Level1Scene")
                 GetComponent<PhotonView>().RPC("GiveSword", RpcTarget.All);
 
                 GetComponent<Animator>().SetBool("isDead", false);
