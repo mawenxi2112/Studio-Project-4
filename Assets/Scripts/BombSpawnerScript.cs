@@ -17,6 +17,9 @@ public class BombSpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         if (bomb == null)
 		{
             bomb = PhotonNetwork.Instantiate("Bomb", gameObject.transform.position, Quaternion.identity);
