@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-public enum SOUNDTYPE
-{
-    BGM,
-    FX
-}
 
 public class GameSettings : MonoBehaviour
 {
@@ -82,23 +77,6 @@ public class GameSettings : MonoBehaviour
             File.Create(settingsFilepath).Close();
 
         File.WriteAllText(settingsFilepath, jsonText);
-    }
-
-    public bool CanPlayAudio(SOUNDTYPE soundType)
-    {
-        if (!MasterVolumeEnabled || MasterVolume == 0)
-            return false;
-
-        if (soundType == SOUNDTYPE.BGM && (BGMEnabled || BGMVolume > 0))
-        {
-            return true;
-        }
-        else if (soundType == SOUNDTYPE.FX && (SoundFXEnabled || SoundFXVolume > 0))
-        {
-            return true;
-        }
-
-        return false;
     }
 
     public static GameSettings GetInstance()
