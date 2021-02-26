@@ -43,6 +43,10 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
     // Start is called before the first frame update
     void Start()
     {
+        if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
+            platform = 0;
+        else if (Application.platform == RuntimePlatform.Android)
+            platform = 1;
         if (GetComponent<PhotonView>()) // Online
         {
             if (!GetComponent<PhotonView>().IsMine)
