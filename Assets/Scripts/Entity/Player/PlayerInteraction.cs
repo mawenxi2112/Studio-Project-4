@@ -51,6 +51,9 @@ public class PlayerInteraction : MonoBehaviour
         if (!GetComponent<PhotonView>().IsMine)
             return;
 
+        if (m_hand == null) // Fail safe check when m_hand is null
+            GetComponent<PhotonView>().RPC("GiveSword", RpcTarget.All);
+
         // If action key is pressed while not holding the sword, it will drop the current held item if there isn't any nearby pickable/interactable gameobjects
         // Throwaway current item mechanic
         if (GetComponent<PlayerData>().m_actionKey && !areTherePossibleMechanics() && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.SWORD && GetComponent<PlayerData>().m_currentEquipment != EQUIPMENT.NONE)
@@ -174,8 +177,13 @@ public class PlayerInteraction : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!GetComponent<PhotonView>().IsMine || GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.NONE)
-            return;
+        if (GetComponent<PhotonView>()) // Online
+        {
+            if (!GetComponent<PhotonView>().IsMine || GetComponent<PlayerData>().m_currentEquipment == EQUIPMENT.NONE)
+                return;
+
+        }
+
 
         if (GetComponent<PlayerData>().platform == 0)
         {
@@ -282,10 +290,25 @@ public class PlayerInteraction : MonoBehaviour
         if (m_hand != m_sword)
             Throw(m_hand, new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0), 2);
 
-        if (m_hand != null)
-            m_hand = null;
-
         m_sword.SetActive(false);
+    }
+
+    [PunRPC]
+    public void GiveSword(PhotonMessageInfo info)
+    {
+        if (GetComponent<PhotonView>().ViewID != info.photonView.ViewID)
+            return;
+
+        GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
+        m_sword.SetActive(true);
+        m_hand = m_sword;
+    }
+
+    [PunRPC]
+    public void RevivePlayer(int reviveID, PhotonMessageInfo info)
+    {
+        if (GetComponent<PhotonView>().IsMine && GetComponent<PhotonView>().ViewID == reviveID)
+            GetComponent<PlayerData>().m_currentHealth = GetComponent<PlayerData>().m_maxHealth;
     }
 }
 
