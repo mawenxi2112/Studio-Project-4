@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -44,8 +45,16 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if (GetComponent<PlayerData>().m_dashButton == null)
+            GetComponent<PlayerData>().m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
+
         if (GetComponent<PlayerData>().m_dashButton != null)
+        {
             GetComponent<PlayerData>().m_dashButton.onClick.AddListener(delegate { Dash(); });
+        
+        }
+           
+        
     }
 
     void Update()
@@ -160,11 +169,8 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(movement * GetComponent<PlayerData>().m_currentMoveSpeed * Time.fixedDeltaTime);
     }
 
-    void Dash()
+  void Dash()
     {
-        if (!GetComponent<PhotonView>() && GetComponent<PlayerData>().m_isPaused) // If in offline mode and isPaused
-            return;
-
         if (GetComponent<PlayerData>().m_isPaused)
             return;
 
