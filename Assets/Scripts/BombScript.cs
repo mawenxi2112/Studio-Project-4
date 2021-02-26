@@ -13,7 +13,7 @@ public class BombScript : MonoBehaviour
     double tickRequiredToChange = 0.2;
 
     private float regularColliderSize = 0.35f;
-    private float expandedColliderSize = 0.6637768f;
+    private float expandedColliderSize = 0.7537768f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +32,7 @@ public class BombScript : MonoBehaviour
         {
             circleCollider.enabled = !circleCollider.enabled;
             circleCollider.radius = expandedColliderSize;
+            circleCollider.isTrigger = true;
         }
 
         if (!GetComponent<PhotonView>().IsMine)
@@ -57,9 +58,18 @@ public class BombScript : MonoBehaviour
         // Only during the explosion state, we will check for explosion
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Explosion_Idle"))
         {
+            Debug.Log("Enters first if");
             // If the gameobject is a networked object and we are able to control the gameobject that's inside the explosion radius, we will then destroy it
             if (collision.gameObject.GetComponent<PhotonView>() && collision.gameObject.GetComponent<PhotonView>().IsMine)
-                PhotonNetwork.Destroy(collision.gameObject);
+            {
+                Debug.Log("Enters second if");
+                if (collision.gameObject.CompareTag("Objects"))
+                {
+                    Debug.Log("Enters third if");
+                    if (collision.gameObject.GetComponent<ObjectData>().object_type == OBJECT_TYPE.BREAKABLEBLOCK)
+                        PhotonNetwork.Destroy(collision.gameObject);
+                }
+            }
         }
     }
 }

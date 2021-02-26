@@ -175,6 +175,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 						break;
 
 					case OBJECT_TYPE.MOVEABLEBLOCK:
+						PlayerData.TransferOwner(gameObject, collision.gameObject);
 						break;
 
 					case OBJECT_TYPE.CAMPFIRE:

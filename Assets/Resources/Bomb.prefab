@@ -166,7 +166,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   circleCollider: {fileID: 0}
   startCountDown: 0
-  isBlowingUp: 0
 --- !u!212 &7266793746816379905
 SpriteRenderer:
   m_ObjectHideFlags: 0

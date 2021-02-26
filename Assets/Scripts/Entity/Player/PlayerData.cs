@@ -120,6 +120,9 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
+                if (m_currentEquipment == EQUIPMENT.NONE)
+                GetComponent<PhotonView>().RPC("GiveSword", RpcTarget.All);
+
                 GetComponent<Animator>().SetBool("isDead", false);
             }
 
