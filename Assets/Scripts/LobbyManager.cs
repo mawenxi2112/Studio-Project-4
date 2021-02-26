@@ -26,7 +26,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
     public Camera camera;
     public PhotonView photonView;
-    public Joystick joystick;
     public GameObject setToDelete;
     public LoadScene SceneManager;
     private GameObject player;

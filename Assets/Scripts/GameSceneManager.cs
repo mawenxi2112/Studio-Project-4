@@ -35,9 +35,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public PlayerOnHandUI handUI;
     public PlayerMoneyUI moneyUI;
     public CinemachineVirtualCamera camera;
-    public Joystick movementJoystick;
-    public Joystick attackJoystick;
-    public Button dashButton;
     public ChooseReward chooseReward;
     public MinimapTransform minimap;
     public LoadScene SceneManager;
@@ -217,9 +214,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerInteraction>().m_sword = player.GetComponent<PlayerInteraction>().m_hand;
         player.GetComponent<PlayerData>().m_currentEquipment = EQUIPMENT.SWORD;
         player.GetComponent<PhotonView>().RPC("SetSwordReference", RpcTarget.AllBuffered, player.GetComponent<PlayerInteraction>().m_hand.GetComponent<PhotonView>().ViewID);
-        player.GetComponent<PlayerData>().m_movementJoystick = movementJoystick;
-        player.GetComponent<PlayerData>().m_attackJoystick = attackJoystick;
-        player.GetComponent<PlayerData>().m_dashButton = dashButton;
         playerData = player.GetComponent<PlayerData>();
         healthbar.player = playerData;
         chooseReward.player = playerData;
