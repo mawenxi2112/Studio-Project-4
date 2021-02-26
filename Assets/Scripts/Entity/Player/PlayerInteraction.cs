@@ -313,10 +313,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (PhotonView.Find(reviveID).gameObject.GetComponent<PhotonView>().IsMine)
         {
-            Debug.Log("reviving me!");
             PhotonView.Find(reviveID).gameObject.GetComponent<PlayerData>().m_currentHealth = PhotonView.Find(reviveID).gameObject.GetComponent<PlayerData>().m_maxHealth;
         }
-        Debug.Log("tried to reveive me!");
     }
 }
 

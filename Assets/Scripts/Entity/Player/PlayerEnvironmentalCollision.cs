@@ -210,11 +210,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
 		if (collision.gameObject.tag == "Player")
 		{
-			Debug.Log("having sex with other player woohoo!");
-
 			if (collision.gameObject.GetComponent<Animator>().GetBool("isDead") && GetComponent<PlayerData>().m_actionKey) // Revive
 			{
-				Debug.Log("trying to revive other player bitch ass!@");
 				GetComponent<PhotonView>().RPC("RevivePlayer", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
 			}
 		}

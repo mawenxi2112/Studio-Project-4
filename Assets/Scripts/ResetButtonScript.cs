@@ -50,7 +50,10 @@ public class ResetButtonScript : MonoBehaviour
             for (int i = 0; i < ListOfObjectToReset.Count; i++)
             {
                 if (ListOfObjectToReset[i].CompareTag("Objects"))
+				{
+                    PlayerData.TransferOwner(collision.gameObject, gameObject);
                     ListOfObjectToReset[i].GetComponent<Transform>().position = ListOfObjectToReset[i].GetComponent<ObjectData>().originalPosition;
+				}
             }
         }
     }
