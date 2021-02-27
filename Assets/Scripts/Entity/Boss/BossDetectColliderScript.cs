@@ -29,6 +29,9 @@ public class BossDetectColliderScript : MonoBehaviour
             if (!PhotonNetwork.IsMasterClient)
                 return;
 
+            if (collision.gameObject.GetComponent<PlayerData>().m_currentHealth <= 0)
+                return;
+
             // Determine what type of attack is going to be use here (Create pattern, 1,1,2)
             if (attackPattern != 2)
             {
