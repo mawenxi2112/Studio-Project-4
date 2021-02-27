@@ -79,6 +79,7 @@ public class PlayerMenuMovement : MonoBehaviour
         {
             // Dash
             Debug.Log("Dashed!");
+            SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.DASH);
             rb.AddForce(movement.normalized * GetComponent<PlayerData>().m_dashSpeed, ForceMode2D.Impulse);
         }
     }

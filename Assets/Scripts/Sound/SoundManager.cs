@@ -14,7 +14,8 @@ public static class SoundManager
     {
         DAMAGE,
         DOOR,
-        SWORD
+        SWORD,
+        DASH,
     }
 
     private static Dictionary<SoundName, float> soundTimerDictionary;
