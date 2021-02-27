@@ -224,6 +224,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 				case OBJECT_TYPE.COIN:
 					GetComponent<PlayerData>().SetCurrency(GetComponent<PlayerData>().m_currency + collision.gameObject.GetComponent<ObjectData>().coinValue);
 					PlayerData.TransferOwner(gameObject, collision.gameObject);
+					GetComponent<PhotonView>().RPC("SetObjectInactive", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
 					PhotonNetwork.Destroy(collision.gameObject);
 					break;
 
@@ -232,6 +233,7 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					{
 						GetComponent<PlayerData>().SetCurrentHealth(GetComponent<PlayerData>().m_currentHealth + collision.gameObject.GetComponent<ObjectData>().healthPackValue);
 						PlayerData.TransferOwner(gameObject, collision.gameObject);
+						GetComponent<PhotonView>().RPC("SetObjectInactive", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
 						PhotonNetwork.Destroy(collision.gameObject);
 					}
 					break;
@@ -343,5 +345,11 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
                     break;
             }
 		}
+	}
+
+	[PunRPC]
+	public void SetObjectInactive(int viewID)
+	{
+		PhotonView.Find(viewID).gameObject.SetActive(false);
 	}
 }
