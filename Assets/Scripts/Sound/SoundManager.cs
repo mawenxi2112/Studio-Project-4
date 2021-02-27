@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SOUNDTYPE
+{
+    BGM,
+    FX
+}
+
 public static class SoundManager
 {
     public enum SoundName
@@ -21,17 +27,20 @@ public static class SoundManager
 
     public static void PlaySound(SOUNDTYPE soundType, SoundName name)
     {
-        if (GameSettings.GetInstance().CanPlayAudio(soundType) && CanPlaySound(name))
+        if (CanPlayAudio(soundType) && CanPlaySound(name))
         {
             // Play sound
             GameObject soundGameObject = new GameObject("Sound");
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
 
-            if (soundType == SOUNDTYPE.BGM)
-                audioSource.volume = GameSettings.GetInstance().BGMVolume;
-            else
-                audioSource.volume = GameSettings.GetInstance().SoundFXVolume;
+            float volume;
 
+            if (soundType == SOUNDTYPE.BGM)
+                volume = (float)SceneData.BGMVolume / 100.0f;
+            else
+                volume = (float)SceneData.SoundFXVolume / 100.0f;
+
+            audioSource.volume = volume;
             audioSource.PlayOneShot(GetAudioClip(name));
         }
     }
@@ -81,5 +90,22 @@ public static class SoundManager
         Debug.LogError("Sound " + name + " not found!");
 
         return null;
+    }
+
+    public static bool CanPlayAudio(SOUNDTYPE soundType)
+    {
+        if (SceneData.MasterVolume == 0)
+            return false;
+
+        if (soundType == SOUNDTYPE.BGM && SceneData.BGMVolume > 0)
+        {
+            return true;
+        }
+        else if (soundType == SOUNDTYPE.FX && SceneData.SoundFXVolume > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

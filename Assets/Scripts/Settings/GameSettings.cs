@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-public enum SOUNDTYPE
-{
-    BGM,
-    FX
-}
 
 public class GameSettings : MonoBehaviour
 {
@@ -61,17 +56,20 @@ public class GameSettings : MonoBehaviour
 
             SoundFXEnabled = newSettings.SoundFXEnabled;
             SoundFXVolume = newSettings.SoundFXVolume;
+
+            SceneData.MasterVolumeEnabled = newSettings.MasterVolumeEnabled;
+            SceneData.MasterVolume = newSettings.MasterVolume;
+
+            SceneData.BGMEnabled = newSettings.BGMEnabled;
+            SceneData.BGMVolume = newSettings.BGMVolume;
+
+            SceneData.SoundFXEnabled = newSettings.SoundFXEnabled;
+            SceneData.SoundFXVolume = newSettings.SoundFXVolume;
         }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-            MasterVolume++;
-
-        Debug.Log("Master Volume: " + MasterVolume);
-        Debug.Log("BGM Volume: " + BGMVolume);
-        Debug.Log("Sound FX Volume: " + SoundFXVolume);
     }
 
     public void UpdateTextFile()
@@ -84,28 +82,10 @@ public class GameSettings : MonoBehaviour
         File.WriteAllText(settingsFilepath, jsonText);
     }
 
-    public bool CanPlayAudio(SOUNDTYPE soundType)
-    {
-        if (!MasterVolumeEnabled || MasterVolume == 0)
-            return false;
-
-        if (soundType == SOUNDTYPE.BGM && (BGMEnabled || BGMVolume > 0))
-        {
-            return true;
-        }
-        else if (soundType == SOUNDTYPE.FX && (SoundFXEnabled || SoundFXVolume > 0))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
     public static GameSettings GetInstance()
     {
         if (instance == null)
             instance = new GameSettings();
-
 
         return instance;
     }

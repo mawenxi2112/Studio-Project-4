@@ -21,6 +21,9 @@ public class EnemyProjectileScript : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
 		if (collision.gameObject.CompareTag("Player"))
 		{
             if (!collision.gameObject.GetComponent<PlayerData>().m_iFrame)

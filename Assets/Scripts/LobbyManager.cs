@@ -227,7 +227,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 /*        StartCoroutine(SceneManager.LoadMainLevelAsync(async));*/
         GameObject world = GameObject.Find("World");
 
-         player = PhotonNetwork.Instantiate("Player", new Vector3(-4, -4, 0), Quaternion.identity, 0);
+        player = PhotonNetwork.Instantiate("Player", new Vector3(-4, -4, 0), Quaternion.identity, 0);
         player.transform.SetParent(world.transform);
         player.GetComponent<PlayerData>().platform = 0;
         photonView = player.GetComponent<PhotonView>();

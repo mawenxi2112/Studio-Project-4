@@ -40,6 +40,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public LoadScene SceneManager;
     public PlayerData playerData;
     public PauseScreen pauseUI;
+    public GameSettings gameSettings;
 
     public int levelCount;
 

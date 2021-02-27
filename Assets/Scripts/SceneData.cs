@@ -12,21 +12,19 @@ public class SceneData : MonoBehaviour
     public static string currentScene;
     public static int playerCurrency;
 
-    //private static string savedFilepath;
+    private GameSettings gameSettings;
 
-    //public static PlayerStorage storage;
+    public static bool MasterVolumeEnabled = true;
+    public static int MasterVolume = 100;
+
+    public static bool BGMEnabled = true;
+    public static int BGMVolume = 100;
+
+    public static bool SoundFXEnabled = true;
+    public static int SoundFXVolume = 100;
 
     void Start()
     {
-/*        savedFilepath = Application.persistentDataPath + "/pdata.json";
-
-        Debug.Log("is hererehagdjha");
-
-        if (storage == null)
-            storage = new PlayerStorage();
-
-        LoadData();*/
-
         GameObject[] array = GameObject.FindGameObjectsWithTag("DataManager");
 
         for (int i = 0; i != array.Length; i++)
@@ -50,40 +48,4 @@ public class SceneData : MonoBehaviour
     {
         DontDestroyOnLoad(this);
     }
-
-/*    void LoadData()
-    {
-        string playerData = null;
-
-        if (!File.Exists(savedFilepath))
-        {
-            SaveData();
-        }
-        else
-        {
-            playerData = File.ReadAllText(savedFilepath);
-
-            storage = JsonConvert.DeserializeObject<PlayerStorage>(playerData);
-        }
-    }
-
-    static public void SaveData()
-    {
-        Debug.Log("My stuff here: " + storage.maxHealth);
-        Debug.Log(storage.coins);
-        Debug.Log(storage.damage);
-        Debug.Log(storage.speed);
-
-        string jsonText = JsonUtility.ToJson(storage);
-
-        if (!File.Exists(savedFilepath))
-            File.Create(savedFilepath).Close();
-
-        File.WriteAllText(savedFilepath, jsonText);
-    }
-
-    void OnApplicationQuit()
-    {
-        SaveData();
-    }*/
 }
