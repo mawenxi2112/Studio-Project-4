@@ -20,9 +20,16 @@ public static class SoundManager
         COIN,
         HEALTH,
         STRENGTH,
+        MELEE,
+        BOW,
+        TELEPORT,
+        RUNNER,
     }
 
     private static Dictionary<SoundName, float> soundTimerDictionary = null;
+
+    private static GameObject oneShotGameObject;
+    private static AudioSource oneShotAudioSource;
 
     public static void Initialise()
     {
@@ -42,9 +49,11 @@ public static class SoundManager
             if (audioClip == null)
                 return;
 
-            // Play sound
-            GameObject soundGameObject = new GameObject("Sound");
-            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            if (oneShotGameObject == null)
+            {
+                oneShotGameObject = new GameObject("Sound");
+                oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+            }
 
             float volume;
 
@@ -53,9 +62,9 @@ public static class SoundManager
             else
                 volume = (float)SceneData.SoundFXVolume / 100.0f;
 
-            audioSource.volume = volume;
+            oneShotAudioSource.volume = volume;
 
-            audioSource.PlayOneShot(audioClip);
+            oneShotAudioSource.PlayOneShot(audioClip);
         }
     }
 
