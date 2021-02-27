@@ -270,4 +270,14 @@ public class BossData : MonoBehaviourPunCallbacks, IPunObservable
             colorB = (float)stream.ReceiveNext();
         }
     }
+
+    public void PlayTeleportSound()
+    {
+        SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.TELEPORT);
+    }
+
+    public void PlayAttackSound()
+    {
+        SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.MELEE);
+    }
 }

@@ -226,7 +226,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 					PlayerData.TransferOwner(gameObject, collision.gameObject);
 					GetComponent<PhotonView>().RPC("SetObjectInactive", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
 					PhotonNetwork.Destroy(collision.gameObject);
-					break;
+                    SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.COIN);
+                    break;
 
 				case OBJECT_TYPE.HEALTHPACK:
 					if (GetComponent<PlayerData>().m_currentHealth < GetComponent<PlayerData>().m_maxHealth)
@@ -235,7 +236,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 						PlayerData.TransferOwner(gameObject, collision.gameObject);
 						GetComponent<PhotonView>().RPC("SetObjectInactive", RpcTarget.All, collision.gameObject.GetComponent<PhotonView>().ViewID);
 						PhotonNetwork.Destroy(collision.gameObject);
-					}
+                        SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.HEALTH);
+                    }
 					break;
 
 				case OBJECT_TYPE.KEY:
@@ -330,6 +332,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 
                     // Destroy the Damage Powerup
                     PhotonNetwork.Destroy(collision.gameObject);
+
+                    SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.HEALTH);
 
                     break;
 

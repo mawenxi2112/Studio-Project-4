@@ -16,12 +16,26 @@ public static class SoundManager
         DOOR,
         SWORD,
         DASH,
+        BUTTON,
+        COIN,
+        HEALTH,
+        STRENGTH,
+        MELEE,
+        BOW,
+        TELEPORT,
+        RUNNER,
     }
 
-    private static Dictionary<SoundName, float> soundTimerDictionary;
+    private static Dictionary<SoundName, float> soundTimerDictionary = null;
+
+    private static GameObject oneShotGameObject;
+    private static AudioSource oneShotAudioSource;
 
     public static void Initialise()
     {
+        if (soundTimerDictionary != null)
+            return;
+
         soundTimerDictionary = new Dictionary<SoundName, float>();
         soundTimerDictionary[SoundName.DAMAGE] = 0.0f;
     }
@@ -30,9 +44,16 @@ public static class SoundManager
     {
         if (CanPlayAudio(soundType) && CanPlaySound(name))
         {
-            // Play sound
-            GameObject soundGameObject = new GameObject("Sound");
-            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            AudioClip audioClip = GetAudioClip(name);
+
+            if (audioClip == null)
+                return;
+
+            if (oneShotGameObject == null)
+            {
+                oneShotGameObject = new GameObject("Sound");
+                oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+            }
 
             float volume;
 
@@ -41,8 +62,9 @@ public static class SoundManager
             else
                 volume = (float)SceneData.SoundFXVolume / 100.0f;
 
-            audioSource.volume = volume;
-            audioSource.PlayOneShot(GetAudioClip(name));
+            oneShotAudioSource.volume = volume;
+
+            oneShotAudioSource.PlayOneShot(audioClip);
         }
     }
 
@@ -80,6 +102,9 @@ public static class SoundManager
 
     public static AudioClip GetAudioClip(SoundName name)
     {
+        if (GameSceneManager.Instance == null)
+            return null;
+
         foreach (GameSceneManager.SoundAudioClip soundAudioClip in GameSceneManager.Instance.soundAudioClipArray)
         {
             if (soundAudioClip.name == name)

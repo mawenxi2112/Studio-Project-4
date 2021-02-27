@@ -182,4 +182,13 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
         gameObject.transform.Find("Hitbox").GetComponent<PolygonCollider2D>().enabled = true;
 	}
 
+    public void PlaySound()
+    {
+        if (m_type == ENEMY_TYPE.MELEE)
+            SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.MELEE);
+        else if (m_type == ENEMY_TYPE.RANGED)
+            SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.BOW);
+        else if (m_type == ENEMY_TYPE.RUNNER)
+            SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.RUNNER);
+    }
 }

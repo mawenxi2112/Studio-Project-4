@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        SoundManager.Initialise();
+
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -176,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
             return;
 
      
+        SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.DASH);
         rb.AddForce(movement.normalized * GetComponent<PlayerData>().m_dashSpeed, ForceMode2D.Impulse);
     }
 }
