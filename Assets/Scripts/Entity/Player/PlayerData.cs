@@ -114,6 +114,11 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
 
         goColor.a = goColor.r = goColor.g = goColor.b = colorA = colorR = colorG = colorB = 1.0f;
 
+        if (platform == 1)
+        {
+            m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
+            m_dashButton.onClick.AddListener(GetComponent<PlayerMovement>().Dash);
+        }
         changeToRedTimer = 0;
     }
 

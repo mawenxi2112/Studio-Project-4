@@ -44,15 +44,14 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-    
-        if (GetComponent<PlayerData>().m_dashButton == null && GetComponent<PlayerData>().platform==1)
-            GetComponent<PlayerData>().m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
 
-        if (GetComponent<PlayerData>().m_dashButton != null)
+/*        if (GetComponent<PlayerData>().platform == 1)
         {
-            GetComponent<PlayerData>().m_dashButton.onClick.AddListener(delegate { Dash(); });
-        
-        }
+       
+            GetComponent<PlayerData>().m_dashButton = GameObject.Find("Dash").GetComponent<Button>();
+            GetComponent<PlayerData>().m_dashButton.onClick.AddListener(Dash);
+            Debug.Log("Testing");
+        }*/
            
         
     }
@@ -85,8 +84,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (GetComponent<PlayerData>().platform == 1) // Android Platform
             {
-                movement.x = GetComponent<PlayerData>().m_movementJoystick.Horizontal;
-                movement.y = GetComponent<PlayerData>().m_movementJoystick.Vertical;
+                movement = GetComponent<PlayerData>().m_movementJoystick.Direction;
+
             }
 
             animator.SetFloat("Horizontal", movement.x);
@@ -130,7 +129,9 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (GetComponent<PlayerData>().platform == 1) // Android Platform
             {
+
                 movement = GetComponent<PlayerData>().m_movementJoystick.Direction;
+ 
             }
 
             animator.SetFloat("Horizontal", movement.x);
@@ -169,11 +170,12 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(movement * GetComponent<PlayerData>().m_currentMoveSpeed * Time.fixedDeltaTime);
     }
 
-  void Dash()
+  public void Dash()
     {
         if (GetComponent<PlayerData>().m_isPaused)
             return;
 
+     
         rb.AddForce(movement.normalized * GetComponent<PlayerData>().m_dashSpeed, ForceMode2D.Impulse);
     }
 }
