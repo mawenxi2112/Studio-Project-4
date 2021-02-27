@@ -21,7 +21,6 @@ public class EnemyAttackColliderScript : MonoBehaviour
             case ENEMY_TYPE.RUNNER:
                 break;
         };
-
     }
 
     // Update is called once per frame

@@ -16,12 +16,19 @@ public static class SoundManager
         DOOR,
         SWORD,
         DASH,
+        BUTTON,
+        COIN,
+        HEALTH,
+        STRENGTH,
     }
 
-    private static Dictionary<SoundName, float> soundTimerDictionary;
+    private static Dictionary<SoundName, float> soundTimerDictionary = null;
 
     public static void Initialise()
     {
+        if (soundTimerDictionary != null)
+            return;
+
         soundTimerDictionary = new Dictionary<SoundName, float>();
         soundTimerDictionary[SoundName.DAMAGE] = 0.0f;
     }
@@ -30,6 +37,11 @@ public static class SoundManager
     {
         if (CanPlayAudio(soundType) && CanPlaySound(name))
         {
+            AudioClip audioClip = GetAudioClip(name);
+
+            if (audioClip == null)
+                return;
+
             // Play sound
             GameObject soundGameObject = new GameObject("Sound");
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
@@ -42,7 +54,8 @@ public static class SoundManager
                 volume = (float)SceneData.SoundFXVolume / 100.0f;
 
             audioSource.volume = volume;
-            audioSource.PlayOneShot(GetAudioClip(name));
+
+            audioSource.PlayOneShot(audioClip);
         }
     }
 
@@ -80,6 +93,9 @@ public static class SoundManager
 
     public static AudioClip GetAudioClip(SoundName name)
     {
+        if (GameSceneManager.Instance == null)
+            return null;
+
         foreach (GameSceneManager.SoundAudioClip soundAudioClip in GameSceneManager.Instance.soundAudioClipArray)
         {
             if (soundAudioClip.name == name)
