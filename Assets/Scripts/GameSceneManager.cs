@@ -43,6 +43,15 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     public int levelCount;
 
+    public SoundAudioClip[] soundAudioClipArray;
+
+    [System.Serializable]
+    public class SoundAudioClip
+    {
+        public SoundManager.SoundName name;
+        public AudioClip audioClip;
+    }
+
     //public GameObject[] AsteroidPrefabs;
 
     #region UNITY
@@ -50,6 +59,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public void Awake()
     {
         Instance = this;
+
+        SoundManager.Initialise();
     }
 
     public override void OnEnable()

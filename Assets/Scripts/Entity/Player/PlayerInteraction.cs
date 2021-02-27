@@ -76,6 +76,7 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (GetComponent<PlayerData>().m_actionKey && !areTherePossibleMechanics()) // Add trigger mode for mobile as well.
                 {
+                    SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.SWORD);
                     m_handAnimator.SetBool("Attack", true);
                     GetComponent<PlayerData>().m_actionKey = false;
                 }

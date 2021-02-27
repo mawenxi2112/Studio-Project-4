@@ -84,7 +84,7 @@ public class EnemyData : MonoBehaviourPunCallbacks, IPunObservable
             m_iFrameCounter += Time.deltaTime;
             changeToRedTimer += Time.deltaTime;
 
-            colorR = colorG = colorB = (float)changeToRedTimer / ((float)m_iFrameThreshold);
+            colorG = colorB = (float)changeToRedTimer / ((float)m_iFrameThreshold);
 
             if (m_iFrameCounter >= m_iFrameThreshold)
             {

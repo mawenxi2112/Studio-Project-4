@@ -37,6 +37,14 @@ public class BossData : MonoBehaviourPunCallbacks, IPunObservable
 
     public Animator animator;
 
+    private double changeToRedTimer;
+    private Color goColor;
+
+    private float colorA;
+    private float colorR;
+    private float colorG;
+    private float colorB;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -56,11 +64,21 @@ public class BossData : MonoBehaviourPunCallbacks, IPunObservable
         DetectCollider = gameObject.transform.Find("DetectCollider").gameObject;
         AttackColliderOne = gameObject.transform.Find("AttackColliderOne").gameObject;
         AttackColliderTwo = gameObject.transform.Find("AttackColliderTwo").gameObject;
+
+        goColor.a = goColor.r = goColor.g = goColor.b = colorA = colorR = colorG = colorB = 1.0f;
+
+        changeToRedTimer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        goColor.a = colorA;
+        goColor.r = colorR;
+        goColor.g = colorG;
+        goColor.b = colorB;
+
+        GetComponent<SpriteRenderer>().color = goColor;
 
         animator.SetInteger("Health", m_currentHealth);
 
@@ -73,11 +91,16 @@ public class BossData : MonoBehaviourPunCallbacks, IPunObservable
             // Render a different colour during iFrame
 
             m_iFrameCounter += Time.deltaTime;
+            changeToRedTimer += Time.deltaTime;
+
+            colorG = colorB = (float)changeToRedTimer / ((float)m_iFrameThreshold);
 
             if (m_iFrameCounter >= m_iFrameThreshold)
             {
                 m_iFrame = false;
                 m_iFrameCounter = 0f;
+                changeToRedTimer = 0f;
+                colorA = colorR = colorG = colorB = 1.0f;
             }
         }
     }
@@ -233,10 +256,18 @@ public class BossData : MonoBehaviourPunCallbacks, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(m_currentHealth);
+            stream.SendNext(colorA);
+            stream.SendNext(colorR);
+            stream.SendNext(colorG);
+            stream.SendNext(colorB);
         }
         else
         {
             m_currentHealth = (int)stream.ReceiveNext();
+            colorA = (float)stream.ReceiveNext();
+            colorR = (float)stream.ReceiveNext();
+            colorG = (float)stream.ReceiveNext();
+            colorB = (float)stream.ReceiveNext();
         }
     }
 }

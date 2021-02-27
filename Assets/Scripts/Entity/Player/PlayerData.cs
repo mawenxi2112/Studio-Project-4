@@ -159,6 +159,8 @@ public class PlayerData : MonoBehaviourPunCallbacks, IPunObservable
                 m_iFrameCounter += Time.deltaTime;
                 changeToRedTimer += Time.deltaTime;
 
+                SoundManager.PlaySound(SOUNDTYPE.FX, SoundManager.SoundName.DAMAGE);
+
                 colorG = colorB = (float)changeToRedTimer / ((float)m_iFrameThreshold);
 
                 if (m_iFrameCounter >= m_iFrameThreshold)
