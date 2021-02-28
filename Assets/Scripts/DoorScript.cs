@@ -31,7 +31,6 @@ public class DoorScript : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Door_Opened"))
         {
-            Debug.Log("Here");
             boxCollider.enabled = false;
             LeftCollider.GetComponent<BoxCollider2D>().enabled = true;
             RightCollider.GetComponent<BoxCollider2D>().enabled = true;
@@ -46,7 +45,6 @@ public class DoorScript : MonoBehaviour
         }
         else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Door_Lock"))
         {
-            Debug.Log("Here1");
             boxCollider.enabled = true;
             LeftCollider.GetComponent<BoxCollider2D>().enabled = false;
             RightCollider.GetComponent<BoxCollider2D>().enabled = false;
