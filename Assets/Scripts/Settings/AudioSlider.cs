@@ -53,14 +53,17 @@ public class AudioSlider : MonoBehaviour
             if (gameObject.name.Contains("Main"))
             {
                 gameSettings.MasterVolume = (int)slider.value;
+                SceneData.MasterVolume = (int)slider.value;
             }
             else if (gameObject.name.Contains("BGM"))
             {
                 gameSettings.BGMVolume = (int)slider.value;
+                SceneData.BGMVolume = (int)slider.value;
             }
             else if (gameObject.name.Contains("FX"))
             {
                 gameSettings.SoundFXVolume = (int)slider.value;
+                SceneData.SoundFXVolume = (int)slider.value;
             }
         }
     }
