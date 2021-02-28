@@ -36,7 +36,7 @@ public class SceneSoundManager : MonoBehaviour
 
     void Start()
     {
-        DontDestroyOnLoad(SoundManager.PlaySoundMenu(SOUNDTYPE.BGM, SoundManager.SoundName.BGM));
+        DontDestroyOnLoad(SoundManager.PlayLoopBGM(SOUNDTYPE.BGM, SoundManager.SoundName.BGM));
     }
 
     public void PlayDashSound()

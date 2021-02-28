@@ -117,7 +117,7 @@ public static class SoundManager
             GameObject bgmGameObject = new GameObject("BG Music");
             AudioSource bgmAudioSouce = bgmGameObject.AddComponent<AudioSource>();
 
-            float volume = (float)SceneData.BGMVolume / 100.0f;
+            float volume = (float)SceneData.BGMVolume / 200.0f;
 
             bgmAudioSouce.volume = volume;
             bgmAudioSouce.clip = audioClip;
