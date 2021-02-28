@@ -43,6 +43,8 @@ public class PlayerEnvironmentalCollision : MonoBehaviour
 		if (GameObject.Find("Grid") == null)
 			return;
 
+		map = new Tilemap[GameObject.Find("Grid").transform.childCount];
+
 		for (int i = 0; i < GameObject.Find("Grid").transform.childCount; i++)
 		{
 			map[i] = GameObject.Find("Grid").transform.GetChild(i).GetComponent<Tilemap>();

@@ -8,7 +8,6 @@ public class SpikeMovement : MonoBehaviour
     public Animator animator;
     public BoxCollider2D collider;
 
-    float state = 0; // 0 = Idle1, 1 = Idle2, 2 = Up
     double maxDurationTillNextChange = 0.2;
     public double maxUpDurationToStayFor = 2;
     public double maxDownDurationToStayFor = 2;
@@ -27,60 +26,66 @@ public class SpikeMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
-        if (!isStaying)
-		{
-            durationTillNextChange += Time.deltaTime;
-
-            if (durationTillNextChange >= maxDurationTillNextChange)
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (!isStaying)
             {
-                durationTillNextChange = 0;
+                durationTillNextChange += Time.deltaTime;
 
-                if (goingDown)
-                    state--;
-                else if (!goingDown)
-                    state++;
-
-                animator.SetFloat("State", state);
-
-                if (state == 0 || state == 2)
+                if (durationTillNextChange >= maxDurationTillNextChange)
                 {
-                    isStaying = true;
-                    goingDown = !goingDown;
+                    durationTillNextChange = 0;
 
-                    if (state == 2)
-                        collider.enabled = !collider.enabled;
+                    if (goingDown)
+                        animator.SetFloat("State", animator.GetFloat("State") - 1);
+                    else if (!goingDown)
+                        animator.SetFloat("State", animator.GetFloat("State") + 1);
+
+
+                    if ((int)animator.GetFloat("State") <= 0 || (int)animator.GetFloat("State") == 2)
+                    {
+                        isStaying = true;
+                        goingDown = !goingDown;
+
+                        if ((int)animator.GetFloat("State") == 2)
+                            collider.enabled = !collider.enabled;
+                    }
                 }
             }
-		}
-        else if (isStaying)
-		{
-            durationToStayFor += Time.deltaTime;
-
-            if (!goingDown)
+            else if (isStaying)
             {
-                if (durationToStayFor >= maxDownDurationToStayFor)
-                {
-                    isStaying = false;
-                    durationToStayFor = 0;
+                durationToStayFor += Time.deltaTime;
 
-                    if (state == 2)
-                        collider.enabled = !collider.enabled;
+                if (!goingDown)
+                {
+                    if (durationToStayFor >= maxDownDurationToStayFor)
+                    {
+                        isStaying = false;
+                        durationToStayFor = 0;
+
+                        if ((int)animator.GetFloat("State") == 2)
+                            collider.enabled = !collider.enabled;
+                    }
+                }
+                else if (goingDown)
+                {
+                    if (durationToStayFor >= maxUpDurationToStayFor)
+                    {
+                        isStaying = false;
+                        durationToStayFor = 0;
+
+                        if ((int)animator.GetFloat("State") == 2)
+                            collider.enabled = !collider.enabled;
+                    }
                 }
             }
-            else if (goingDown)
-			{
-                if (durationToStayFor >= maxUpDurationToStayFor)
-                {
-                    isStaying = false;
-                    durationToStayFor = 0;
-
-                    if (state == 2)
-                        collider.enabled = !collider.enabled;
-                }
-            }
+        }
+        else
+        {
+            if ((int)animator.GetFloat("State") == 2)
+                collider.enabled = true;
+            else
+                collider.enabled = false;
         }
 
     }

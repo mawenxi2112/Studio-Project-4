@@ -46,12 +46,21 @@ public class ResetButtonScript : MonoBehaviour
         if (collision.CompareTag("Player") && PhotonNetwork.IsMasterClient)
         {
             animator.SetBool("isPressed", true);
+            GameObject[] PlayerList = GameObject.FindGameObjectsWithTag("Player");
+            int ClientObjectArray = 0;
+
+            for (int i = 0; i < PlayerList.Length; i++)
+            {
+                if (PlayerList[i].GetComponent<PhotonView>().IsMine)
+                    ClientObjectArray = i;
+            }
 
             for (int i = 0; i < ListOfObjectToReset.Count; i++)
             {
                 if (ListOfObjectToReset[i].CompareTag("Objects"))
 				{
-                    PlayerData.TransferOwner(collision.gameObject, ListOfObjectToReset[i]);
+
+                    PlayerData.TransferOwner(PlayerList[ClientObjectArray], ListOfObjectToReset[i]);
                     ListOfObjectToReset[i].GetComponent<Transform>().position = ListOfObjectToReset[i].GetComponent<ObjectData>().originalPosition;
 				}
             }
