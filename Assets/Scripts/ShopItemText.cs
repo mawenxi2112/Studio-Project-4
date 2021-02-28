@@ -55,7 +55,7 @@ public class ShopItemText : MonoBehaviour
             case 2:
                 if(objectType == 0)
                 {
-                    m_TextComponent.text = "Attack +3";
+                    m_TextComponent.text = "Attack +1";
                 }
 
                 else if (objectType == 1)
@@ -127,7 +127,7 @@ public class ShopItemText : MonoBehaviour
             case 2:
                 if (objectType == 0)
                 {
-                    m_TextComponent.text = "Attack +3";
+                    m_TextComponent.text = "Attack +1";
                 }
 
                 else if (objectType == 1)
@@ -154,8 +154,11 @@ public class ShopItemText : MonoBehaviour
                 break;
             case 4:
                 m_TextComponent.text = player.m_maxHealth.ToString();
-                if (player.m_maxHealth == 10)
+                if (player.m_maxHealth >= 10)
+                {
                     m_TextComponent.text = "Maxed";
+                    player.m_maxHealth = 10;
+                }
                 break;
             case 5:
                 m_TextComponent.text = player.m_maxMoveSpeed.ToString();
@@ -202,12 +205,12 @@ public class ShopItemText : MonoBehaviour
             case 2:
                 if (objectType == 0)
                 {
-                    m_TextComponent.text = "Attack +3";
+                    m_TextComponent.text = "Attack +1";
                 }
 
                 else if (objectType == 1)
                 {
-                    m_TextComponent.text = "Health +2";
+                    m_TextComponent.text = "Health +1";
                 }
 
                 else if (objectType == 2)

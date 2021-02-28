@@ -16,7 +16,7 @@ public class ConfirmPurchase : MonoBehaviour
      
         int iCost = int.Parse(cost.m_TextComponent.text);
         int iWallet = int.Parse(wallet.m_TextComponent.text);
-        if (playerData.m_maxHealth == 10 && objectType == 1)
+        if (playerData.m_maxHealth >= 10 && objectType == 1)
             return;
         if(iCost > iWallet)
         {
@@ -33,7 +33,7 @@ public class ConfirmPurchase : MonoBehaviour
         {
             case 0:
                 iPlayerStat = playerData.m_currentAttack;
-                iIncrease = 3;
+                iIncrease = 1;
                 break;
             case 1:
                 iPlayerStat = playerData.m_maxHealth;

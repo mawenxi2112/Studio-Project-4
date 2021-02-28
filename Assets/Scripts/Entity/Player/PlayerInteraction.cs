@@ -54,8 +54,9 @@ public class PlayerInteraction : MonoBehaviour
         // Need to add custom player interactions for mobile etc.
 
         if (!GetComponent<PhotonView>().IsMine || SceneManager.GetActiveScene().name != "Level1Scene" || GetComponent<PlayerData>().m_isPaused)
-             
             return;
+
+        m_sword.GetComponent<SwordCollision>().sword_damage = gameObject.GetComponent<PlayerData>().m_currentAttack;
 
         if (m_hand == null) // Fail safe check when m_hand is null
             GetComponent<PhotonView>().RPC("GiveSword", RpcTarget.All);

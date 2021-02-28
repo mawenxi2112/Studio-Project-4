@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SwordCollision : MonoBehaviour
 {
+    public int sword_damage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +71,7 @@ public class SwordCollision : MonoBehaviour
             {
                 if (!collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame)
                 {
-                    collider.gameObject.transform.parent.GetComponent<EnemyData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<EnemyData>().m_currentHealth - 1);
+                    collider.gameObject.transform.parent.GetComponent<EnemyData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<EnemyData>().m_currentHealth - sword_damage);
                     collider.gameObject.transform.parent.GetComponent<EnemyData>().m_iFrame = true;
                 }
             }
@@ -77,7 +79,7 @@ public class SwordCollision : MonoBehaviour
 			{
                 if (!collider.gameObject.transform.parent.GetComponent<BossData>().m_iFrame)
 				{
-                    collider.gameObject.transform.parent.GetComponent<BossData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<BossData>().m_currentHealth - 1);
+                    collider.gameObject.transform.parent.GetComponent<BossData>().SetCurrentHealth(collider.gameObject.transform.parent.GetComponent<BossData>().m_currentHealth - sword_damage);
                     collider.gameObject.transform.parent.GetComponent<BossData>().m_iFrame = true;
                 }
 			}
