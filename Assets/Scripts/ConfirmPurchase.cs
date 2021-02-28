@@ -6,7 +6,6 @@ public class ConfirmPurchase : MonoBehaviour
 {
     // Start is called before the first frame update
     public int objectType;
-    public ShopItemText playerStat;
     public PlayerData playerData;
     public ShopItemText statIncrease;
     public ShopItemText cost;
@@ -17,13 +16,10 @@ public class ConfirmPurchase : MonoBehaviour
      
         int iCost = int.Parse(cost.m_TextComponent.text);
         int iWallet = int.Parse(wallet.m_TextComponent.text);
-        /*        Debug.Log("Cost: " + iCost);
-                Debug.Log("Wallet: " + iWallet);*/
         if (playerData.m_maxHealth == 10 && objectType == 1)
             return;
         if(iCost > iWallet)
         {
-            Debug.Log("Not Enough Money");
             return;
         }
         iWallet = iWallet - iCost;

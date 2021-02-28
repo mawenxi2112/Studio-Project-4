@@ -24,8 +24,6 @@ public class ItemPopupText : MonoBehaviour
         if (!pausedOnce)
             pausedOnce = true;*/
 
-
-        Debug.Log("SetAlready "  + popUp.name);
         player.m_isPaused = true;
 
         popUp.gameObject.SetActive(true);
