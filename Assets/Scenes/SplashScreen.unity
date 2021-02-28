@@ -1103,8 +1103,9 @@ MonoBehaviour:
     audioClip: {fileID: 0}
   - name: 0
     audioClip: {fileID: 0}
-  - name: 0
-    audioClip: {fileID: 0}
+  - name: 12
+    audioClip: {fileID: 8300000, guid: be824d72bf70d7c40b7afcdcd3ed9068, type: 3}
+  bgmSong: {fileID: 8300000, guid: be824d72bf70d7c40b7afcdcd3ed9068, type: 3}
 --- !u!4 &1786665733
 Transform:
   m_ObjectHideFlags: 0

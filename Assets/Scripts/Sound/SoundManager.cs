@@ -24,7 +24,7 @@ public static class SoundManager
         BOW,
         TELEPORT,
         RUNNER,
-
+        BGM,
     }
 
     private static Dictionary<SoundName, float> soundTimerDictionary = null;
@@ -98,6 +98,32 @@ public static class SoundManager
             oneShotAudioSource.PlayOneShot(audioClip);
             return oneShotGameObject;
         }
+        return null;
+    }
+
+    public static GameObject PlayLoopBGM(SOUNDTYPE soundType, SoundName name)
+    {
+        if (CanPlayAudio(soundType) && CanPlaySound(name))
+        {
+            AudioClip audioClip = GetAudioClipMenu(name);
+
+            if (audioClip == null)
+                return null;
+
+            GameObject bgmGameObject = new GameObject("BG Music");
+            AudioSource bgmAudioSouce = bgmGameObject.AddComponent<AudioSource>();
+
+            float volume = (float)SceneData.BGMVolume / 100.0f;
+
+            bgmAudioSouce.volume = volume;
+            bgmAudioSouce.clip = audioClip;
+            bgmAudioSouce.loop = true;
+
+            bgmAudioSouce.Play();
+
+            return bgmGameObject;
+        }
+
         return null;
     }
 
