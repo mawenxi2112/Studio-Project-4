@@ -28,10 +28,12 @@ public class ShopData : MonoBehaviour
 
     void OnEnable()
     {
+       
         for (int i = (int)UPGRADETYPES.DAMAGE; i < (int)UPGRADETYPES.TOTAL; i++)
         {
             //Makeshift array storing
             playerUpgrades[i] = PlayerPrefs.GetInt("value" + i.ToString());
+            
         }
         /*        value = PlayerPrefs.GetInt("value");*/
     }

@@ -14,11 +14,13 @@ public class ConfirmPurchase : MonoBehaviour
     public ShopData shopData;
     public void Confirm()
     {
-        Debug.Log("Confirmed");
+     
         int iCost = int.Parse(cost.m_TextComponent.text);
         int iWallet = int.Parse(wallet.m_TextComponent.text);
-/*        Debug.Log("Cost: " + iCost);
-        Debug.Log("Wallet: " + iWallet);*/
+        /*        Debug.Log("Cost: " + iCost);
+                Debug.Log("Wallet: " + iWallet);*/
+        if (playerData.m_maxHealth == 10 && objectType == 1)
+            return;
         if(iCost > iWallet)
         {
             Debug.Log("Not Enough Money");
@@ -27,46 +29,46 @@ public class ConfirmPurchase : MonoBehaviour
         iWallet = iWallet - iCost;
         wallet.m_TextComponent.text = iWallet.ToString();
         shopData.playerUpgrades[objectType]++;
-        int iPlayerStat = int.Parse(playerStat.m_TextComponent.text);
-        Debug.Log("Testing: " + int.Parse(playerStat.m_TextComponent.text));
+        int iPlayerStat = 0;
+
+
         int iIncrease = 0;
         switch (objectType)
         {
             case 0:
+                iPlayerStat = playerData.m_currentAttack;
                 iIncrease = 3;
                 break;
             case 1:
-                iIncrease = 2;
+                iPlayerStat = playerData.m_maxHealth;
+                iIncrease = 1;
                 break;
             case 2:
+                iPlayerStat = (int)playerData.m_maxMoveSpeed;
                 iIncrease = 5;
                 break;
         }
       
         iPlayerStat = iIncrease + iPlayerStat;
-        
-        Debug.Log("iIncrease: " + iIncrease);
 
         playerData.m_currency = iWallet;
+     
         switch (objectType)
         {
             case 0:
                 playerData.m_currentAttack = iPlayerStat;
+        
                 break;
             case 1:
                 playerData.m_maxHealth = iPlayerStat;
+               
                 break;
             case 2:
                 playerData.m_maxMoveSpeed = iPlayerStat;
+              
                 break;
         }
-        if(objectType == 2)
-        {
-            Debug.Log(playerStat.m_TextComponent.text);
-        }
-        playerStat.Restart();
-        cost.Restart();
-        wallet.Restart();
+
 
 
     }

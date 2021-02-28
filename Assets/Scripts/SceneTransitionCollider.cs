@@ -53,6 +53,8 @@ public class SceneTransitionCollider : MonoBehaviour
                 break;
             case 1:
                 soundPlayer.PlayStairsBackSound();
+                if (SceneData.currentScene == "Shop")
+                    PlayerStorage.Save();
                 sceneManager.LoadPlayMenu();
            
                 break;
