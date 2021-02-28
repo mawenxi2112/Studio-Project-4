@@ -360,14 +360,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         if (levelCount >= 2)
         {
             chooseReward.AllowChooseReward();
-
-            for (int i = 0; i < LevelReference[levelCount - 1].transform.childCount; i++)
-            {
-                if (LevelReference[levelCount - 1].transform.GetChild(i).name.Contains("Grid"))
-                {
-                    GameObject.Find("Cinemachine Camera").GetComponent<CinemachineConfiner>().m_BoundingShape2D = LevelReference[levelCount - 1].transform.GetChild(i).gameObject.GetComponent<PolygonCollider2D>();
-                }
-            }
         }
 
         if (levelCount == 1)
