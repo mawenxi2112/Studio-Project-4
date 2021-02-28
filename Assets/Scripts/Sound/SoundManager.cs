@@ -24,6 +24,7 @@ public static class SoundManager
         BOW,
         TELEPORT,
         RUNNER,
+
     }
 
     private static Dictionary<SoundName, float> soundTimerDictionary = null;
@@ -35,6 +36,7 @@ public static class SoundManager
     {
         if (soundTimerDictionary != null)
             return;
+
 
         soundTimerDictionary = new Dictionary<SoundName, float>();
         soundTimerDictionary[SoundName.DAMAGE] = 0.0f;
@@ -54,6 +56,35 @@ public static class SoundManager
                 oneShotGameObject = new GameObject("Sound");
                 oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
             }
+           
+            float volume;
+
+            if (soundType == SOUNDTYPE.BGM)
+                volume = (float)SceneData.BGMVolume / 100.0f;
+            else
+                volume = (float)SceneData.SoundFXVolume / 100.0f;
+
+            oneShotAudioSource.volume = volume;
+
+            oneShotAudioSource.PlayOneShot(audioClip);
+      
+        }
+    }
+
+    public static GameObject PlaySoundMenu(SOUNDTYPE soundType, SoundName name)
+    {
+        if (CanPlayAudio(soundType) && CanPlaySound(name))
+        {
+            AudioClip audioClip = GetAudioClipMenu(name);
+
+            if (audioClip == null)
+                return null;
+
+            if (oneShotGameObject == null)
+            {
+                oneShotGameObject = new GameObject("Sound");
+                oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+            }
 
             float volume;
 
@@ -65,7 +96,9 @@ public static class SoundManager
             oneShotAudioSource.volume = volume;
 
             oneShotAudioSource.PlayOneShot(audioClip);
+            return oneShotGameObject;
         }
+        return null;
     }
 
     private static bool CanPlaySound(SoundName name)
@@ -117,9 +150,27 @@ public static class SoundManager
 
         return null;
     }
+    public static AudioClip GetAudioClipMenu(SoundName name)
+    {
+        if (SceneSoundManager.Instance == null)
+            return null;
+
+        foreach (SceneSoundManager.SoundAudioClip soundAudioClip in SceneSoundManager.Instance.soundAudioClipArray)
+        {
+            if (soundAudioClip.name == name)
+            {
+                return soundAudioClip.audioClip;
+            }
+        }
+
+        Debug.LogError("Sound " + name + " not found!");
+
+        return null;
+    }
 
     public static bool CanPlayAudio(SOUNDTYPE soundType)
     {
+  
         if (SceneData.MasterVolume == 0)
             return false;
 

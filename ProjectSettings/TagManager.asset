@@ -30,6 +30,7 @@ TagManager:
   - SpikePlacement
   - Level
   - Boss
+  - SoundManager
   layers:
   - Default
   - TransparentFX
