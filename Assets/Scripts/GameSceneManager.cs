@@ -170,6 +170,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                     PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerListOthers[0]);
                 }
             }
+            PlayerStorage.Save();
             PhotonNetwork.LeaveRoom();
         }
         /*  StartCoroutine(LeaveRoomAndLoad());*/
