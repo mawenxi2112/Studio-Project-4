@@ -24,7 +24,10 @@ public static class SoundManager
         BOW,
         TELEPORT,
         RUNNER,
-
+        MENUCLICK,
+        MENUBACK,
+        STAIRSBACK,
+        FOOTSTEPS
     }
 
     private static Dictionary<SoundName, float> soundTimerDictionary = null;
@@ -170,7 +173,7 @@ public static class SoundManager
 
     public static bool CanPlayAudio(SOUNDTYPE soundType)
     {
-  
+        Debug.Log(SceneData.MasterVolume);
         if (SceneData.MasterVolume == 0)
             return false;
 

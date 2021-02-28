@@ -11,6 +11,8 @@ public class SceneTransitionCollider : MonoBehaviour
     public int ID;
     public bool pausedOnce;
     public ShopData shopValue;
+    public SoundManagerPlayer soundPlayer;
+ 
     void Start()
     {
         pausedOnce = false;
@@ -34,6 +36,7 @@ public class SceneTransitionCollider : MonoBehaviour
         switch (ID)
         {
             case -1:
+                soundPlayer.PlayFootsSteps();
                 player.GetComponent<PlayerData>().m_isPaused = true;
 
                 if (popupMenu)
@@ -44,12 +47,12 @@ public class SceneTransitionCollider : MonoBehaviour
                 }
                 break;
             case 0:
-                
+               
                 sceneManager.LoadMainMenu();
            
                 break;
             case 1:
-            
+                soundPlayer.PlayStairsBackSound();
                 sceneManager.LoadPlayMenu();
            
                 break;

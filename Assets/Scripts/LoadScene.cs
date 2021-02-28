@@ -6,6 +6,7 @@ public class LoadScene : MonoBehaviour
 {
     // Start is called before the first frame update
  
+    public SoundManagerPlayer soundplayer;
     void Start()
     {
         SceneData.previousScene = SceneData.currentScene;
@@ -30,6 +31,7 @@ public class LoadScene : MonoBehaviour
     
         SceneData.previousScene = SceneManager.GetActiveScene().name;
         SceneData.currentScene = "MainMenu";
+        soundplayer.PlayStairsBackSound();
         SceneManager.LoadScene("MainMenu");
         
      

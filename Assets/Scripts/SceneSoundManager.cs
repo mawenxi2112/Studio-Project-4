@@ -36,7 +36,24 @@ public class SceneSoundManager : MonoBehaviour
     }
     public void PlayDashSound()
     {
-        Debug.Log("PlayingSound");
         DontDestroyOnLoad(SoundManager.PlaySoundMenu(SOUNDTYPE.FX, SoundManager.SoundName.DASH));
+    }
+    public void PlayMenuClickSound()
+    {
+
+        DontDestroyOnLoad(SoundManager.PlaySoundMenu(SOUNDTYPE.FX, SoundManager.SoundName.MENUCLICK));
+    }
+    public void PlayMenuBackSound()
+    {
+
+        DontDestroyOnLoad(SoundManager.PlaySoundMenu(SOUNDTYPE.FX, SoundManager.SoundName.MENUBACK));
+    }
+    public void PlayStairsBackSound()
+    {
+        DontDestroyOnLoad(SoundManager.PlaySoundMenu(SOUNDTYPE.FX, SoundManager.SoundName.STAIRSBACK));
+    }
+    public void PlayFootstepsSound()
+    {
+        DontDestroyOnLoad(SoundManager.PlaySoundMenu(SOUNDTYPE.FX, SoundManager.SoundName.FOOTSTEPS));
     }
 }

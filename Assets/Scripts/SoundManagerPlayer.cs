@@ -15,8 +15,21 @@ public class SoundManagerPlayer : MonoBehaviour
     {
         
     }
-    public void PlayButtonSound()
+    public void PlayButtonHitSound()
     {
-        SceneSoundManager.Instance.PlayDashSound();
+        SceneSoundManager.Instance.PlayMenuClickSound();
     }
+    public void PlayButtonBackSound()
+    {
+        SceneSoundManager.Instance.PlayMenuBackSound();
+    }
+    public void PlayStairsBackSound()
+    {
+        SceneSoundManager.Instance.PlayStairsBackSound();
+    }
+    public void PlayFootsSteps()
+    {
+        SceneSoundManager.Instance.PlayFootstepsSound();
+    }
+
 }

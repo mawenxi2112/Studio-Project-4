@@ -4956,7 +4956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   object_type: 1
-  coinValue: 10
+  coinValue: 1
   healthPackValue: 0
   blockHealth: 0
   originalPosition: {x: 0, y: 0, z: 0}
