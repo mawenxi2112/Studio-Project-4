@@ -19,7 +19,6 @@ public class SceneSoundManager : MonoBehaviour
     // Update is called once per frame
     void Awake()
     {
-
         if (SceneData.currentScene != "Level1Scene")
         {
             SoundManager.Initialise();
@@ -34,6 +33,12 @@ public class SceneSoundManager : MonoBehaviour
         }
         DontDestroyOnLoad(this);
     }
+
+    void Start()
+    {
+        DontDestroyOnLoad(SoundManager.PlaySoundMenu(SOUNDTYPE.BGM, SoundManager.SoundName.BGM));
+    }
+
     public void PlayDashSound()
     {
         DontDestroyOnLoad(SoundManager.PlaySoundMenu(SOUNDTYPE.FX, SoundManager.SoundName.DASH));
