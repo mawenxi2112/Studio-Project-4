@@ -7,6 +7,7 @@ public class WinLoseScreenScript : MonoBehaviour
     // Start is called before the first frame update
     public GameObject WinScreen;
     public GameObject LoseScreen;
+    public GameSceneManager level;
     void Start()
     {
         WinScreen = this.transform.GetChild(0).gameObject;
@@ -24,7 +25,8 @@ public class WinLoseScreenScript : MonoBehaviour
 
         //if() check if player wins for now is default turned off
 
-
+        if (level.levelCount == 3)
+            WinScreen.SetActive(true);
 
         GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
         int deadCounter = 0;

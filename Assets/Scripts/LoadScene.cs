@@ -34,6 +34,18 @@ public class LoadScene : MonoBehaviour
         
      
     }
+    public void LoadSplashScreen()
+    {
+        SceneData.previousScene = SceneManager.GetActiveScene().name;
+        SceneData.currentScene = "SplashScreen";
+        SceneManager.LoadScene("SplashScreen");
+    }
+    public void LoadCreditScreen()
+    {
+        SceneData.previousScene = SceneManager.GetActiveScene().name;
+        SceneData.currentScene = "CreditScreen";
+        SceneManager.LoadScene("CreditScreen");
+    }
     public void LoadTutorial()
     {
         SceneData.previousScene = SceneManager.GetActiveScene().name;

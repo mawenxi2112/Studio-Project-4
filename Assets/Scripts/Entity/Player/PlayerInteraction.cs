@@ -28,6 +28,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         // Later on for multiplayer, set the camera if the photonView is mine.
         camera = Camera.main;
+ 
 
         if (SceneManager.GetActiveScene().name != "Level1Scene")
             return;
@@ -52,7 +53,8 @@ public class PlayerInteraction : MonoBehaviour
         // These updates are for PC platform!
         // Need to add custom player interactions for mobile etc.
 
-        if (!GetComponent<PhotonView>().IsMine || SceneManager.GetActiveScene().name != "Level1Scene")
+        if (!GetComponent<PhotonView>().IsMine || SceneManager.GetActiveScene().name != "Level1Scene" || GetComponent<PlayerData>().m_isPaused)
+             
             return;
 
         if (m_hand == null) // Fail safe check when m_hand is null
@@ -189,7 +191,8 @@ public class PlayerInteraction : MonoBehaviour
 
         }
 
-
+        if (GetComponent<PlayerData>().m_isPaused)
+            return;
         if (GetComponent<PlayerData>().platform == 0)
         {
             // These are for PC control!

@@ -307,7 +307,14 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public void SetCurrentLevel()
 	{
         levelCount++;
+        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+        if (levelCount >= 3)
+        {
+            for (int i = 0; i < playerList.Length; i++)
+                playerList[i].GetComponent<PlayerData>().m_isPaused = true;
 
+            return;
+        }
         Vector3 spawnPoint = new Vector3(0, 0, 0);
         Tilemap[] levelmap = null;
         for (int i = 0; i < LevelReference.Length; i++)
@@ -341,7 +348,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 LevelReference[i].SetActive(false);
         }
 
-        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+       
 
         for (int i = 0; i < playerList.Length; i++)
             if (playerList[i].GetComponent<PhotonView>().IsMine)
